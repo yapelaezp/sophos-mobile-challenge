@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/menuFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.sophos_mobile_app.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.sophos_mobile_app.ui.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
 </navigation>

@@ -7,4 +7,9 @@
     <string name="enter_data">Enter your data to access</string>
     <string name="login">Login</string>
     <string name="login_fingerprint">Enter with fingerprint</string>
+    <string name="send_docs">Send documents</string>
+    <string name="see_docs">See documents</string>
+    <string name="offices">Offices</string>
+    <string name="mode">Mode</string>
+    <string name="language">Language</string>
 </resources>

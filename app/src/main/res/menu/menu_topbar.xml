@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_send_docs"
+        android:title="@string/send_docs"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_see_docs"
+        android:title="@string/see_docs"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_offices"
+        android:title="@string/offices"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_mode"
+        android:title="@string/mode"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_language"
+        android:title="@string/language"
+        app:showAsAction="never"/>
+</menu>
