@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">sophos-mobile-app</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="enter_data">Ingresa tus datos para acceder</string>
+    <string name="login">Ingresar</string>
+    <string name="login_fingerprint">Ingresar con huella</string>
+    <string name="send_docs">Enviar documentos</string>
+    <string name="see_docs"> Ver documentos</string>
+    <string name="offices">Oficinas</string>
+    <string name="mode">Modo</string>
+    <string name="language">Idioma</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="options_for_you">Estas son las opciones que tenemos para ti</string>
+</resources>
