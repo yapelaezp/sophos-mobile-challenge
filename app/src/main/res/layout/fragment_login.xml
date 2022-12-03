@@ -1,10 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.LoginFragment">
 
+    <ImageView
+        android:id="@+id/iv_login_logo"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/logo_sophos"
+        app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_1"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_login_enter_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/enter_data"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_1"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_login_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/email"
+        android:textColorHint="?attr/colorPrimary"
+        app:boxStrokeWidth="2dp"
+        app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_enter_data"
+        app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etv_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textWebEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/v_detail_vertical_line1"
+        style="@style/vertical_line_yellow_40"
+        app:layout_constraintBottom_toBottomOf="@id/til_login_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_separator"
+        app:layout_constraintTop_toTopOf="@id/til_login_email" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_login_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/password"
+        android:textColorHint="?attr/colorPrimary"
+        app:boxStrokeWidth="2dp"
+        app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_1"
+        app:layout_constraintTop_toBottomOf="@+id/til_login_email"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_outline_vpn_key_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etv_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/v_login_password_separator"
+        style="@style/vertical_line_yellow_40"
+        app:layout_constraintBottom_toBottomOf="@id/til_login_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_separator"
+        app:layout_constraintTop_toTopOf="@id/til_login_password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="@color/purple_sophos"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_1"
+        app:layout_constraintTop_toBottomOf="@id/til_login_password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_fingerprint"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_rounded"
+        android:text="@string/login_fingerprint"
+        android:drawableStart="@drawable/ic_baseline_fingerprint_24"
+        android:paddingStart="32dp"
+        android:paddingEnd="56dp"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/vgl_login_1"
+        app:layout_constraintTop_toBottomOf="@id/btn_login_login" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vgl_login_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vgl_login_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vgl_login_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.17" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

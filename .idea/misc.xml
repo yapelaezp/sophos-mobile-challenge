@@ -4,8 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Alejandro/Documents/AndroidStudioProjects/BootcampSophos/sophosmobileapp/app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/button_rounded.xml" value="0.2315" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.179" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/ic_baseline_fingerprint_24.xml" value="0.17" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.179" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/ic_baseline_vpn_key_24.xml" value="0.179" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/ic_outline_vpn_key_24.xml" value="0.1045" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/vertical_separator.xml" value="0.17" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/fragment_login.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/fragment_login.xml" value="0.264" />
       </map>
     </option>
   </component>
