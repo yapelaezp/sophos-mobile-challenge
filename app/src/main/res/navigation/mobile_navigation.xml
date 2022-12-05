@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/menuFragment">
+    app:startDestination="@id/sendDocumentsFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -15,4 +15,9 @@
         android:name="com.example.sophos_mobile_app.ui.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/sendDocumentsFragment"
+        android:name="com.example.sophos_mobile_app.ui.SendDocumentsFragment"
+        android:label="fragment_send_documents"
+        tools:layout="@layout/fragment_send_documents" />
 </navigation>

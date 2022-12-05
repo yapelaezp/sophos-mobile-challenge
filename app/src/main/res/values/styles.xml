@@ -3,28 +3,28 @@
     <style name="vertical_line_yellow_40">
         <item name="android:layout_width">2dp</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:background">@drawable/vertical_separator</item>
+        <item name="android:background">@drawable/separator_vertical</item>
     </style>
 
     <style name="menu_layout_pink">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_marginTop">24dp</item>
-        <item name="android:background">@drawable/menu_layout_pink_background</item>
+        <item name="android:background">@drawable/background_menu_layout_pink</item>
     </style>
 
     <style name="menu_layout_blue">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_marginTop">24dp</item>
-        <item name="android:background">@drawable/menu_layout_blue_background</item>
+        <item name="android:background">@drawable/background_menu_layout_blue</item>
     </style>
 
     <style name="menu_layout_aquamarine">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_marginTop">24dp</item>
-        <item name="android:background">@drawable/menu_layout_aquamarine_background</item>
+        <item name="android:background">@drawable/background_menu_layout_aquamarine</item>
     </style>
 
     <style name="menu_layout_text">
@@ -42,6 +42,14 @@
         <item name="android:paddingStart">48dp</item>
         <item name="android:text">@string/enter</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="document_input_data">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:layout_marginTop">8dp</item>
+
     </style>
 
 

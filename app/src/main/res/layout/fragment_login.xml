@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_enter_data"
-        app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
+        app:startIconDrawable="@drawable/ic_baseline_account_circle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_email"
@@ -73,7 +73,7 @@
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/til_login_email"
         app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/ic_outline_vpn_key_24">
+        app:startIconDrawable="@drawable/ic_outline_vpn_key">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_password"
@@ -97,7 +97,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/button_rounded"
+        android:background="@drawable/background_button_rounded"
         android:backgroundTint="@color/purple_sophos"
         android:text="@string/login"
         android:textAllCaps="false"
@@ -113,9 +113,9 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/button_rounded"
+        android:background="@drawable/background_button_rounded"
         android:text="@string/login_fingerprint"
-        android:drawableStart="@drawable/ic_baseline_fingerprint_24"
+        android:drawableStart="@drawable/ic_baseline_fingerprint"
         android:paddingStart="32dp"
         android:paddingEnd="56dp"
         android:textAllCaps="false"
