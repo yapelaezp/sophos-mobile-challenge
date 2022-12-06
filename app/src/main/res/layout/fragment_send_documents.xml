@@ -23,7 +23,7 @@
         android:id="@+id/tv_document_screen_doc_delivery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Document delivery"
+        android:text="@string/document_delivery"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:layout_marginTop="8dp"
