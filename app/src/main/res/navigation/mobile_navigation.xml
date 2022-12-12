@@ -11,9 +11,10 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragmentDestination_to_menuFragmentDestination"
+            android:id="@+id/action_to_menuFragmentDestination"
             app:destination="@id/menuFragmentDestination" />
     </fragment>
+
     <fragment
         android:id="@+id/menuFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.menu.MenuFragment"
@@ -21,20 +22,21 @@
         tools:layout="@layout/fragment_menu" >
         <argument
             android:name="userName"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue='""' />
+            app:argType="string"/>
     </fragment>
+
     <fragment
         android:id="@+id/sendDocumentsFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.documents.SendDocumentsFragment"
         android:label="fragment_send_documents"
         tools:layout="@layout/fragment_send_documents" />
+
     <fragment
         android:id="@+id/officesFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.offices.OfficesFragment"
         android:label="fragment_offices"
         tools:layout="@layout/fragment_offices" />
+
     <fragment
         android:id="@+id/viewDocumentsFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.documents.ViewDocumentsFragment"

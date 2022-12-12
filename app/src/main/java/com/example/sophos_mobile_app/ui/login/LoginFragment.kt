@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.databinding.FragmentLoginBinding
 import com.example.sophos_mobile_app.utils.Validation
 
@@ -30,7 +31,8 @@ class LoginFragment : Fragment() {
 
     private fun observeViewModel() {
         loginViewModel.user.observe(viewLifecycleOwner){ userDto ->
-
+            val action = LoginFragmentDirections.actionToMenuFragmentDestination(userDto.nombre)
+            findNavController().navigate(action)
         }
     }
 
