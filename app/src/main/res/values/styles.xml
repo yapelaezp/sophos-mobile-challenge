@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="vertical_line_yellow_40">
+    <style name="login_vertical_line">
         <item name="android:layout_width">2dp</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/separator_vertical</item>
+    </style>
+
+    <style name="login_input_data_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColorHint">?attr/colorPrimary</item>
     </style>
 
     <style name="menu_layout_pink">

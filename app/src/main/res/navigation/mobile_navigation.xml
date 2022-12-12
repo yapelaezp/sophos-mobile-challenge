@@ -3,21 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/sendDocumentsFragment">
+    app:startDestination="@id/loginFragmentDestination">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.sophos_mobile_app.ui.LoginFragment"
+        android:id="@+id/loginFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragmentDestination_to_menuFragmentDestination"
+            app:destination="@id/menuFragmentDestination" />
+    </fragment>
     <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.example.sophos_mobile_app.ui.MenuFragment"
+        android:id="@+id/menuFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.menu.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <argument
+            android:name="userName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='""' />
+    </fragment>
     <fragment
-        android:id="@+id/sendDocumentsFragment"
-        android:name="com.example.sophos_mobile_app.ui.SendDocumentsFragment"
+        android:id="@+id/sendDocumentsFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.documents.SendDocumentsFragment"
         android:label="fragment_send_documents"
         tools:layout="@layout/fragment_send_documents" />
+    <fragment
+        android:id="@+id/officesFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.offices.OfficesFragment"
+        android:label="fragment_offices"
+        tools:layout="@layout/fragment_offices" />
+    <fragment
+        android:id="@+id/viewDocumentsFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.documents.ViewDocumentsFragment"
+        android:label="fragment_view_documents"
+        tools:layout="@layout/fragment_view_documents" />
 </navigation>

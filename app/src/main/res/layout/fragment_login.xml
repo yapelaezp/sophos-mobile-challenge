@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LoginFragment">
+    tools:context=".ui.login.LoginFragment">
 
     <ImageView
         android:id="@+id/iv_login_logo"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="56dp"
         android:src="@drawable/logo_sophos"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
@@ -25,6 +25,7 @@
         android:textAlignment="center"
         android:textColor="?attr/colorPrimary"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
@@ -38,6 +39,8 @@
         android:hint="@string/email"
         android:textColorHint="?attr/colorPrimary"
         app:boxStrokeWidth="2dp"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_enter_data"
@@ -46,29 +49,33 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textWebEmailAddress" />
+            android:layout_height="50dp"
+            android:background="@drawable/background_button_rounded"
+            android:fontFamily="@font/montserrat_regular"
+            android:inputType="textWebEmailAddress"
+            android:textColor="?attr/colorPrimary"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
         android:id="@+id/v_detail_vertical_line1"
-        style="@style/vertical_line_yellow_40"
-        app:layout_constraintBottom_toBottomOf="@id/til_login_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/vgl_login_separator"
-        app:layout_constraintTop_toTopOf="@id/til_login_email" />
+        style="@style/login_vertical_line"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/til_login_email"
+        app:layout_constraintStart_toStartOf="@+id/vgl_login_separator"
+        app:layout_constraintTop_toTopOf="@+id/til_login_email" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_login_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:hint="@string/password"
         android:textColorHint="?attr/colorPrimary"
         app:boxStrokeWidth="2dp"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/til_login_email"
@@ -78,14 +85,19 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:layout_height="50dp"
+            android:background="@drawable/background_button_rounded"
+            android:fontFamily="@font/montserrat_regular"
+            android:inputType="textPassword"
+            android:textColor="?attr/colorPrimary"
+            app:endIconTint="?attr/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
         android:id="@+id/v_login_password_separator"
-        style="@style/vertical_line_yellow_40"
+        style="@style/login_vertical_line"
+        android:layout_marginBottom="14dp"
         app:layout_constraintBottom_toBottomOf="@id/til_login_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -99,6 +111,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/background_button_rounded"
         android:backgroundTint="@color/purple_sophos"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -114,10 +127,11 @@
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/background_button_rounded"
-        android:text="@string/login_fingerprint"
         android:drawableStart="@drawable/ic_baseline_fingerprint"
+        android:fontFamily="@font/montserrat_bold"
         android:paddingStart="32dp"
         android:paddingEnd="56dp"
+        android:text="@string/login_fingerprint"
         android:textAllCaps="false"
         android:textColor="?attr/colorPrimary"
         android:textSize="18sp"
@@ -145,6 +159,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.17" />
+        app:layout_constraintGuide_percent="0.16" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.sophos_mobile_app.ui
+package com.example.sophos_mobile_app.ui.menu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

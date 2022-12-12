@@ -1,4 +1,4 @@
-package com.example.sophos_mobile_app.ui
+package com.example.sophos_mobile_app.ui.documents
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.sophos_mobile_app.R
 
-class OfficesFragment : Fragment() {
+class ViewDocumentsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +18,7 @@ class OfficesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offices, container, false)
+        return inflater.inflate(R.layout.fragment_view_documents, container, false)
     }
 
 }
