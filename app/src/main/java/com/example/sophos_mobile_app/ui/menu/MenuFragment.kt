@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MenuFragment : Fragment() {
 
     private val args: MenuFragmentArgs by navArgs()

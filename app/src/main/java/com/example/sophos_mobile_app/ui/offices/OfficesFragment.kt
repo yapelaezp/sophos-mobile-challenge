@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sophos_mobile_app.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OfficesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

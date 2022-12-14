@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sophos_mobile_app.data.api.ProvideRetrofit
 import com.example.sophos_mobile_app.data.api.dto.UserDto
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel: ViewModel(){
+@HiltViewModel
+class LoginViewModel @Inject constructor(): ViewModel(){
 
     private val _user = MutableLiveData<UserDto>()
     val user: LiveData<UserDto>
