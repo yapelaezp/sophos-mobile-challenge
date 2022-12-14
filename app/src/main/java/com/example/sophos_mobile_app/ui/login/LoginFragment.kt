@@ -31,8 +31,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        loginViewModel.user.observe(viewLifecycleOwner){ userDto ->
-            val action = LoginFragmentDirections.actionToMenuFragmentDestination(userDto.nombre)
+        loginViewModel.user.observe(viewLifecycleOwner){ user ->
+            val action = LoginFragmentDirections.actionToMenuFragmentDestination(user.name)
             findNavController().navigate(action)
         }
     }

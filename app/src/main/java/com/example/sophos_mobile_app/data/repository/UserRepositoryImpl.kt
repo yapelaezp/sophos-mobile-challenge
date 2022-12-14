@@ -17,5 +17,5 @@ class UserRepositoryImpl @Inject constructor(private val api: ApiService): UserR
             response
         }
     }
-    
+
 }
