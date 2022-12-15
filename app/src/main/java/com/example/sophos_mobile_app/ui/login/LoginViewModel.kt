@@ -5,13 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sophos_mobile_app.data.model.User
+import com.example.sophos_mobile_app.data.repository.UserRepository
 import com.example.sophos_mobile_app.data.repository.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val userRepository: UserRepositoryImpl): ViewModel(){
+class LoginViewModel @Inject constructor(private val userRepository: UserRepository): ViewModel(){
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
