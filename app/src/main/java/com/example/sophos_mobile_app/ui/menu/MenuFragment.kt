@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
+import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +26,15 @@ class MenuFragment : Fragment() {
     ): View? {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         setComponents()
+        setListeners()
         return binding.root
+    }
+
+    private fun setListeners() {
+        binding.btnMenuScreenSendDocs.setOnClickListener {
+            val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setComponents() {

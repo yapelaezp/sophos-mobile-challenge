@@ -23,6 +23,9 @@
         <argument
             android:name="userName"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_to_sendDocumentsFragmentDestination"
+            app:destination="@id/sendDocumentsFragmentDestination" />
     </fragment>
 
     <fragment
