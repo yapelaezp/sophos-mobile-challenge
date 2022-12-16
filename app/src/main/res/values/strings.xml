@@ -22,7 +22,8 @@
     <string name="documents">Documents</string>
     <string-array name="doc_type">
         <item>CC</item>
-        <item>Passport</item>
+        <item>TI</item>
+        <item>PA</item>
         <item>CE</item>
     </string-array>
 </resources>

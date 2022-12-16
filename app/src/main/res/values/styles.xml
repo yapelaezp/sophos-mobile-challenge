@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="login_vertical_line">
-        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/separator_vertical</item>
     </style>

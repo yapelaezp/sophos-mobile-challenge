@@ -1,5 +1,6 @@
 package com.example.sophos_mobile_app.ui.login
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,9 +26,13 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        setComponents()
         setListeners()
         observeViewModel()
         return binding.root
+    }
+
+    private fun setComponents() {
     }
 
     private fun observeViewModel() {
