@@ -1,12 +1,10 @@
 package com.example.sophos_mobile_app.ui.login
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.databinding.FragmentLoginBinding
@@ -26,13 +24,9 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        setComponents()
         setListeners()
         observeViewModel()
         return binding.root
-    }
-
-    private fun setComponents() {
     }
 
     private fun observeViewModel() {

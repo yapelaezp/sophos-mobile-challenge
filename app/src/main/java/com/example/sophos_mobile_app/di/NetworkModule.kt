@@ -1,10 +1,7 @@
 package com.example.sophos_mobile_app.di
 
 import com.example.sophos_mobile_app.data.api.ApiService
-import com.example.sophos_mobile_app.data.repository.DocumentRepository
-import com.example.sophos_mobile_app.data.repository.DocumentRepositoryImpl
-import com.example.sophos_mobile_app.data.repository.UserRepository
-import com.example.sophos_mobile_app.data.repository.UserRepositoryImpl
+import com.example.sophos_mobile_app.data.repository.*
 import com.example.sophos_mobile_app.utils.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -54,6 +51,12 @@ object NetworkModule {
     @Singleton
     fun provideDocumentRepository(apiService: ApiService): DocumentRepository {
         return DocumentRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOfficeRepository(apiService: ApiService): OfficeRepository {
+        return OfficeRepositoryImpl(apiService)
     }
 
 }
