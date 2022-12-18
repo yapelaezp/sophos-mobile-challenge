@@ -26,13 +26,20 @@
         <action
             android:id="@+id/action_to_sendDocumentsFragmentDestination"
             app:destination="@id/sendDocumentsFragmentDestination" />
+        <action
+            android:id="@+id/action_menuFragmentDestination_to_viewDocumentsFragmentDestination"
+            app:destination="@id/viewDocumentsFragmentDestination" />
     </fragment>
 
     <fragment
         android:id="@+id/sendDocumentsFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.documents.SendDocumentsFragment"
         android:label="fragment_send_documents"
-        tools:layout="@layout/fragment_send_documents" />
+        tools:layout="@layout/fragment_send_documents" >
+        <action
+            android:id="@+id/action_sendDocumentsFragmentDestination_to_menuFragmentDestination"
+            app:destination="@id/menuFragmentDestination" />
+    </fragment>
 
     <fragment
         android:id="@+id/officesFragmentDestination"

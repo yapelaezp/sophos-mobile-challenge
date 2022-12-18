@@ -20,6 +20,8 @@
     <string name="lastnames">Lastnames</string>
     <string name="document_delivery">Document delivery</string>
     <string name="documents">Documents</string>
+    <string name="go_back">Return</string>
+
     <string-array name="doc_type">
         <item>CC</item>
         <item>TI</item>

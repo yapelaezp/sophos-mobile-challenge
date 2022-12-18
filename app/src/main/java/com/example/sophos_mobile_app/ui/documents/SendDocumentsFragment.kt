@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import com.example.sophos_mobile_app.utils.Validation
@@ -95,18 +97,26 @@ class SendDocumentsFragment : Fragment() {
     }
 
     private fun setComponents() {
-        //Load cities into city spinner
+        // Load cities into city spinner
         sendDocumentViewModel.getOffices()
-        //Load doc type into doc type spinner
+
+        //Set doc type spinner
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.doc_type,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
             binding.spDocumentScreenDocType.adapter = adapter
+        }
+
+        //Set toolbar
+        binding.toolbarDocumentScreen.title = getString(R.string.go_back)
+        binding.toolbarDocumentScreen.overflowIcon =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
+        //Set arrow back event
+        binding.toolbarDocumentScreen.getChildAt(0).setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
