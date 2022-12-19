@@ -21,6 +21,7 @@
     <string name="document_delivery">Document delivery</string>
     <string name="documents">Documents</string>
     <string name="go_back">Return</string>
+    <string name="full_name">%s %s</string>
 
     <string-array name="doc_type">
         <item>CC</item>

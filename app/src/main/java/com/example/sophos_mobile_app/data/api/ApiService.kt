@@ -1,8 +1,9 @@
 package com.example.sophos_mobile_app.data.api
 
 import com.example.sophos_mobile_app.data.api.dto.NewDocumentDto
-import com.example.sophos_mobile_app.data.api.dto.OfficesResponse
+import com.example.sophos_mobile_app.data.api.responses.OfficesResponse
 import com.example.sophos_mobile_app.data.api.dto.UserDto
+import com.example.sophos_mobile_app.data.api.responses.DocumentResponse
 import com.example.sophos_mobile_app.data.api.responses.NewDocumentResponse
 import com.example.sophos_mobile_app.utils.DOCUMENTS_URL
 import com.example.sophos_mobile_app.utils.OFFICES_URL
@@ -24,4 +25,7 @@ interface ApiService {
 
     @POST(DOCUMENTS_URL)
     suspend fun createNewDocument(@Body newDocumentDto: NewDocumentDto): NewDocumentResponse
+
+    @GET(DOCUMENTS_URL)
+    suspend fun getDocumentByUserEmail(@Query("correo") email: String): DocumentResponse
 }

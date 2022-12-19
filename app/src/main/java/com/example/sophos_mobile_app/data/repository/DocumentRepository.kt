@@ -1,5 +1,7 @@
 package com.example.sophos_mobile_app.data.repository
 
+import com.example.sophos_mobile_app.data.model.Document
+
 interface DocumentRepository {
     suspend fun createNewDocument(
         idType: String,
@@ -11,4 +13,6 @@ interface DocumentRepository {
         attachedType: String,
         attached: String
     )
+
+    suspend fun getDocumentByUserEmail(email: String): List<Document>
 }

@@ -30,8 +30,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        val userEmail = binding.etvLoginEmail.text.toString()
         loginViewModel.user.observe(viewLifecycleOwner){ user ->
-            val action = LoginFragmentDirections.actionToMenuFragmentDestination(user.name)
+            val action = LoginFragmentDirections.actionToMenuFragmentDestination(user.name, userEmail)
             findNavController().navigate(action)
         }
     }
@@ -70,7 +71,6 @@ class LoginFragment : Fragment() {
             true
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

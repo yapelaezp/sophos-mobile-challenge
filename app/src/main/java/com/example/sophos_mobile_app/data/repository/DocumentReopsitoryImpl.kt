@@ -2,6 +2,8 @@ package com.example.sophos_mobile_app.data.repository
 
 import com.example.sophos_mobile_app.data.api.ApiService
 import com.example.sophos_mobile_app.data.api.dto.NewDocumentDto
+import com.example.sophos_mobile_app.data.mappers.toModel
+import com.example.sophos_mobile_app.data.model.Document
 import javax.inject.Inject
 
 class DocumentRepositoryImpl @Inject constructor(val api: ApiService): DocumentRepository {
@@ -29,6 +31,17 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService): DocumentR
             )
             api.createNewDocument(newDocument)
         } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    override suspend fun getDocumentByUserEmail(email: String): List<Document> {
+        try {
+            val response = api.getDocumentByUserEmail(email).Items.map { document ->
+                document.toModel()
+            }
+            return response
+        } catch (e: Exception){
             throw Exception(e.message)
         }
     }

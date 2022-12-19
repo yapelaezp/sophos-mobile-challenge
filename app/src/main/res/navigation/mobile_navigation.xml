@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_menuFragmentDestination_to_viewDocumentsFragmentDestination"
             app:destination="@id/viewDocumentsFragmentDestination" />
+        <argument
+            android:name="userEmail"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -51,5 +54,9 @@
         android:id="@+id/viewDocumentsFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.documents.ViewDocumentsFragment"
         android:label="fragment_view_documents"
-        tools:layout="@layout/fragment_view_documents" />
+        tools:layout="@layout/fragment_view_documents" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -37,7 +37,10 @@ class MenuFragment : Fragment() {
         }
         binding.btnMenuScreenSeeDocs.setOnClickListener {
             val action =
-                MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination()
+                MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination(
+                    //args.userEmail
+                    "naruto@hotmail.com"
+                )
             findNavController().navigate(action)
         }
     }

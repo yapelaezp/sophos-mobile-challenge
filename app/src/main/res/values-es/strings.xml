@@ -22,4 +22,5 @@
     <string name="document_delivery">Entrega de documentos</string>
     <string name="documents">Documentos</string>
     <string name="go_back">Regresar</string>
+    <string name="full_name">%s %s</string>
 </resources>

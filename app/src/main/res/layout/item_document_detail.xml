@@ -15,7 +15,7 @@
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/h_divider_item_document_detail"
+        app:layout_constraintTop_toBottomOf="@+id/h_divider_item_view_document"
         tools:text="@tools:sample/date/mmddyy" />
 
     <TextView
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_item_document_date" />
 
     <View
-        android:id="@+id/h_divider_item_document_detail"
+        android:id="@+id/h_divider_item_view_document"
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:background="@color/black"
