@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".utils.CameraFragment">
+    tools:context=".ui.camera.CameraFragment">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/pv_camera_preview"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
-        android:id="@+id/camera_switch_button"
+        android:id="@+id/ib_accept_photo"
         android:layout_width="@dimen/round_button_medium"
         android:layout_height="@dimen/round_button_medium"
         android:layout_marginBottom="32dp"
@@ -30,7 +30,7 @@
         android:contentDescription="@string/accept" />
 
     <ImageButton
-        android:id="@+id/camera_capture_button"
+        android:id="@+id/ib_take_photo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginBottom="48dp"

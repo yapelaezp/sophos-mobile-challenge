@@ -6,9 +6,10 @@ import android.util.Base64
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import javax.inject.Inject
 
-object ImageConverter {
-    private suspend fun imageProxyToBitmap(image: ImageProxy): Bitmap {
+class ImageConverter @Inject constructor() {
+    suspend fun imageProxyToBitmap(image: ImageProxy): Bitmap {
         val planeProxy = image.planes[0]
         val buffer: ByteBuffer = planeProxy.buffer
         val bytes = ByteArray(buffer.remaining())
@@ -16,14 +17,14 @@ object ImageConverter {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 
-    private suspend fun bitmapToBase64(imageBitmap: Bitmap): String {
+    suspend fun bitmapToBase64(imageBitmap: Bitmap): String {
         val stream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         val imageBytes = stream.toByteArray()
         return Base64.encodeToString(imageBytes, Base64.DEFAULT)
     }
 
-    private suspend fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+    suspend fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         var image = image
         return if (maxHeight > 0 && maxWidth > 0) {
             val width = image.width

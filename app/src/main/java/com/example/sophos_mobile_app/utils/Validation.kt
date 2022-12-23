@@ -1,6 +1,5 @@
 package com.example.sophos_mobile_app.utils
 
-import android.util.Patterns
 import androidx.core.util.PatternsCompat
 
 class Validation {

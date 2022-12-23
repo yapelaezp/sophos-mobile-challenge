@@ -86,7 +86,7 @@
         android:label="GalleryFragment" />
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.example.sophos_mobile_app.utils.CameraFragment"
+        android:name="com.example.sophos_mobile_app.ui.camera.CameraFragment"
         android:label="CameraFragment" >
         <action
             android:id="@+id/action_cameraFragment_to_sendDocumentsFragmentDestination"
