@@ -32,14 +32,14 @@ class MenuFragment : Fragment() {
 
     private fun setListeners() {
         binding.btnMenuScreenSendDocs.setOnClickListener {
-            val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination()
+            val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination(null)
             findNavController().navigate(action)
         }
         binding.btnMenuScreenSeeDocs.setOnClickListener {
             val action =
                 MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination(
                     //args.userEmail
-                    "naruto@hotmail.com"
+                    "naruto@hotmail.com" //TODO("Change burned value")
                 )
             findNavController().navigate(action)
         }

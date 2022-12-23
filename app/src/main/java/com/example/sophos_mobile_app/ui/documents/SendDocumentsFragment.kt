@@ -1,11 +1,13 @@
 package com.example.sophos_mobile_app.ui.documents
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,7 +22,6 @@ class SendDocumentsFragment : Fragment() {
 
     private var _binding: FragmentSendDocumentsBinding? = null
     private val binding get() = _binding!!
-
     private val sendDocumentViewModel: SendDocumentsViewModel by viewModels()
 
     override fun onCreateView(
@@ -69,6 +70,51 @@ class SendDocumentsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_LONG).show()
             }
         }
+        binding.btnDocumentScreenUploadDoc.setOnClickListener {
+/*            if (ContextCompat.checkSelfPermission( requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100
+                )
+            }
+            else{
+                selectImage()
+            }*/
+            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+            startActivity(intent)
+        }
+        binding.ivDocumentScreenAddPhoto.setOnClickListener {
+            showSelectPhotoOptionDialog()
+        }
+    }
+
+    private fun showSelectPhotoOptionDialog() {
+        val pictureDialog = AlertDialog.Builder(requireContext())
+        pictureDialog.setTitle(getString(R.string.select_picture_option))
+        val pictureDialogItem = arrayOf(
+            getString(R.string.select_from_gallery),
+            getString(R.string.capture_photo_from_gallery)
+        )
+        pictureDialog.setItems(pictureDialogItem) { _, option ->
+            when (option) {
+                0 -> {
+                    val action =
+                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToPermissionsFragment(
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE
+                        )
+                    findNavController().navigate(action)
+                }
+                1 -> {
+                    val action =
+                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToPermissionsFragment(
+                            android.Manifest.permission.CAMERA
+                        )
+                    findNavController().navigate(action)
+                }
+            }
+        }
+        pictureDialog.show()
     }
 
     private fun validateFields(

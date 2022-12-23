@@ -42,6 +42,13 @@
         <action
             android:id="@+id/action_sendDocumentsFragmentDestination_to_menuFragmentDestination"
             app:destination="@id/menuFragmentDestination" />
+        <action
+            android:id="@+id/action_sendDocumentsFragmentDestination_to_permissionsFragment"
+            app:destination="@id/permissionsFragment" />
+        <argument
+            android:name="imageBitmap"
+            app:nullable="true"
+            />
     </fragment>
 
     <fragment
@@ -58,5 +65,31 @@
         <argument
             android:name="email"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/permissionsFragment"
+        android:name="com.example.sophos_mobile_app.utils.PermissionsFragment"
+        android:label="PermissionsFragment" >
+        <argument
+            android:name="permissionCode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_permissionsFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+        <action
+            android:id="@+id/action_permissionsFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.sophos_mobile_app.utils.GalleryFragment"
+        android:label="GalleryFragment" />
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.sophos_mobile_app.utils.CameraFragment"
+        android:label="CameraFragment" >
+        <action
+            android:id="@+id/action_cameraFragment_to_sendDocumentsFragmentDestination"
+            app:destination="@id/sendDocumentsFragmentDestination" />
     </fragment>
 </navigation>

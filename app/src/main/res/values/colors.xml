@@ -11,7 +11,9 @@
     <color name="blue_sophos">#4500FF</color>
     <color name="aquamarine_sophos">#05667C</color>
     <color name="pink_sophos">#FE1191</color>
-
+    <color name="icActive">#FFFFFFFF</color>
+    <color name="icFocused">#DDFFFFFF</color>
+    <color name="icPressed">#AAFFFFFF</color>
 
 
 

@@ -22,7 +22,7 @@ class DocumentAdapter(private val documentList: List<Document>) :
         documentHolder.binding.tvItemDocumentDate.text = document.date
         documentHolder.binding.tvItemDocumentDetailType.text = document.attachedType
         documentHolder.binding.tvItemDocumentDetailName.text = document.name + " " + document.lastname
-            //Resources.getSystem().getString(R.string.full_name,document.name, document.lastname) // TODO preguntar
+            //Resources.getSystem().getString(R.string.full_name,document.name, document.lastname)
     }
 
     override fun getItemCount() = documentList.size

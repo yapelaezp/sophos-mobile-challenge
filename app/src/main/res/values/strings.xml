@@ -22,6 +22,12 @@
     <string name="documents">Documents</string>
     <string name="go_back">Return</string>
     <string name="full_name">%s %s</string>
+    <string name="select_picture_option">What do you prefer?</string>
+    <string name="select_from_gallery">Select photo from gallery</string>
+    <string name="capture_photo_from_gallery">Capture photo from camera</string>
+    <string name="capture_button">Capture button</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
 
     <string-array name="doc_type">
         <item>CC</item>

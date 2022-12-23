@@ -21,9 +21,9 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/enter_data"
         android:textAlignment="center"
-        android:fontFamily="@font/montserrat_bold"
         android:textColor="?attr/colorPrimary"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -44,18 +44,20 @@
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_enter_data"
-        app:startIconDrawable="@drawable/ic_baseline_account_circle">
+        app:startIconDrawable="@drawable/ic_baseline_account_circle"
+        app:startIconTint="@color/purple_sophos">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_email"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawablePadding="10dp"
-            android:text="alejo51120@gmail.com"
+            android:layout_height="52dp"
             android:background="@drawable/background_button_rounded"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/montserrat_regular"
+            android:textSize="18sp"
             android:inputType="textWebEmailAddress"
-            android:textColor="?attr/colorPrimary"/>
+            android:text="alejo51120@gmail.com"
+            android:textColor="?attr/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +74,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:textColorHint="?attr/colorPrimary"
         app:boxStrokeWidth="2dp"
         app:errorEnabled="true"
@@ -81,19 +83,20 @@
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/til_login_email"
         app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/ic_outline_vpn_key">
+        app:passwordToggleTint="@color/purple_sophos"
+        app:startIconDrawable="@drawable/ic_outline_vpn_key"
+        app:startIconTint="?attr/colorPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_password"
-            android:drawablePadding="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="PIpP0553v031"
             android:background="@drawable/background_button_rounded"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/montserrat_regular"
-            android:textColor="?attr/colorPrimary"
             android:inputType="textPassword"
-            />
+            android:text="PIpP0553v031"
+            android:textColor="?attr/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -23,4 +23,5 @@
     <string name="documents">Documentos</string>
     <string name="go_back">Regresar</string>
     <string name="full_name">%s %s</string>
+    <string name="capture_button">Capture button</string>
 </resources>
