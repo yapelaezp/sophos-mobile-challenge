@@ -43,10 +43,10 @@
             android:id="@+id/action_sendDocumentsFragmentDestination_to_menuFragmentDestination"
             app:destination="@id/menuFragmentDestination" />
         <action
-            android:id="@+id/action_sendDocumentsFragmentDestination_to_permissionsFragment"
+            android:id="@+id/action_sendDocumentsFragment_to_permissionsFragment"
             app:destination="@id/permissionsFragment" />
         <argument
-            android:name="imageBitmap"
+            android:name="imageBase64"
             app:nullable="true"
             />
     </fragment>
@@ -82,8 +82,12 @@
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="com.example.sophos_mobile_app.utils.GalleryFragment"
-        android:label="GalleryFragment" />
+        android:name="com.example.sophos_mobile_app.ui.camera.GalleryFragment"
+        android:label="GalleryFragment" >
+        <action
+            android:id="@+id/action_galleryFragment_to_sendDocumentsFragmentDestination"
+            app:destination="@id/sendDocumentsFragmentDestination" />
+    </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.sophos_mobile_app.ui.camera.CameraFragment"

@@ -9,17 +9,15 @@ class ValidationTest{
     @Test
     fun testIsFieldEmpty(){
         //Arrange
-        val actual = Validation.isFieldEmpty("")
-        //Assert
-        assertTrue(actual)
-    }
+        val email = "conan@yahoo.com"
+        val password = ""
+        val city = "Berlin"
 
-    @Test
-    fun testIsFieldNull(){
-        //Arrange
-        val actual = Validation.isFieldEmpty(null)
+        //Action
+
+        val actual = Validation.isFieldNullOrEmpty(email,password, city)
         //Assert
-        assertTrue(actual)
+        assertEquals(Pair(false, ""), actual)
     }
 
     @Test

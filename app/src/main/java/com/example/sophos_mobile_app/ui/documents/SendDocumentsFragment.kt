@@ -1,6 +1,5 @@
 package com.example.sophos_mobile_app.ui.documents
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import com.example.sophos_mobile_app.utils.Validation
@@ -23,6 +24,7 @@ class SendDocumentsFragment : Fragment() {
     private var _binding: FragmentSendDocumentsBinding? = null
     private val binding get() = _binding!!
     private val sendDocumentViewModel: SendDocumentsViewModel by viewModels()
+    private val args: SendDocumentsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,13 +51,16 @@ class SendDocumentsFragment : Fragment() {
 
     private fun setListeners() {
         binding.btnDocumentScreenSend.setOnClickListener {
-            val docType = binding.spDocumentScreenDocType.selectedItem.toString()
+            val docType = binding.spDocumentScreenIdType.selectedItem.toString()
             val docNumber = binding.etvDocumentScreenDocNumber.text.toString()
             val names = binding.etvDocumentScreenNames.text.toString()
             val lastnames = binding.etvDocumentScreenLastnames.text.toString()
             val email = binding.etvDocumentScreenEmail.text.toString()
             val city = binding.spDocumentScreenCity.selectedItem.toString()
-            if (validateFields(docType, docNumber, names, lastnames, email, city)) {
+            val attachedType = binding.etvDocumentScreenAttachedType.text.toString()
+            val photoBase64 = args.imageBase64
+            val areFieldsValid = validateFields(docType, docNumber, names, lastnames, email, city, attachedType, photoBase64)
+            if (areFieldsValid.first) {
                 sendDocumentViewModel.createNewDocument(
                     docType,
                     docNumber,
@@ -63,26 +68,18 @@ class SendDocumentsFragment : Fragment() {
                     lastnames,
                     city,
                     email,
-                    attachedType = "Photo",
-                    attached = "123"
+                    attachedType,
+                    photoBase64!!
                 )
             } else {
-                Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), areFieldsValid.second, Toast.LENGTH_LONG).show()
             }
         }
         binding.btnDocumentScreenUploadDoc.setOnClickListener {
-/*            if (ContextCompat.checkSelfPermission( requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100
-                )
-            }
-            else{
-                selectImage()
-            }*/
-            val intent = Intent("android.media.action.IMAGE_CAPTURE")
-            startActivity(intent)
+            val action =
+                SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            navigate(action)
         }
         binding.ivDocumentScreenAddPhoto.setOnClickListener {
             showSelectPhotoOptionDialog()
@@ -100,17 +97,17 @@ class SendDocumentsFragment : Fragment() {
             when (option) {
                 0 -> {
                     val action =
-                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToPermissionsFragment(
+                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
                             android.Manifest.permission.READ_EXTERNAL_STORAGE
                         )
-                    findNavController().navigate(action)
+                    navigate(action)
                 }
                 1 -> {
                     val action =
-                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToPermissionsFragment(
+                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
                             android.Manifest.permission.CAMERA
                         )
-                    findNavController().navigate(action)
+                    navigate(action)
                 }
             }
         }
@@ -118,34 +115,39 @@ class SendDocumentsFragment : Fragment() {
     }
 
     private fun validateFields(
-        docType: String?, docNumber: String?, names: String?,
-        lastnames: String?, email: String?, city: String?
-    ): Boolean {
-        if (Validation.isFieldEmpty(docType)) {
-            return false
+        docType: String?, docNumber: String?, names: String?, lastnames: String?,
+        email: String?, city: String?, attachedType: String, imageBase64: String?
+    ): Pair<Boolean, String> {
+        if (Validation.isFieldEmpty(docType)){
+            return Pair(false, getString(R.string.id_type_requirement))
         }
-        if (Validation.isFieldEmpty(docNumber)) {
-            return false
+        if (Validation.isFieldEmpty(docNumber)){
+            return Pair(false, getString(R.string.doc_number_requirement))
         }
-        if (Validation.isFieldEmpty(names)) {
-            return false
+        if (Validation.isFieldEmpty(names)){
+            return Pair(false, getString(R.string.name_requirement))
         }
-        if (Validation.isFieldEmpty(lastnames)) {
-            return false
+        if (Validation.isFieldEmpty(lastnames)){
+            return Pair(false, getString(R.string.lastname_requirement))
         }
-        if (Validation.isFieldEmpty(email)) {
-            return false
+        if (Validation.isFieldEmpty(email)){
+            return Pair(false, getString(R.string.email_requirement))
         }
-        if (Validation.isFieldEmpty(city)) {
-            return false
+        if (Validation.isFieldEmpty(city)){
+            return Pair(false, getString(R.string.city_requirement))
         }
-        return true
+        if (Validation.isFieldEmpty(attachedType)){
+            return Pair(false, getString(R.string.attached_type_requirement))
+        }
+        if (Validation.isFieldEmpty(imageBase64)){
+            return Pair(false, getString(R.string.add_photo_requirement))
+        }
+        return Pair(true, "")
     }
 
     private fun setComponents() {
         // Load cities into city spinner
         sendDocumentViewModel.getOffices()
-
         //Set doc type spinner
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -153,17 +155,20 @@ class SendDocumentsFragment : Fragment() {
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spDocumentScreenDocType.adapter = adapter
+            binding.spDocumentScreenIdType.adapter = adapter
         }
-
         //Set toolbar
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
         binding.toolbarDocumentScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         //Set arrow back event
-        binding.toolbarDocumentScreen.getChildAt(0).setOnClickListener {
+        binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    private fun navigate(action: NavDirections) {
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_document_screen_doc_delivery" />
 
     <Spinner
-        android:id="@+id/sp_document_screen_doc_type"
+        android:id="@+id/sp_document_screen_id_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -66,9 +66,9 @@
         android:inputType="textPersonName"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/sp_document_screen_doc_type"
-        app:layout_constraintStart_toStartOf="@+id/sp_document_screen_doc_type"
-        app:layout_constraintTop_toBottomOf="@+id/sp_document_screen_doc_type" />
+        app:layout_constraintEnd_toEndOf="@+id/sp_document_screen_id_type"
+        app:layout_constraintStart_toStartOf="@+id/sp_document_screen_id_type"
+        app:layout_constraintTop_toBottomOf="@+id/sp_document_screen_id_type" />
 
     <EditText
         android:id="@+id/etv_document_screen_names"
@@ -98,7 +98,7 @@
         style="@style/document_input_data"
         android:ems="10"
         android:hint="jonathan.perez@sophosolutions.com"
-        android:inputType="textPersonName"
+        android:inputType=""
         app:layout_constraintEnd_toEndOf="@+id/etv_document_screen_lastnames"
         app:layout_constraintStart_toStartOf="@+id/etv_document_screen_lastnames"
         app:layout_constraintTop_toBottomOf="@+id/etv_document_screen_lastnames" />
@@ -112,11 +112,24 @@
         app:layout_constraintStart_toStartOf="@+id/etv_document_screen_email"
         app:layout_constraintTop_toBottomOf="@+id/etv_document_screen_email" />
 
+    <EditText
+        android:id="@+id/etv_document_screen_attached_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Attached type"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/etv_document_screen_doc_number"
+        app:layout_constraintStart_toStartOf="@+id/etv_document_screen_doc_number"
+        app:layout_constraintTop_toBottomOf="@+id/sp_document_screen_city" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_document_screen_upload_doc"
         android:layout_width="170dp"
         android:layout_height="40dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/background_button_rounded"
         android:backgroundTint="?attr/colorAccent"
         android:drawableStart="@drawable/ic_outline_backup_24"
@@ -128,7 +141,7 @@
         app:layout_constraintEnd_toEndOf="@+id/sp_document_screen_city"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/sp_document_screen_city"
-        app:layout_constraintTop_toBottomOf="@+id/sp_document_screen_city" />
+        app:layout_constraintTop_toBottomOf="@+id/etv_document_screen_attached_type" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_document_screen_send"

@@ -11,6 +11,7 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentCameraBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,12 +38,13 @@ class CameraFragment : Fragment() {
         observeViewModel()
         outputDirectory = getOutputDirectory()
         return binding.root
-
     }
 
     private fun observeViewModel() {
         cameraViewModel.photoBase64.observe(viewLifecycleOwner){ base64Photo ->
-            Log.i("pokemon", base64Photo)
+            showMessage(getString(R.string.photo_saved))
+            val action = CameraFragmentDirections.actionCameraFragmentToSendDocumentsFragmentDestination(base64Photo)
+            findNavController().navigate(action)
         }
     }
 
@@ -89,7 +91,6 @@ class CameraFragment : Fragment() {
 
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
-
         imageCapture.takePicture(
             ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageCapturedCallback() {
@@ -101,12 +102,15 @@ class CameraFragment : Fragment() {
                         e.printStackTrace()
                     }
                 }
-
                 override fun onError(exception: ImageCaptureException) {
                     super.onError(exception)
                     Toast.makeText(requireContext(), exception.message, Toast.LENGTH_LONG).show()
                 }
             }
         )
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

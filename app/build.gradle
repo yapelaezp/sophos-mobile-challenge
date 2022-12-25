@@ -65,4 +65,7 @@ dependencies {
     implementation "androidx.camera:camera-camera2:${cameraxVersion}"
     implementation "androidx.camera:camera-lifecycle:${cameraxVersion}"
     implementation "androidx.camera:camera-view:${cameraxVersion}"
+
+    //Kotlin reflect
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.21"
 }
