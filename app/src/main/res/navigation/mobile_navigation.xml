@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_to_menuFragmentDestination"
-            app:destination="@id/menuFragmentDestination" />
+            app:destination="@id/menuFragmentDestination"
+            app:popUpTo="@id/loginFragmentDestination"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -32,6 +34,12 @@
         <argument
             android:name="userEmail"
             app:argType="string" />
+        <action
+            android:id="@+id/action_menuFragmentDestination_self"
+            app:destination="@id/menuFragmentDestination" />
+        <action
+            android:id="@+id/action_menuFragmentDestination_to_loginFragmentDestination"
+            app:destination="@id/loginFragmentDestination" />
     </fragment>
 
     <fragment

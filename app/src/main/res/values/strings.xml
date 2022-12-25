@@ -38,6 +38,7 @@
     <string name="city_requirement">You must select a city</string>
     <string name="add_photo_requirement">You must attach a photo or image</string>
     <string name="image_saved">Image saved successfully</string>
+    <string name="logout">Logut</string>
 
     <string-array name="doc_type">
         <item>CC</item>
