@@ -66,6 +66,6 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:${cameraxVersion}"
     implementation "androidx.camera:camera-view:${cameraxVersion}"
 
-    //Kotlin reflect
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.21"
+    //Data store preferences
+    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
 }
