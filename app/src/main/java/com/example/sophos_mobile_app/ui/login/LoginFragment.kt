@@ -7,22 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
-import com.example.sophos_mobile_app.data.model.UserPreferences
 import com.example.sophos_mobile_app.databinding.FragmentLoginBinding
+import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
-import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executor
@@ -37,6 +31,7 @@ class LoginFragment : Fragment() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var userDataStore: UserDataStore
 
     companion object {
         const val EMAIL = "email"
@@ -49,7 +44,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //getDataStorePreferences()
         setupBiometricAccess()
     }
 
@@ -58,6 +52,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        userDataStore = UserDataStore(requireContext()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      )
         isUserLogged()
         setListeners()
         observeViewModel()
@@ -66,7 +61,7 @@ class LoginFragment : Fragment() {
 
     private fun isUserLogged() {
         lifecycleScope.launch(Dispatchers.IO) {
-            getDataStorePreferences()?.collect() { userPreferences ->
+            userDataStore.getDataStorePreferences().collect() { userPreferences ->
                 println(userPreferences)
                 if (userPreferences.email.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
@@ -86,13 +81,13 @@ class LoginFragment : Fragment() {
         val userPassword = binding.etvLoginPassword.text.toString()
         loginViewModel.user.observe(viewLifecycleOwner) { user ->
             lifecycleScope.launch(Dispatchers.IO) {
-                getDataStorePreferences()?.collect(){ userPreferences ->
+                userDataStore.getDataStorePreferences()?.collect(){ userPreferences ->
                     if (userPreferences.biometricIntention){
-                        saveBiometricData(userEmail,userPassword)
+                        userDataStore.saveBiometricData(userEmail,userPassword)
                     }
                     println("UPref when fp is true $userPreferences")
                 }
-                saveUserInDataStore(userEmail, userPassword, user.name)
+                userDataStore.saveUserInDataStore(userEmail, userPassword, user.name)
             }
             val action =
                 LoginFragmentDirections.actionToMenuFragmentDestination(user.name, userEmail)
@@ -135,8 +130,8 @@ class LoginFragment : Fragment() {
                 ) {
                     super.onAuthenticationSucceeded(result)
                     lifecycleScope.launch(Dispatchers.IO){
-                        getDataStorePreferences()?.collect(){ userPreferences ->
-                            if (!userPreferences.biometricIntention) setBiometricIntention()
+                        userDataStore.getDataStorePreferences().collect(){ userPreferences ->
+                            if (!userPreferences.biometricIntention) userDataStore.setBiometricIntention()
                             if (userPreferences.biometricEmail.isEmpty()){
                                 withContext(Dispatchers.Main){
                                     Toast.makeText(
@@ -146,7 +141,7 @@ class LoginFragment : Fragment() {
                                 }
                             }
                             else{
-                                getDataStorePreferences()?.collect(){ userPreferences ->
+                                userDataStore.getDataStorePreferences()?.collect(){ userPreferences ->
                                     loginViewModel.login(userPreferences.biometricEmail,userPreferences.biometricPassword)
                                 }
                             }
@@ -194,38 +189,6 @@ class LoginFragment : Fragment() {
         } else {
             binding.tilLoginEmail.error = null
             true
-        }
-    }
-
-    private fun getDataStorePreferences() = context?.dataStore?.data?.map { preferences ->
-        UserPreferences(
-            email = preferences[stringPreferencesKey(EMAIL)].orEmpty(),
-            password = preferences[stringPreferencesKey(PASSWORD)].orEmpty(),
-            name = preferences[stringPreferencesKey(NAME)].orEmpty(),
-            biometricIntention = preferences[booleanPreferencesKey(BIOMETRIC_INTENTION)] ?: false,
-            biometricEmail = preferences[stringPreferencesKey(BIOMETRIC_EMAIL)].orEmpty(),
-            biometricPassword = preferences[stringPreferencesKey(BIOMETRIC_PASSWORD)].orEmpty()
-        )
-    }
-
-    private suspend fun saveUserInDataStore(email: String, password: String, name: String) {
-        context?.dataStore?.edit { preferences ->
-            preferences[stringPreferencesKey(EMAIL)] = email
-            preferences[stringPreferencesKey(PASSWORD)] = password
-            preferences[stringPreferencesKey(NAME)] = name
-        }
-    }
-
-    private suspend fun setBiometricIntention() {
-        context?.dataStore?.edit { preferences ->
-            preferences[booleanPreferencesKey(BIOMETRIC_INTENTION)] = true
-        }
-    }
-
-    private suspend fun saveBiometricData(userEmail: String, userPassword: String) {
-        context?.dataStore?.edit { preferences ->
-            preferences[stringPreferencesKey(BIOMETRIC_EMAIL)] = userEmail
-            preferences[stringPreferencesKey(BIOMETRIC_PASSWORD)] = userPassword
         }
     }
 
