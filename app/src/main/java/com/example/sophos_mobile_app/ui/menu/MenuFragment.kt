@@ -5,12 +5,14 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
+import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -36,12 +38,10 @@ class MenuFragment : Fragment() {
     }
 
     private fun setListeners() {
-
         binding.btnMenuScreenSendDocs.setOnClickListener {
             val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination(null)
             findNavController().navigate(action)
         }
-
         binding.btnMenuScreenSeeDocs.setOnClickListener {
             val action =
                 MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination(
@@ -50,7 +50,6 @@ class MenuFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
-
         binding.toolbarMenuScreen.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_logout -> {
@@ -89,7 +88,10 @@ class MenuFragment : Fragment() {
 
     private suspend fun logout(){
         context?.dataStore?.edit { preferences ->
-            preferences.clear()
+            println("UP in menu fragment $preferences")
+            preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
+            preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
+            preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
         }
         withContext(Dispatchers.Main){
             Toast.makeText(requireContext(), "Data cleared successfully", Toast.LENGTH_SHORT).show()

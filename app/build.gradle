@@ -70,4 +70,7 @@ dependencies {
 
     //Data store preferences
     implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
+
+    //Fingerprint
+    implementation "androidx.biometric:biometric:$biometricVersion"
 }

@@ -39,6 +39,12 @@
     <string name="add_photo_requirement">You must attach a photo or image</string>
     <string name="image_saved">Image saved successfully</string>
     <string name="logout">Logut</string>
+    <string name="fingerprint_auth">Aunthenticate with fingerprint</string>
+    <string name="use_biometric_as_authentication">Log in using your biometric credential</string>
+    <string name="use_password_auth">Use account password instead</string>
+    <string name="email_not_empty">Email can\'t be empty</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="password_not_empy">Password can\'t be empty</string>
 
     <string-array name="doc_type">
         <item>CC</item>
