@@ -17,7 +17,7 @@ import java.io.IOException
 @AndroidEntryPoint
 class GalleryFragment : Fragment() {
 
-    private val galleryViewModel: GalleryViewModel by viewModels()
+    private val galleryViewModel: CameraViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

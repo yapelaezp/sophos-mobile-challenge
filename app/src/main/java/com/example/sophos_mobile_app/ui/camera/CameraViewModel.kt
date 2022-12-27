@@ -1,5 +1,6 @@
 package com.example.sophos_mobile_app.ui.camera
 
+import android.graphics.Bitmap
 import androidx.camera.core.ImageProxy
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,11 +23,25 @@ class CameraViewModel @Inject constructor(private val imageConverter: ImageConve
     val photoBase64: LiveData<String>
     get() = _photoBase64
 
+    private val _imageBase64 = MutableLiveData<String>()
+    val imageBase64: LiveData<String>
+        get() = _imageBase64
+
     fun getBase64Photo(imageProxy: ImageProxy){
         viewModelScope.launch {
             val bitmapPhoto = imageConverter.imageProxyToBitmap(imageProxy)
             val bitmapResizedPhoto = imageConverter.resize(bitmapPhoto, PHOTO_MAX_WIDTH, PHOTO_MAX_HEIGHT)
             _photoBase64.value = imageConverter.bitmapToBase64(bitmapResizedPhoto)
+        }
+    }
+
+    fun getImage64Photo(imageBitmap: Bitmap){
+        viewModelScope.launch {
+            val bitmapResizedPhoto = imageConverter.resize(imageBitmap,
+                GalleryViewModel.IMAGE_MAX_WIDTH,
+                GalleryViewModel.IMAGE_MAX_HEIGHT
+            )
+            _imageBase64.value = imageConverter.bitmapToBase64(bitmapResizedPhoto)
         }
     }
 

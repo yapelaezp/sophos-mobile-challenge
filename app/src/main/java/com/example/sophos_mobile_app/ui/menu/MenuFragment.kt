@@ -45,8 +45,7 @@ class MenuFragment : Fragment() {
         binding.btnMenuScreenSeeDocs.setOnClickListener {
             val action =
                 MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination(
-                    //args.userEmail
-                    "naruto@hotmail.com" //TODO("Change burned value")
+                    args.userEmail
                 )
             findNavController().navigate(action)
         }

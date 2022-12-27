@@ -3,6 +3,7 @@ package com.example.sophos_mobile_app.data.api
 import com.example.sophos_mobile_app.data.api.dto.NewDocumentDto
 import com.example.sophos_mobile_app.data.api.responses.OfficesResponse
 import com.example.sophos_mobile_app.data.api.dto.UserDto
+import com.example.sophos_mobile_app.data.api.responses.DocumentDetailResponse
 import com.example.sophos_mobile_app.data.api.responses.DocumentResponse
 import com.example.sophos_mobile_app.data.api.responses.NewDocumentResponse
 import com.example.sophos_mobile_app.utils.DOCUMENTS_URL
@@ -28,4 +29,7 @@ interface ApiService {
 
     @GET(DOCUMENTS_URL)
     suspend fun getDocumentByUserEmail(@Query("correo") email: String): DocumentResponse
+
+    @GET(DOCUMENTS_URL)
+    suspend fun getDocumentDetail(@Query("idRegistro") registerId: String): DocumentDetailResponse
 }

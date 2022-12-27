@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.databinding.FragmentViewDocumentsBinding
-import com.example.sophos_mobile_app.ui.menu.MenuFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +36,12 @@ class ViewDocumentsFragment : Fragment() {
 
     private fun observeViewModel() {
         viewDocumentsViewModel.documents.observe(viewLifecycleOwner){ documents ->
-            binding.rvViewDocuments.adapter = DocumentAdapter(documents)
+            binding.rvViewDocuments.adapter = DocumentDetailAdapter(documents){ registerId ->
+                viewDocumentsViewModel.getDocumentDetail(registerId)
+            }
+        }
+        viewDocumentsViewModel.imageBitmap.observe(viewLifecycleOwner){ imageBitmap ->
+            binding.ivViwDocumentsAttached.setImageBitmap(imageBitmap)
         }
     }
 
