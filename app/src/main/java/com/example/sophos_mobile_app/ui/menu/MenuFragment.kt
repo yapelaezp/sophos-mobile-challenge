@@ -1,7 +1,10 @@
 package com.example.sophos_mobile_app.ui.menu
 
+import android.Manifest
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
@@ -49,10 +52,15 @@ class MenuFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
+        binding.btnMenuScreenOffices.setOnClickListener {
+            val action =
+                MenuFragmentDirections.actionMenuFragmentDestinationToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
+            findNavController().navigate(action)
+        }
         binding.toolbarMenuScreen.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_logout -> {
-                    lifecycleScope.launch(Dispatchers.IO){
+                    lifecycleScope.launch(Dispatchers.IO) {
                         logout()
                     }
                     true
@@ -85,16 +93,17 @@ class MenuFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
     }
 
-    private suspend fun logout(){
+    private suspend fun logout() {
         context?.dataStore?.edit { preferences ->
             println("UP in menu fragment $preferences")
             preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
             preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
             preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
         }
-        withContext(Dispatchers.Main){
+        withContext(Dispatchers.Main) {
             Toast.makeText(requireContext(), "Data cleared successfully", Toast.LENGTH_SHORT).show()
-            val action = MenuFragmentDirections.actionMenuFragmentDestinationToLoginFragmentDestination()
+            val action =
+                MenuFragmentDirections.actionMenuFragmentDestinationToLoginFragmentDestination()
             findNavController().navigate(action)
         }
     }
