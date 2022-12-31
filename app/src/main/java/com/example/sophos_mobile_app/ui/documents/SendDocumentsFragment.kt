@@ -84,6 +84,9 @@ class SendDocumentsFragment : Fragment() {
         binding.ivDocumentScreenAddPhoto.setOnClickListener {
             showSelectPhotoOptionDialog()
         }
+        binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun showSelectPhotoOptionDialog() {
@@ -161,7 +164,6 @@ class SendDocumentsFragment : Fragment() {
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
         binding.toolbarDocumentScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
-        //Set arrow back event
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }

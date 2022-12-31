@@ -23,13 +23,13 @@ class PermissionsFragment() : Fragment() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            when(args.permissionCode){
+            when (args.permissionCode) {
                 Manifest.permission.CAMERA -> navigateToCamera()
                 Manifest.permission.READ_EXTERNAL_STORAGE -> navigateToGallery()
                 Manifest.permission.ACCESS_COARSE_LOCATION -> navigateToMaps()
             }
         } else {
-            when(args.permissionCode){
+            when (args.permissionCode) {
                 Manifest.permission.CAMERA -> {
                     showPermissionDeniedMessage(args.permissionCode)
                     navigateToMenu()
@@ -49,7 +49,7 @@ class PermissionsFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkPermissions(args.permissionCode)
-        permissionsValues =  hashMapOf(
+        permissionsValues = hashMapOf(
             Manifest.permission.CAMERA to getString(R.string.camera_permisssion),
             Manifest.permission.READ_EXTERNAL_STORAGE to getString(R.string.read_external_permisssion),
             Manifest.permission.ACCESS_COARSE_LOCATION to getString(R.string.location_permission)
@@ -69,21 +69,29 @@ class PermissionsFragment() : Fragment() {
     }
 
     private fun checkPermission(permission: String) {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)){
-            Toast.makeText(context, getString(R.string.request_rationale_permission), Toast.LENGTH_LONG).show()
-            findNavController().navigateUp()
-        }
-        else {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)) {
+            //Toast.makeText(context, getString(R.string.request_rationale_permission), Toast.LENGTH_LONG).show()
+            CustomDialog(
+                getString(R.string.grant_permission),
+                getString(R.string.request_rationale_permission)
+            ) {
+                findNavController().popBackStack()
+            }.show(childFragmentManager, CustomDialog.TAG)
+        } else {
             requestPermissionLauncher.launch(permission)
         }
     }
 
     private fun showPermissionDeniedMessage(permissionCode: String) {
-       Toast.makeText(requireContext(), getString(R.string.permission_denied_format, permissionsValues[permissionCode]) , Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.permission_denied_format, permissionsValues[permissionCode]),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun navigateToFragment() {
-        when(args.permissionCode){
+        when (args.permissionCode) {
             Manifest.permission.CAMERA -> navigateToCamera()
             Manifest.permission.READ_EXTERNAL_STORAGE -> navigateToGallery()
             Manifest.permission.ACCESS_COARSE_LOCATION -> navigateToMaps()
@@ -114,9 +122,10 @@ class PermissionsFragment() : Fragment() {
 
     private fun navigateToCamera() {
         lifecycleScope.launchWhenStarted {
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(
+            findNavController().navigate(
                 PermissionsFragmentDirections.actionPermissionsFragmentToCameraFragment()
             )
         }
     }
+
 }

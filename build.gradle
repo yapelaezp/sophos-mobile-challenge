@@ -15,6 +15,7 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
 }
 
+
 ext {
     nav_version = "2.5.3"
     retrofitVersion = "2.9.0"

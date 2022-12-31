@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.offices.OfficesFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -16,7 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_topbar" />
+        app:menu="@menu/menu_topbar"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
+        app:title="@string/go_back"
+        app:titleTextColor="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/tv_offices_screen_title"
@@ -39,6 +43,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_offices_screen_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_offices_screen_title"
+        app:uiCompass="true"
+        app:uiRotateGestures="true"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

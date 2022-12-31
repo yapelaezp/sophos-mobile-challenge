@@ -45,12 +45,13 @@
     <string name="email_not_empty">Email can\'t be empty</string>
     <string name="invalid_email">Invalid email</string>
     <string name="password_not_empy">Password can\'t be empty</string>
-    <string name="request_rationale_permission">Permission denied previously. Please go to app settings and change the permission manually</string>
+    <string name="request_rationale_permission">Permission denied previously. Please go to app settings and activate the permission manually</string>
     <string name="permission_denied_format">%s permission was denied</string>
     <string name="camera_permisssion">Camera permission</string>
     <string name="read_external_permisssion">Read external</string>
     <string name="maps_permission">Location</string>
     <string name="location_permission">Location</string>
+    <string name="grant_permission">Grant permission</string>
 
     <string-array name="doc_type">
         <item>CC</item>
