@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.repository.OfficeRepository
+import com.example.sophos_mobile_app.utils.AppLanguage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OfficesViewModel @Inject constructor(private val officesRepository: OfficeRepository): ViewModel() {
+class OfficesViewModel @Inject constructor(
+    private val officesRepository: OfficeRepository): ViewModel() {
 
     private val _offices = MutableLiveData<List<Office>>()
     val offices: LiveData<List<Office>>
@@ -22,4 +24,5 @@ class OfficesViewModel @Inject constructor(private val officesRepository: Office
             _offices.value = officesRepository.getOffices()
         }
     }
+
 }

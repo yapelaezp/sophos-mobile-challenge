@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
+import com.example.sophos_mobile_app.utils.AppLanguage
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,7 @@ class MenuFragment : Fragment() {
 
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
+    private val appLanguage = AppLanguage()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +68,7 @@ class MenuFragment : Fragment() {
                     true
                 }
                 R.id.action_language -> {
-                    println("Action language")
+                    lifecycleScope.launch { appLanguage.changeLanguage() }
                     true
                 }
                 R.id.action_mode -> {
@@ -91,6 +93,13 @@ class MenuFragment : Fragment() {
         binding.toolbarMenuScreen.title = args.userName
         binding.toolbarMenuScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
+        appLanguage.currentLocaleName?.let {
+            if ("español" !in it.lowercase()){
+                binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "Español"
+            } else{
+                binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "English"
+            }
+        }
     }
 
     private suspend fun logout() {

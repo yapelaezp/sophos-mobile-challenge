@@ -10,13 +10,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
+import com.example.sophos_mobile_app.utils.AppLanguage
 import com.example.sophos_mobile_app.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SendDocumentsFragment : Fragment() {
@@ -25,6 +28,7 @@ class SendDocumentsFragment : Fragment() {
     private val binding get() = _binding!!
     private val sendDocumentViewModel: SendDocumentsViewModel by viewModels()
     private val args: SendDocumentsFragmentArgs by navArgs()
+    private val appLanguage = AppLanguage()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,6 +90,15 @@ class SendDocumentsFragment : Fragment() {
         }
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
+        }
+        binding.toolbarDocumentScreen.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.action_language -> {
+                    lifecycleScope.launch { appLanguage.changeLanguage() }
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -167,6 +180,13 @@ class SendDocumentsFragment : Fragment() {
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
+        appLanguage.currentLocaleName?.let {
+            if ("español" !in it.lowercase()){
+                binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "Español"
+            } else{
+                binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "English"
+            }
+        }
     }
 
     private fun navigate(action: NavDirections) {
@@ -177,5 +197,4 @@ class SendDocumentsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }
