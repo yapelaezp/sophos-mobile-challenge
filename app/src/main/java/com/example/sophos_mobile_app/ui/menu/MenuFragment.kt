@@ -48,16 +48,10 @@ class MenuFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.btnMenuScreenSeeDocs.setOnClickListener {
-            val action =
-                MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination(
-                    args.userEmail
-                )
-            findNavController().navigate(action)
+            navigateToSeeDocs()
         }
         binding.btnMenuScreenOffices.setOnClickListener {
-            val action =
-                MenuFragmentDirections.actionMenuFragmentDestinationToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
-            findNavController().navigate(action)
+            navigateToOffices()
         }
         binding.toolbarMenuScreen.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -76,16 +70,39 @@ class MenuFragment : Fragment() {
                     true
                 }
                 R.id.action_see_docs -> {
-                    println("See docs")
+                    navigateToSeeDocs()
                     true
                 }
                 R.id.action_offices -> {
-                    println("Action offices")
+                    navigateToOffices()
+                    true
+                }
+                R.id.action_send_docs -> {
+                    navigateToSendDocs()
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    private fun navigateToSeeDocs() {
+        val action =
+            MenuFragmentDirections.actionMenuFragmentDestinationToViewDocumentsFragmentDestination(
+                args.userEmail
+            )
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToSendDocs() {
+        val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination(null)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToOffices() {
+        val action =
+            MenuFragmentDirections.actionMenuFragmentDestinationToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
+        findNavController().navigate(action)
     }
 
     private fun setComponents() {
