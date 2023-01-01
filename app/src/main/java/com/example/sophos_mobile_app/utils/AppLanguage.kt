@@ -2,7 +2,10 @@ package com.example.sophos_mobile_app.utils
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
@@ -20,10 +23,21 @@ class AppLanguage @Inject constructor() {
     }
      val currentLocaleName get() = _currentLocaleName
 
-    suspend fun changeLanguage(language: String){
+    private suspend fun setLanguage(language: String){
         withContext(Dispatchers.Main){
             val localeList = LocaleListCompat.forLanguageTags(language)
             AppCompatDelegate.setApplicationLocales(localeList)
+        }
+    }
+
+    suspend fun changeLanguage(){
+        _currentLocaleName?.let {
+            if ( "español" in it.lowercase()){
+                setLanguage("en")
+            }
+            else{
+                setLanguage("es")
+            }
         }
     }
 

@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.sophos_mobile_app.utils.AppLanguage
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -28,6 +29,7 @@ class OfficesFragment : Fragment() {
     private lateinit var mapView: MapView
     private val officesViewModel: OfficesViewModel by viewModels()
     private var offices: List<Office>? = null
+    private val appLanguage = AppLanguage()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,10 +40,9 @@ class OfficesFragment : Fragment() {
         mapView = binding.mvOffices
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
-        setComponents()
-        setListeners()
-        setMapView()
         observeViewModel()
+        setListeners()
+        setComponents()
         return root
     }
 
@@ -56,6 +57,15 @@ class OfficesFragment : Fragment() {
         binding.toolbarOfficesScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack(R.id.menuFragmentDestination, false)
         }
+        binding.toolbarOfficesScreen.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.action_language -> {
+                    lifecycleScope.launch { appLanguage.changeLanguage() }
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setComponents() {
@@ -64,6 +74,14 @@ class OfficesFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         //Load cities
         officesViewModel.getOffices()
+        //Set toolbar language option
+        appLanguage.currentLocaleName?.let {
+            if ("español" !in it.lowercase()){
+                binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "Español"
+            } else{
+                binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "English"
+            }
+        }
     }
 
     @SuppressLint("MissingPermission") // Permissions are granted upon create this fragment
