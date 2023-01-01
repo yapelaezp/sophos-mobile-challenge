@@ -106,7 +106,7 @@ class PermissionsFragment() : Fragment() {
 
     private fun navigateToMaps() {
         lifecycleScope.launchWhenStarted {
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(
+            findNavController().navigate(
                 PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination()
             )
         }
