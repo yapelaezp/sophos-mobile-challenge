@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,9 +18,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import com.example.sophos_mobile_app.utils.AppLanguage
+import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class SendDocumentsFragment : Fragment() {
@@ -29,6 +33,7 @@ class SendDocumentsFragment : Fragment() {
     private val sendDocumentViewModel: SendDocumentsViewModel by viewModels()
     private val args: SendDocumentsFragmentArgs by navArgs()
     private val appLanguage = AppLanguage()
+    private lateinit var userDataStore: UserDataStore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +48,7 @@ class SendDocumentsFragment : Fragment() {
         setComponents()
         setListeners()
         observeViewModel()
+        userDataStore = UserDataStore(requireContext())
     }
 
     private fun observeViewModel() {
@@ -97,9 +103,30 @@ class SendDocumentsFragment : Fragment() {
                     lifecycleScope.launch { appLanguage.changeLanguage() }
                     true
                 }
+                R.id.action_main_menu -> {
+                    findNavController().popBackStack()
+                    true
+                }
+                R.id.action_see_docs -> {
+                    navigateToSeeDocs()
+                    true
+                }
                 else -> false
             }
         }
+    }
+
+    private fun navigateToSeeDocs() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect(){ userPreferences ->
+                withContext(Dispatchers.Main){
+                    println(userPreferences.email)
+                    val action = SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToViewDocumentsFragmentDestination(userPreferences.email)
+                    findNavController().navigate(action)
+                }
+            }
+        }
+
     }
 
     private fun showSelectPhotoOptionDialog() {
@@ -164,6 +191,7 @@ class SendDocumentsFragment : Fragment() {
     private fun setComponents() {
         // Load cities into city spinner
         sendDocumentViewModel.getOffices()
+
         //Set doc type spinner
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -173,6 +201,7 @@ class SendDocumentsFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spDocumentScreenIdType.adapter = adapter
         }
+
         //Set toolbar
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
         binding.toolbarDocumentScreen.overflowIcon =
@@ -180,6 +209,7 @@ class SendDocumentsFragment : Fragment() {
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.toolbarDocumentScreen.menu.findItem(R.id.action_send_docs).isVisible = false
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
                 binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "Español"
