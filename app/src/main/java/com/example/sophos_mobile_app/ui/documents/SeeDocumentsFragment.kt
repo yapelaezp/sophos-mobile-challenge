@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.viewModels
@@ -78,6 +79,9 @@ class SeeDocumentsFragment : Fragment() {
                 else -> false
             }
         }
+        binding.toolbarViewDocumentsScreen.getChildAt(1).setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun observeViewModel() {
@@ -96,6 +100,8 @@ class SeeDocumentsFragment : Fragment() {
         seeDocumentsViewModel.getDocuments(args.email)
         //Set Toolbar
         binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_see_docs).isVisible = false
+        binding.toolbarViewDocumentsScreen.overflowIcon =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
                 binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_language).title = "Español"

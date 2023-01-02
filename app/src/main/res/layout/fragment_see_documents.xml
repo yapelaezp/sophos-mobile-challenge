@@ -9,6 +9,8 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_view_documents_screen"
         android:layout_width="0dp"
+        app:title="@string/go_back"
+        app:titleTextColor="?attr/colorPrimary"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:minHeight="?attr/actionBarSize"
@@ -16,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
         app:menu="@menu/menu_topbar" />
 
     <TextView

@@ -62,12 +62,11 @@ class LoginFragment : Fragment() {
     private fun isUserLogged() {
         lifecycleScope.launch(Dispatchers.IO) {
             userDataStore.getDataStorePreferences().collect() { userPreferences ->
-                println(userPreferences)
                 if (userPreferences.email.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
                         val action = LoginFragmentDirections.actionToMenuFragmentDestination(
-                            userPreferences.email,
-                            userPreferences.name
+                            userPreferences.name,
+                            userPreferences.email
                         )
                         findNavController().navigate(action)
                     }
@@ -98,8 +97,6 @@ class LoginFragment : Fragment() {
         binding.btnLoginLogin.setOnClickListener {
             val email = binding.etvLoginEmail.text.toString()
             val password = binding.etvLoginPassword.text.toString()
-            validateEmail(email)
-            validatePassword(password)
             if (validateEmail(email) && validatePassword(password)) {
                 loginViewModel.login(email, password)
             }
@@ -135,7 +132,7 @@ class LoginFragment : Fragment() {
                                 withContext(Dispatchers.Main){
                                     Toast.makeText(
                                         requireContext(),
-                                        "You must authenticate with password first", Toast.LENGTH_SHORT
+                                        getString(R.string.auth_with_password_first), Toast.LENGTH_SHORT
                                     ).show()
                                 }
                             }

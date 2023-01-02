@@ -30,7 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 @AndroidEntryPoint
 class OfficesFragment : Fragment() {
 
