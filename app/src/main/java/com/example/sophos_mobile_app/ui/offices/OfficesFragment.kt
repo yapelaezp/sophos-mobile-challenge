@@ -13,12 +13,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding
+import com.example.sophos_mobile_app.ui.documents.SendDocumentsFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
+import com.example.sophos_mobile_app.utils.UserDataStore
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -30,6 +34,7 @@ class OfficesFragment : Fragment() {
     private val officesViewModel: OfficesViewModel by viewModels()
     private var offices: List<Office>? = null
     private val appLanguage = AppLanguage()
+    private lateinit var userDataStore: UserDataStore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +60,7 @@ class OfficesFragment : Fragment() {
 
     private fun setListeners() {
         binding.toolbarOfficesScreen.getChildAt(1).setOnClickListener {
-            findNavController().popBackStack(R.id.menuFragmentDestination, false)
+            findNavController().popBackStack()
         }
         binding.toolbarOfficesScreen.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
@@ -63,18 +68,50 @@ class OfficesFragment : Fragment() {
                     lifecycleScope.launch { appLanguage.changeLanguage() }
                     true
                 }
+                R.id.action_main_menu -> {
+                    findNavController().popBackStack(R.id.menuFragmentDestination, false)
+                    true
+                }
+                R.id.action_send_docs -> {
+                    navigateToSendDocs()
+                    true
+                }
+                R.id.action_see_docs -> {
+                    navigateToSeeDocs()
+                    true
+                }
+
                 else -> false
             }
         }
     }
 
+    private fun navigateToSeeDocs() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                withContext(Dispatchers.Main){
+                    val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToViewDocumentsFragmentDestination(userPreferences.email)
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun navigateToSendDocs() {
+        val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToSendDocumentsFragmentDestination(null)
+        findNavController().navigate(action)
+    }
+
     private fun setComponents() {
+        //Get user datastore
+        userDataStore = UserDataStore(requireContext())
         //Set Toolbar
         binding.toolbarOfficesScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         //Load cities
         officesViewModel.getOffices()
-        //Set toolbar language option
+        //Set toolbar
+        binding.toolbarOfficesScreen.menu.findItem(R.id.action_offices).isVisible = false
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
                 binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "Español"

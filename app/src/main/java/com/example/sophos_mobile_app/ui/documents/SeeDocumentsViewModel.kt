@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewDocumentsViewModel @Inject constructor(
+class SeeDocumentsViewModel @Inject constructor(
     private val documentRepository: DocumentRepository,
     private val imageConverter: ImageConverter
     ): ViewModel() {

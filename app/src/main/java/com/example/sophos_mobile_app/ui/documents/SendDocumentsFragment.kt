@@ -1,5 +1,6 @@
 package com.example.sophos_mobile_app.ui.documents
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -104,29 +105,20 @@ class SendDocumentsFragment : Fragment() {
                     true
                 }
                 R.id.action_main_menu -> {
-                    findNavController().popBackStack()
+                    findNavController().popBackStack(R.id.menuFragmentDestination, false)
                     true
                 }
                 R.id.action_see_docs -> {
                     navigateToSeeDocs()
                     true
                 }
+                R.id.action_offices -> {
+                    navigateToOffices()
+                    true
+                }
                 else -> false
             }
         }
-    }
-
-    private fun navigateToSeeDocs() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            userDataStore.getDataStorePreferences().collect(){ userPreferences ->
-                withContext(Dispatchers.Main){
-                    println(userPreferences.email)
-                    val action = SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToViewDocumentsFragmentDestination(userPreferences.email)
-                    findNavController().navigate(action)
-                }
-            }
-        }
-
     }
 
     private fun showSelectPhotoOptionDialog() {
@@ -221,6 +213,23 @@ class SendDocumentsFragment : Fragment() {
 
     private fun navigate(action: NavDirections) {
         findNavController().navigate(action)
+    }
+
+    private fun navigateToOffices() {
+        val action = SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToSeeDocs() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect(){ userPreferences ->
+                withContext(Dispatchers.Main){
+                    println(userPreferences.email)
+                    val action = SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToViewDocumentsFragmentDestination(userPreferences.email)
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

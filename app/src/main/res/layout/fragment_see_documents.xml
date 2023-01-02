@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.documents.ViewDocumentsFragment">
+    tools:context=".ui.documents.SeeDocumentsFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_view_documents_screen"

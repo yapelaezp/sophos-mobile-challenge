@@ -55,7 +55,7 @@
             app:destination="@id/menuFragmentDestination" />
         <action
             android:id="@+id/action_sendDocumentsFragment_to_permissionsFragment"
-            app:destination="@id/permissionsFragment" />
+            app:destination="@id/permissionsFragment"/>
         <argument
             android:name="imageBase64"
             app:nullable="true"
@@ -63,25 +63,35 @@
         <action
             android:id="@+id/action_sendDocumentsFragmentDestination_to_viewDocumentsFragmentDestination"
             app:destination="@id/viewDocumentsFragmentDestination" />
-        <action
-            android:id="@+id/action_sendDocumentsFragmentDestination_to_officesFragmentDestination"
-            app:destination="@id/officesFragmentDestination" />
     </fragment>
 
     <fragment
         android:id="@+id/officesFragmentDestination"
         android:name="com.example.sophos_mobile_app.ui.offices.OfficesFragment"
         android:label="fragment_offices"
-        tools:layout="@layout/fragment_offices" />
+        tools:layout="@layout/fragment_offices" >
+        <action
+            android:id="@+id/action_officesFragmentDestination_to_viewDocumentsFragmentDestination"
+            app:destination="@id/viewDocumentsFragmentDestination" />
+        <action
+            android:id="@+id/action_officesFragmentDestination_to_sendDocumentsFragmentDestination"
+            app:destination="@id/sendDocumentsFragmentDestination" />
+    </fragment>
 
     <fragment
         android:id="@+id/viewDocumentsFragmentDestination"
-        android:name="com.example.sophos_mobile_app.ui.documents.ViewDocumentsFragment"
+        android:name="com.example.sophos_mobile_app.ui.documents.SeeDocumentsFragment"
         android:label="fragment_view_documents"
-        tools:layout="@layout/fragment_view_documents" >
+        tools:layout="@layout/fragment_see_documents" >
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/action_viewDocumentsFragmentDestination_to_sendDocumentsFragmentDestination"
+            app:destination="@id/sendDocumentsFragmentDestination" />
+        <action
+            android:id="@+id/action_viewDocumentsFragmentDestination_to_permissionsFragment"
+            app:destination="@id/permissionsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/permissionsFragment"
@@ -101,13 +111,13 @@
         <action
             android:id="@+id/action_permissionsFragment_to_officesFragmentDestination"
             app:destination="@id/officesFragmentDestination"
-            app:popUpTo="@id/menuFragmentDestination"
+            app:popUpTo="@id/permissionsFragment"
+            app:popUpToInclusive="true"
             />
         <action
             android:id="@+id/action_permissionsFragment_to_menuFragmentDestination"
             app:destination="@id/menuFragmentDestination"
-            app:popUpTo="@id/menuFragmentDestination"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/menuFragmentDestination" />
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
