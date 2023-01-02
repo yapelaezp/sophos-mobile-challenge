@@ -52,6 +52,7 @@
     <string name="maps_permission">Location</string>
     <string name="location_permission">Location</string>
     <string name="grant_permission">Grant permission</string>
+    <string name="main_menu">Main menu</string>
 
     <string-array name="doc_type">
         <item>CC</item>

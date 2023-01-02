@@ -2,6 +2,7 @@ package com.example.sophos_mobile_app.ui.menu
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,11 @@ import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
+import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -31,12 +34,14 @@ class MenuFragment : Fragment() {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private val appLanguage = AppLanguage()
+    private lateinit var userDataStore: UserDataStore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
+        userDataStore = UserDataStore(requireContext())
         setComponents()
         setListeners()
         return binding.root
@@ -91,6 +96,7 @@ class MenuFragment : Fragment() {
     private fun setComponents() {
         //Set toolbar
         binding.toolbarMenuScreen.title = args.userName
+        binding.toolbarMenuScreen.menu.findItem(R.id.action_main_menu).isVisible = false
         binding.toolbarMenuScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         appLanguage.currentLocaleName?.let {
@@ -98,6 +104,15 @@ class MenuFragment : Fragment() {
                 binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "Español"
             } else{
                 binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "English"
+            }
+        }
+
+        // Watch datastore values
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect{
+                Log.i("pikachu1", it.email)
+                Log.i("pikachu2", it.password)
+                Log.i("pikachu3", it.name)
             }
         }
     }
