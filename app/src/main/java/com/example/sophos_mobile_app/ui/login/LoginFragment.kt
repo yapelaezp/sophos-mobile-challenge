@@ -77,17 +77,16 @@ class LoginFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        val userEmail = binding.etvLoginEmail.text.toString()
-        val userPassword = binding.etvLoginPassword.text.toString()
         loginViewModel.user.observe(viewLifecycleOwner) { user ->
+            val userEmail = binding.etvLoginEmail.text.toString()
+            val userPassword = binding.etvLoginPassword.text.toString()
             lifecycleScope.launch(Dispatchers.IO) {
-                userDataStore.getDataStorePreferences()?.collect(){ userPreferences ->
+                userDataStore.saveUserInDataStore(userEmail, userPassword, user.name)
+                userDataStore.getDataStorePreferences().collect{ userPreferences ->
                     if (userPreferences.biometricIntention){
                         userDataStore.saveBiometricData(userEmail,userPassword)
                     }
-                    println("UPref when fp is true $userPreferences")
                 }
-                userDataStore.saveUserInDataStore(userEmail, userPassword, user.name)
             }
             val action =
                 LoginFragmentDirections.actionToMenuFragmentDestination(user.name, userEmail)
@@ -141,7 +140,7 @@ class LoginFragment : Fragment() {
                                 }
                             }
                             else{
-                                userDataStore.getDataStorePreferences()?.collect(){ userPreferences ->
+                                userDataStore.getDataStorePreferences().collect{ userPreferences ->
                                     loginViewModel.login(userPreferences.biometricEmail,userPreferences.biometricPassword)
                                 }
                             }
