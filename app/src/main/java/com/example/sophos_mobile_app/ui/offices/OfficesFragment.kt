@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,9 +16,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding
-import com.example.sophos_mobile_app.ui.documents.SendDocumentsFragmentDirections
+import com.example.sophos_mobile_app.ui.login.LoginFragment
+import com.example.sophos_mobile_app.ui.login.Logout
+import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
 import com.example.sophos_mobile_app.utils.UserDataStore
+import com.example.sophos_mobile_app.utils.dataStore
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -80,7 +86,12 @@ class OfficesFragment : Fragment() {
                     navigateToSeeDocs()
                     true
                 }
-
+                R.id.action_logout -> {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        logout()
+                    }
+                    true
+                }
                 else -> false
             }
         }
@@ -103,7 +114,7 @@ class OfficesFragment : Fragment() {
     }
 
     private fun setComponents() {
-        //Get user datastore
+        //Get user datastore instance
         userDataStore = UserDataStore(requireContext())
         //Set Toolbar
         binding.toolbarOfficesScreen.overflowIcon =
@@ -118,6 +129,20 @@ class OfficesFragment : Fragment() {
             } else{
                 binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "English"
             }
+        }
+    }
+
+    private suspend fun logout() {
+        withContext(Dispatchers.IO) {
+            requireContext().dataStore.edit { preferences ->
+                preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
+                preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
+                preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
+            }
+        }
+        withContext(Dispatchers.Main) {
+            val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToLoginFragmentDestination()
+            findNavController().navigate(action)
         }
     }
 

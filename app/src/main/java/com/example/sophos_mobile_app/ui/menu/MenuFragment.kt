@@ -135,11 +135,12 @@ class MenuFragment : Fragment() {
     }
 
     private suspend fun logout() {
-        context?.dataStore?.edit { preferences ->
-            println("UP in menu fragment $preferences")
-            preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
-            preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
-            preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
+        withContext(Dispatchers.IO){
+            requireContext().dataStore.edit { preferences ->
+                preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
+                preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
+                preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
+            }
         }
         withContext(Dispatchers.Main) {
             Toast.makeText(requireContext(), "Data cleared successfully", Toast.LENGTH_SHORT).show()

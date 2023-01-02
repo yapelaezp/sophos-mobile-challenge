@@ -9,7 +9,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,9 +19,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
+import com.example.sophos_mobile_app.ui.login.LoginFragment
+import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
+import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,7 +74,16 @@ class SendDocumentsFragment : Fragment() {
             val city = binding.spDocumentScreenCity.selectedItem.toString()
             val attachedType = binding.etvDocumentScreenAttachedType.text.toString()
             val photoBase64 = args.imageBase64
-            val areFieldsValid = validateFields(docType, docNumber, names, lastnames, email, city, attachedType, photoBase64)
+            val areFieldsValid = validateFields(
+                docType,
+                docNumber,
+                names,
+                lastnames,
+                email,
+                city,
+                attachedType,
+                photoBase64
+            )
             if (areFieldsValid.first) {
                 sendDocumentViewModel.createNewDocument(
                     docType,
@@ -89,7 +102,8 @@ class SendDocumentsFragment : Fragment() {
         binding.btnDocumentScreenUploadDoc.setOnClickListener {
             val action =
                 SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
             navigate(action)
         }
         binding.ivDocumentScreenAddPhoto.setOnClickListener {
@@ -99,7 +113,7 @@ class SendDocumentsFragment : Fragment() {
             findNavController().popBackStack()
         }
         binding.toolbarDocumentScreen.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
+            when (menuItem.itemId) {
                 R.id.action_language -> {
                     lifecycleScope.launch { appLanguage.changeLanguage() }
                     true
@@ -114,6 +128,12 @@ class SendDocumentsFragment : Fragment() {
                 }
                 R.id.action_offices -> {
                     navigateToOffices()
+                    true
+                }
+                R.id.action_logout -> {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        logout()
+                    }
                     true
                 }
                 else -> false
@@ -153,28 +173,28 @@ class SendDocumentsFragment : Fragment() {
         docType: String?, docNumber: String?, names: String?, lastnames: String?,
         email: String?, city: String?, attachedType: String, imageBase64: String?
     ): Pair<Boolean, String> {
-        if (Validation.isFieldEmpty(docType)){
+        if (Validation.isFieldEmpty(docType)) {
             return Pair(false, getString(R.string.id_type_requirement))
         }
-        if (Validation.isFieldEmpty(docNumber)){
+        if (Validation.isFieldEmpty(docNumber)) {
             return Pair(false, getString(R.string.doc_number_requirement))
         }
-        if (Validation.isFieldEmpty(names)){
+        if (Validation.isFieldEmpty(names)) {
             return Pair(false, getString(R.string.name_requirement))
         }
-        if (Validation.isFieldEmpty(lastnames)){
+        if (Validation.isFieldEmpty(lastnames)) {
             return Pair(false, getString(R.string.lastname_requirement))
         }
-        if (Validation.isFieldEmpty(email)){
+        if (Validation.isFieldEmpty(email)) {
             return Pair(false, getString(R.string.email_requirement))
         }
-        if (Validation.isFieldEmpty(city)){
+        if (Validation.isFieldEmpty(city)) {
             return Pair(false, getString(R.string.city_requirement))
         }
-        if (Validation.isFieldEmpty(attachedType)){
+        if (Validation.isFieldEmpty(attachedType)) {
             return Pair(false, getString(R.string.attached_type_requirement))
         }
-        if (Validation.isFieldEmpty(imageBase64)){
+        if (Validation.isFieldEmpty(imageBase64)) {
             return Pair(false, getString(R.string.add_photo_requirement))
         }
         return Pair(true, "")
@@ -203,9 +223,9 @@ class SendDocumentsFragment : Fragment() {
         }
         binding.toolbarDocumentScreen.menu.findItem(R.id.action_send_docs).isVisible = false
         appLanguage.currentLocaleName?.let {
-            if ("español" !in it.lowercase()){
+            if ("español" !in it.lowercase()) {
                 binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "Español"
-            } else{
+            } else {
                 binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "English"
             }
         }
@@ -216,19 +236,40 @@ class SendDocumentsFragment : Fragment() {
     }
 
     private fun navigateToOffices() {
-        val action = SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
+        val action =
+            SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         findNavController().navigate(action)
     }
 
     private fun navigateToSeeDocs() {
         lifecycleScope.launch(Dispatchers.IO) {
-            userDataStore.getDataStorePreferences().collect(){ userPreferences ->
-                withContext(Dispatchers.Main){
+            userDataStore.getDataStorePreferences().collect() { userPreferences ->
+                withContext(Dispatchers.Main) {
                     println(userPreferences.email)
-                    val action = SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToViewDocumentsFragmentDestination(userPreferences.email)
+                    val action =
+                        SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToViewDocumentsFragmentDestination(
+                            userPreferences.email
+                        )
                     findNavController().navigate(action)
                 }
             }
+        }
+    }
+
+    private suspend fun logout() {
+        withContext(Dispatchers.IO) {
+            requireContext().dataStore.edit { preferences ->
+                preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
+                preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
+                preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
+            }
+        }
+        withContext(Dispatchers.Main) {
+            val action =
+                SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToLoginFragmentDestination()
+            findNavController().navigate(action)
         }
     }
 

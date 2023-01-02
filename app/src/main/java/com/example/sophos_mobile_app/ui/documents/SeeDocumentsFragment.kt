@@ -6,15 +6,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
+import com.example.sophos_mobile_app.ui.login.LoginFragment
+import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
+import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class SeeDocumentsFragment : Fragment() {
@@ -61,6 +69,12 @@ class SeeDocumentsFragment : Fragment() {
                     navigateToOffices()
                     true
                 }
+                R.id.action_logout -> {
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        logout()
+                    }
+                    true
+                }
                 else -> false
             }
         }
@@ -99,6 +113,21 @@ class SeeDocumentsFragment : Fragment() {
     private fun navigateToOffices() {
         val action = SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
         findNavController().navigate(action)
+    }
+
+    private suspend fun logout() {
+        withContext(Dispatchers.IO) {
+            requireContext().dataStore.edit { preferences ->
+                preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
+                preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
+                preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
+            }
+        }
+        withContext(Dispatchers.Main) {
+            val action =
+                SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToLoginFragmentDestination()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

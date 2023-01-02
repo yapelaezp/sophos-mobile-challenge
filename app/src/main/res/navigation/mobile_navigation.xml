@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_sendDocumentsFragmentDestination_to_viewDocumentsFragmentDestination"
             app:destination="@id/viewDocumentsFragmentDestination" />
+        <action
+            android:id="@+id/action_sendDocumentsFragmentDestination_to_loginFragmentDestination"
+            app:destination="@id/loginFragmentDestination" />
     </fragment>
 
     <fragment
@@ -76,6 +79,9 @@
         <action
             android:id="@+id/action_officesFragmentDestination_to_sendDocumentsFragmentDestination"
             app:destination="@id/sendDocumentsFragmentDestination" />
+        <action
+            android:id="@+id/action_officesFragmentDestination_to_loginFragmentDestination"
+            app:destination="@id/loginFragmentDestination" />
     </fragment>
 
     <fragment
@@ -92,6 +98,9 @@
         <action
             android:id="@+id/action_viewDocumentsFragmentDestination_to_permissionsFragment"
             app:destination="@id/permissionsFragment"/>
+        <action
+            android:id="@+id/action_viewDocumentsFragmentDestination_to_loginFragmentDestination"
+            app:destination="@id/loginFragmentDestination" />
     </fragment>
     <fragment
         android:id="@+id/permissionsFragment"
