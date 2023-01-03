@@ -18,7 +18,6 @@ class PermissionsFragment() : Fragment() {
 
     private val args: PermissionsFragmentArgs by navArgs()
     private lateinit var permissionsValues: HashMap<String, String>
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -26,7 +25,7 @@ class PermissionsFragment() : Fragment() {
             when (args.permissionCode) {
                 Manifest.permission.CAMERA -> navigateToCamera()
                 Manifest.permission.READ_EXTERNAL_STORAGE -> navigateToGallery()
-                Manifest.permission.ACCESS_COARSE_LOCATION -> navigateToMaps()
+                Manifest.permission.ACCESS_COARSE_LOCATION -> navigateToMaps(true)
             }
         } else {
             when (args.permissionCode) {
@@ -39,8 +38,7 @@ class PermissionsFragment() : Fragment() {
                     navigateToMenu()
                 }
                 Manifest.permission.ACCESS_COARSE_LOCATION -> {
-                    showPermissionDeniedMessage(args.permissionCode)
-                    navigateToMenu()
+                    navigateToMaps(false)
                 }
             }
         }
@@ -48,12 +46,12 @@ class PermissionsFragment() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkPermissions(args.permissionCode)
         permissionsValues = hashMapOf(
             Manifest.permission.CAMERA to getString(R.string.camera_permisssion),
             Manifest.permission.READ_EXTERNAL_STORAGE to getString(R.string.read_external_permisssion),
             Manifest.permission.ACCESS_COARSE_LOCATION to getString(R.string.location_permission)
         )
+        checkPermissions(args.permissionCode)
     }
 
     private fun checkPermissions(permission: String) {
@@ -70,12 +68,16 @@ class PermissionsFragment() : Fragment() {
 
     private fun checkPermission(permission: String) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)) {
-            //Toast.makeText(context, getString(R.string.request_rationale_permission), Toast.LENGTH_LONG).show()
             CustomDialog(
                 getString(R.string.grant_permission),
-                getString(R.string.request_rationale_permission)
+                getString(R.string.request_rationale_permission, permissionsValues[args.permissionCode])
             ) {
-                findNavController().popBackStack()
+                if(args.permissionCode == Manifest.permission.ACCESS_COARSE_LOCATION){
+                    navigateToMaps(false)
+                }
+                else {
+                    findNavController().popBackStack()
+                }
             }.show(childFragmentManager, CustomDialog.TAG)
         } else {
             requestPermissionLauncher.launch(permission)
@@ -94,7 +96,7 @@ class PermissionsFragment() : Fragment() {
         when (args.permissionCode) {
             Manifest.permission.CAMERA -> navigateToCamera()
             Manifest.permission.READ_EXTERNAL_STORAGE -> navigateToGallery()
-            Manifest.permission.ACCESS_COARSE_LOCATION -> navigateToMaps()
+            Manifest.permission.ACCESS_COARSE_LOCATION -> navigateToMaps(true)
         }
     }
 
@@ -104,11 +106,20 @@ class PermissionsFragment() : Fragment() {
         }
     }
 
-    private fun navigateToMaps() {
-        lifecycleScope.launchWhenStarted {
-            findNavController().navigate(
-                PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination()
-            )
+    private fun navigateToMaps(isPermissionGranted: Boolean) {
+        if (isPermissionGranted){
+            lifecycleScope.launchWhenStarted {
+                findNavController().navigate(
+                    PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination(true)
+                )
+            }
+        }
+        else{
+            lifecycleScope.launchWhenStarted {
+                findNavController().navigate(
+                    PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination(false)
+                )
+            }
         }
     }
 

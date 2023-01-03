@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_officesFragmentDestination_to_loginFragmentDestination"
             app:destination="@id/loginFragmentDestination" />
+        <argument
+            android:name="hasLocationPermission"
+            app:argType="boolean" />
     </fragment>
 
     <fragment

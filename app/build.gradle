@@ -78,5 +78,6 @@ dependencies {
 
     //Maps
     implementation "com.google.android.gms:play-services-maps:$mapsVersion"
+    implementation "com.google.android.libraries.places:places:$placesVersion"
 
 }

@@ -123,15 +123,6 @@ class MenuFragment : Fragment() {
                 binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "English"
             }
         }
-
-        // Watch datastore values
-        lifecycleScope.launch(Dispatchers.IO) {
-            userDataStore.getDataStorePreferences().collect{
-                Log.i("pikachu1", it.email)
-                Log.i("pikachu2", it.password)
-                Log.i("pikachu3", it.name)
-            }
-        }
     }
 
     private suspend fun logout() {

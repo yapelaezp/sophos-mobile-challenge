@@ -27,6 +27,7 @@ ext {
     biometricVersion = '1.0.0-rc02'
     mapsVersion = '18.1.0'
     latestAppCompatVersion = '1.7.0-alpha01'
+    placesVersion = '3.0.0'
 }
 
 task clean(type: Delete) {
