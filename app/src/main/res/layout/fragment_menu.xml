@@ -15,8 +15,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/white"
-            app:titleTextColor="?attr/colorPrimary"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="?attr/colorPrimaryVariant"
             app:layout_constraintEnd_toEndOf="parent"
             tools:title="Naruto"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,9 +94,8 @@
 
             <TextView
                 android:id="@+id/tv_main_screen_send_docs"
-                style="@style/menu_layout_text"
+                style="@style/menu_layout_title_send_docs"
                 android:text="@string/send_docs"
-                android:textColor="@color/pink_sophos"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
@@ -106,10 +105,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_menu_screen_send_docs"
-                style="@style/menu_layout_button"
-                android:background="@drawable/background_menu_layout_pink"
-                android:drawableEnd="@drawable/ic_baseline_east_pink"
-                android:textColor="@color/pink_sophos"
+                style="@style/menu_layout_button_send_docs"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.95"
@@ -141,9 +137,8 @@
 
             <TextView
                 android:id="@+id/tv_menu_screen_see_docs"
-                style="@style/menu_layout_text"
+                style="@style/menu_layout_title_see_docs"
                 android:text="@string/see_docs"
-                android:textColor="@color/blue_sophos"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
@@ -153,10 +148,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_menu_screen_see_docs"
-                style="@style/menu_layout_button"
-                android:background="@drawable/background_menu_layout_blue"
-                android:drawableEnd="@drawable/ic_baseline_east_blue"
-                android:textColor="@color/blue_sophos"
+                style="@style/menu_layout_button_see_docs"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.95"
@@ -188,9 +180,8 @@
 
             <TextView
                 android:id="@+id/tv_main_screen_offices"
-                style="@style/menu_layout_text"
+                style="@style/menu_layout_title_offices"
                 android:text="@string/offices"
-                android:textColor="@color/aquamarine_sophos"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
@@ -200,10 +191,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_menu_screen_offices"
-                style="@style/menu_layout_button"
-                android:background="@drawable/background_menu_layout_aquamarine"
-                android:drawableEnd="@drawable/ic_baseline_east_aquamarine"
-                android:textColor="@color/aquamarine_sophos"
+                style="@style/menu_layout_button_offices"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.95"

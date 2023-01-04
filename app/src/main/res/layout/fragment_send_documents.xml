@@ -11,14 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:title="@string/offices"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu_topbar"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
-        app:titleTextColor="?attr/colorPrimary" />
+        app:titleTextColor="?attr/colorPrimaryVariant" />
 
     <TextView
         android:id="@+id/tv_document_screen_doc_delivery"
@@ -27,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/document_delivery"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorSecondary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
@@ -59,11 +59,8 @@
     <EditText
         android:id="@+id/etv_document_screen_doc_number"
         style="@style/document_input_data"
-        android:drawableStart="@drawable/ic_outline_badge_24"
-        android:drawablePadding="24dp"
-        android:ems="10"
         android:hint="@string/document_number"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintEnd_toEndOf="@+id/sp_document_screen_id_type"
@@ -72,13 +69,12 @@
 
     <EditText
         android:id="@+id/etv_document_screen_names"
+        style="@style/document_input_data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/names"
         android:inputType="textPersonName"
-        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/etv_document_screen_doc_number"
         app:layout_constraintStart_toStartOf="@+id/etv_document_screen_doc_number"
         app:layout_constraintTop_toBottomOf="@+id/etv_document_screen_doc_number" />
@@ -86,6 +82,8 @@
     <EditText
         android:id="@+id/etv_document_screen_lastnames"
         style="@style/document_input_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/lastnames"
         android:inputType="textPersonName"
@@ -96,6 +94,8 @@
     <EditText
         android:id="@+id/etv_document_screen_email"
         style="@style/document_input_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="jonathan.perez@sophosolutions.com"
         android:inputType=""
@@ -114,13 +114,10 @@
 
     <EditText
         android:id="@+id/etv_document_screen_attached_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        style="@style/document_input_data"
         android:ems="10"
         android:hint="Attached type"
         android:inputType="textPersonName"
-        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/etv_document_screen_doc_number"
         app:layout_constraintStart_toStartOf="@+id/etv_document_screen_doc_number"
         app:layout_constraintTop_toBottomOf="@+id/sp_document_screen_city" />
@@ -135,6 +132,7 @@
         android:drawableStart="@drawable/ic_outline_backup_24"
         android:fontFamily="@font/montserrat_bold"
         android:paddingStart="8dp"
+        android:paddingEnd="40dp"
         android:text="@string/document"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -158,6 +156,5 @@
         app:layout_constraintEnd_toEndOf="@+id/sp_document_screen_city"
         app:layout_constraintStart_toStartOf="@+id/sp_document_screen_city"
         app:layout_constraintTop_toBottomOf="@+id/btn_document_screen_upload_doc" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

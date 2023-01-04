@@ -11,7 +11,7 @@
         android:id="@+id/toolbar_offices_screen"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
         app:menu="@menu/menu_topbar"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
         app:title="@string/go_back"
-        app:titleTextColor="?attr/colorPrimary" />
+        app:titleTextColor="?attr/colorPrimaryVariant" />
 
     <TextView
         android:id="@+id/tv_offices_screen_title"
@@ -29,7 +29,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/offices"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorSecondary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

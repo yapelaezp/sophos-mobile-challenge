@@ -24,7 +24,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/enter_data"
         android:textAlignment="center"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textColorHint="?attr/colorPrimary"
+        android:textColorHint="?attr/colorPrimaryVariant"
         app:boxStrokeWidth="2dp"
         app:errorEnabled="true"
         app:errorIconDrawable="@null"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_enter_data"
         app:startIconDrawable="@drawable/ic_baseline_account_circle"
-        app:startIconTint="@color/purple_sophos">
+        app:startIconTint="?attr/colorOnPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_email"
@@ -57,7 +57,7 @@
             android:textSize="18sp"
             android:inputType="textWebEmailAddress"
             android:text="alejo51120@gmail.com"
-            android:textColor="?attr/colorPrimary" />
+            android:textColor="?attr/colorOnPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColorHint="?attr/colorPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
         app:boxStrokeWidth="2dp"
         app:errorEnabled="true"
         app:errorIconDrawable="@null"
@@ -83,9 +83,9 @@
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/til_login_email"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/purple_sophos"
+        app:passwordToggleTint="?attr/colorOnPrimary"
         app:startIconDrawable="@drawable/ic_outline_vpn_key"
-        app:startIconTint="?attr/colorPrimary">
+        app:startIconTint="?attr/colorOnPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_password"
@@ -96,7 +96,7 @@
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textPassword"
             android:text="PIpP0553v031"
-            android:textColor="?attr/colorPrimary" />
+            android:textColor="?attr/colorOnPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,11 +116,11 @@
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/background_button_rounded"
-        android:backgroundTint="@color/purple_sophos"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/login"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -132,14 +132,14 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/background_button_rounded"
+        android:background="@drawable/background_button_fingerprint"
         android:drawableStart="@drawable/ic_baseline_fingerprint"
         android:fontFamily="@font/montserrat_bold"
         android:paddingStart="32dp"
         android:paddingEnd="56dp"
         android:text="@string/login_fingerprint"
         android:textAllCaps="false"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintHorizontal_bias="0.0"

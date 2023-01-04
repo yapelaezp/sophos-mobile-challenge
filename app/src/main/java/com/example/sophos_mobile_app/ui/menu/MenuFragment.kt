@@ -2,11 +2,13 @@ package com.example.sophos_mobile_app.ui.menu
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -22,7 +24,6 @@ import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -71,7 +72,7 @@ class MenuFragment : Fragment() {
                     true
                 }
                 R.id.action_mode -> {
-                    println("Action mode")
+                    chooseThemeDialog()
                     true
                 }
                 R.id.action_see_docs -> {
@@ -89,6 +90,37 @@ class MenuFragment : Fragment() {
                 else -> false
             }
         }
+    }
+
+    private fun chooseThemeDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Choose theme ")
+        val styles = arrayOf("Light","Dark","System default")
+        val checkedItem = 0
+
+        builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
+            val appCompactActivity =  activity as AppCompatActivity
+            when (which) {
+                0 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    appCompactActivity.delegate .applyDayNight()
+                    dialog.dismiss()
+                }
+                1 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    appCompactActivity.delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+                2 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    appCompactActivity.delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun navigateToSeeDocs() {

@@ -19,7 +19,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="@dimen/stroke_small"
-                android:color="@color/icPressed" />
+                android:color="@color/ic_pressed" />
             <size
                 android:width="@dimen/round_button_medium"
                 android:height="@dimen/round_button_medium" />
@@ -29,7 +29,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="@dimen/stroke_small"
-                android:color="@color/icFocused" />
+                android:color="@color/ic_focused" />
             <size
                 android:width="@dimen/round_button_medium"
                 android:height="@dimen/round_button_medium" />
@@ -39,7 +39,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="@dimen/stroke_small"
-                android:color="@color/icActive" />
+                android:color="@color/ic_active" />
             <size
                 android:width="@dimen/round_button_medium"
                 android:height="@dimen/round_button_medium" />

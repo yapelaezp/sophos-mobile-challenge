@@ -9,13 +9,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple_sophos">#7800FD</color>
     <color name="blue_sophos">#4500FF</color>
+    <color name="blue_sophos_70">#B34500FF</color>
     <color name="aquamarine_sophos">#05667C</color>
+    <color name="aquamarine_sophos_70">#B305667C</color>
     <color name="pink_sophos">#FE1191</color>
-    <color name="icActive">#FFFFFFFF</color>
-    <color name="icFocused">#DDFFFFFF</color>
-    <color name="icPressed">#AAFFFFFF</color>
-
-
-
-
+    <color name="pink_sophos_70">#B3FE1191</color>
+    <color name="ic_active">#FFFFFFFF</color>
+    <color name="ic_focused">#DDFFFFFF</color>
+    <color name="ic_pressed">#AAFFFFFF</color>
+    <color name="color_accent">#FE0FE0</color>
+    <color name="background_light">#FFFFFF</color>
+    <color name="purple_sophos_dark">#3A275B</color>
 </resources>
