@@ -16,6 +16,9 @@ import kotlinx.coroutines.withContext
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATA_STORE_NAME)
 
 class UserDataStore(private val context: Context) {
+    companion object{
+        const val DARK_MODE = "dark_mode"
+    }
 
     suspend fun getDataStorePreferences() = withContext(Dispatchers.IO){
         context.dataStore.data.map { preferences ->
@@ -26,7 +29,8 @@ class UserDataStore(private val context: Context) {
                 biometricIntention = preferences[booleanPreferencesKey(LoginFragment.BIOMETRIC_INTENTION)]
                     ?: false,
                 biometricEmail = preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_EMAIL)].orEmpty(),
-                biometricPassword = preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_PASSWORD)].orEmpty()
+                biometricPassword = preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_PASSWORD)].orEmpty(),
+                darkMode = preferences[booleanPreferencesKey(DARK_MODE)] ?: false
             )
         }
     }
@@ -49,6 +53,12 @@ class UserDataStore(private val context: Context) {
         context.dataStore.edit { preferences ->
             preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_EMAIL)] = userEmail
             preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_PASSWORD)] = userPassword
+        }
+    }
+
+    suspend fun saveModePreference(darkMode: Boolean){
+        context.dataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(DARK_MODE)]  = darkMode
         }
     }
 

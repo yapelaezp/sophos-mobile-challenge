@@ -54,6 +54,8 @@
     <string name="grant_permission">Grant permission</string>
     <string name="main_menu">Main menu</string>
     <string name="auth_with_password_first">You must authenticate with password first</string>
+    <string name="day_mode">Day mode</string>
+    <string name="night_mode">Night mode</string>
 
     <string-array name="doc_type">
         <item>CC</item>

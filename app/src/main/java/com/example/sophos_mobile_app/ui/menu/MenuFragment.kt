@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -40,7 +39,7 @@ class MenuFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         userDataStore = UserDataStore(requireContext())
         setComponents()
@@ -72,7 +71,7 @@ class MenuFragment : Fragment() {
                     true
                 }
                 R.id.action_mode -> {
-                    chooseThemeDialog()
+                    setAppMode()
                     true
                 }
                 R.id.action_see_docs -> {
@@ -92,35 +91,27 @@ class MenuFragment : Fragment() {
         }
     }
 
-    private fun chooseThemeDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Choose theme ")
-        val styles = arrayOf("Light","Dark","System default")
-        val checkedItem = 0
-
-        builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
-            val appCompactActivity =  activity as AppCompatActivity
-            when (which) {
-                0 -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    appCompactActivity.delegate .applyDayNight()
-                    dialog.dismiss()
-                }
-                1 -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    appCompactActivity.delegate.applyDayNight()
-                    dialog.dismiss()
-                }
-                2 -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    appCompactActivity.delegate.applyDayNight()
-                    dialog.dismiss()
+    private fun setAppMode() {
+        lifecycleScope.launch(Dispatchers.IO){
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                val appCompatActivity = activity as AppCompatActivity
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        appCompatActivity.delegate.applyDayNight()
+                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                    }
+                    userDataStore.saveModePreference(darkMode = true)
+                } else {
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        appCompatActivity.delegate.applyDayNight()
+                    }
+                    userDataStore.saveModePreference(darkMode = false)
                 }
             }
         }
-
-        val dialog = builder.create()
-        dialog.show()
     }
 
     private fun navigateToSeeDocs() {
@@ -153,6 +144,20 @@ class MenuFragment : Fragment() {
                 binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "Español"
             } else{
                 binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "English"
+            }
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
+                println(userPreferences.darkMode)
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                    }
+                } else{
+                    withContext(Dispatchers.Main){
+                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                    }
+                }
             }
         }
     }
