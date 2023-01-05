@@ -8,13 +8,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 
-class PermissionsFragment() : Fragment() {
+class PermissionsFragment : Fragment() {
 
     private val args: PermissionsFragmentArgs by navArgs()
     private lateinit var permissionsValues: HashMap<String, String>
@@ -70,12 +68,14 @@ class PermissionsFragment() : Fragment() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)) {
             CustomDialog(
                 getString(R.string.grant_permission),
-                getString(R.string.request_rationale_permission, permissionsValues[args.permissionCode])
+                getString(
+                    R.string.request_rationale_permission,
+                    permissionsValues[args.permissionCode]
+                )
             ) {
-                if(args.permissionCode == Manifest.permission.ACCESS_COARSE_LOCATION){
+                if (args.permissionCode == Manifest.permission.ACCESS_COARSE_LOCATION) {
                     navigateToMaps(false)
-                }
-                else {
+                } else {
                     findNavController().popBackStack()
                 }
             }.show(childFragmentManager, CustomDialog.TAG)
@@ -101,42 +101,35 @@ class PermissionsFragment() : Fragment() {
     }
 
     private fun navigateToMenu() {
-        lifecycleScope.launchWhenStarted {
-            findNavController().navigateUp()
-        }
+        findNavController().navigateUp()
     }
 
     private fun navigateToMaps(isPermissionGranted: Boolean) {
-        if (isPermissionGranted){
-            lifecycleScope.launchWhenStarted {
-                findNavController().navigate(
-                    PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination(true)
+        if (isPermissionGranted) {
+            findNavController().navigate(
+                PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination(
+                    true
                 )
-            }
-        }
-        else{
-            lifecycleScope.launchWhenStarted {
-                findNavController().navigate(
-                    PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination(false)
+            )
+        } else {
+            findNavController().navigate(
+                PermissionsFragmentDirections.actionPermissionsFragmentToOfficesFragmentDestination(
+                    false
                 )
-            }
+            )
         }
     }
 
     private fun navigateToGallery() {
-        lifecycleScope.launchWhenStarted {
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(
-                PermissionsFragmentDirections.actionPermissionsFragmentToGalleryFragment()
-            )
-        }
+        findNavController().navigate(
+            PermissionsFragmentDirections.actionPermissionsFragmentToGalleryFragment()
+        )
     }
 
     private fun navigateToCamera() {
-        lifecycleScope.launchWhenStarted {
-            findNavController().navigate(
-                PermissionsFragmentDirections.actionPermissionsFragmentToCameraFragment()
-            )
-        }
+        findNavController().navigate(
+            PermissionsFragmentDirections.actionPermissionsFragmentToCameraFragment()
+        )
     }
 
 }

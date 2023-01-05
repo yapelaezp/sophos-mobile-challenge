@@ -49,7 +49,7 @@ class MenuFragment : Fragment() {
 
     private fun setListeners() {
         binding.btnMenuScreenSendDocs.setOnClickListener {
-            val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination(null)
+            val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination()
             findNavController().navigate(action)
         }
         binding.btnMenuScreenSeeDocs.setOnClickListener {
@@ -123,7 +123,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun navigateToSendDocs() {
-        val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination(null)
+        val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination()
         findNavController().navigate(action)
     }
 

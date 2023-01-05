@@ -56,6 +56,8 @@
     <string name="auth_with_password_first">You must authenticate with password first</string>
     <string name="day_mode">Day mode</string>
     <string name="night_mode">Night mode</string>
+    <string name="add_new_doc_success">Document added succesfully</string>
+    <string name="add_new_doc_failed">Document could not be uploaded </string>
 
     <string-array name="doc_type">
         <item>CC</item>

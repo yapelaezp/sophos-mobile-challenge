@@ -7,5 +7,6 @@ data class UserPreferences(
     val biometricIntention: Boolean = false,
     val biometricEmail: String = "",
     val biometricPassword: String = "",
-    val darkMode: Boolean = false
+    val darkMode: Boolean = false,
+    val image: String = ""
 )

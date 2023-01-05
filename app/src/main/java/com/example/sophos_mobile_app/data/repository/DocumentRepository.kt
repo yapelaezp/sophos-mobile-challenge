@@ -13,7 +13,7 @@ interface DocumentRepository {
         email: String,
         attachedType: String,
         attached: String
-    )
+    ): Boolean
 
     suspend fun getDocumentByUserEmail(email: String): List<Document>
 

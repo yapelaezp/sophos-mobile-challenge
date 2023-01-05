@@ -18,7 +18,7 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService): DocumentR
         email: String,
         attachedType: String,
         attached: String
-    ) {
+    ): Boolean {
         try {
             val newDocument = NewDocumentDto(
                 idType,
@@ -30,7 +30,8 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService): DocumentR
                 attachedType,
                 attached
             )
-            api.createNewDocument(newDocument)
+            val response = api.createNewDocument(newDocument)
+            return response.put
         } catch (e: Exception) {
             throw Exception(e.message)
         }

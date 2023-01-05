@@ -12,13 +12,16 @@ import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
+import com.example.sophos_mobile_app.ui.camera.GalleryViewModel
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
@@ -36,15 +39,18 @@ class SendDocumentsFragment : Fragment() {
     private var _binding: FragmentSendDocumentsBinding? = null
     private val binding get() = _binding!!
     private val sendDocumentViewModel: SendDocumentsViewModel by viewModels()
-    private val args: SendDocumentsFragmentArgs by navArgs()
+    private val galleryViewModel: GalleryViewModel by activityViewModels()
     private val appLanguage = AppLanguage()
     private lateinit var userDataStore: UserDataStore
+    private var imageBase64: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSendDocumentsBinding.inflate(inflater, container, false)
+        userDataStore = UserDataStore(requireContext())
         return binding.root
     }
 
@@ -53,7 +59,6 @@ class SendDocumentsFragment : Fragment() {
         setComponents()
         setListeners()
         observeViewModel()
-        userDataStore = UserDataStore(requireContext())
     }
 
     private fun observeViewModel() {
@@ -62,18 +67,28 @@ class SendDocumentsFragment : Fragment() {
             cities.addAll(offices)
             binding.spDocumentScreenCity.adapter = cities
         }
+        sendDocumentViewModel.status.observe(viewLifecycleOwner){ postNewDocStatus ->
+            if (postNewDocStatus){
+                this.imageBase64 = null
+                showMessage(getString(R.string.add_new_doc_success))
+            } else {
+                showMessage(getString(R.string.add_new_doc_failed))
+            }
+        }
+        galleryViewModel.imageBase64.observe(viewLifecycleOwner){ imageBase64 ->
+            this.imageBase64 = imageBase64
+        }
     }
 
     private fun setListeners() {
         binding.btnDocumentScreenSend.setOnClickListener {
             val docType = binding.spDocumentScreenIdType.selectedItem.toString()
-            val docNumber = binding.etvDocumentScreenDocNumber.text.toString()
-            val names = binding.etvDocumentScreenNames.text.toString()
-            val lastnames = binding.etvDocumentScreenLastnames.text.toString()
-            val email = binding.etvDocumentScreenEmail.text.toString()
+            val docNumber = binding.etvDocumentScreenDocNumber.text.toString().trim()
+            val names = binding.etvDocumentScreenNames.text.toString().trim()
+            val lastnames = binding.etvDocumentScreenLastnames.text.toString().trim()
+            val email = binding.etvDocumentScreenEmail.text.toString().trim()
             val city = binding.spDocumentScreenCity.selectedItem.toString()
-            val attachedType = binding.etvDocumentScreenAttachedType.text.toString()
-            val photoBase64 = args.imageBase64
+            val attachedType = binding.etvDocumentScreenAttachedType.text.toString().trim()
             val areFieldsValid = validateFields(
                 docType,
                 docNumber,
@@ -82,7 +97,7 @@ class SendDocumentsFragment : Fragment() {
                 email,
                 city,
                 attachedType,
-                photoBase64
+                this.imageBase64
             )
             if (areFieldsValid.first) {
                 sendDocumentViewModel.createNewDocument(
@@ -93,7 +108,7 @@ class SendDocumentsFragment : Fragment() {
                     city,
                     email,
                     attachedType,
-                    photoBase64!!
+                    imageBase64!!
                 )
             } else {
                 Toast.makeText(requireContext(), areFieldsValid.second, Toast.LENGTH_LONG).show()
@@ -102,7 +117,7 @@ class SendDocumentsFragment : Fragment() {
         binding.btnDocumentScreenUploadDoc.setOnClickListener {
             val action =
                 SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             navigate(action)
         }
@@ -153,7 +168,7 @@ class SendDocumentsFragment : Fragment() {
                 0 -> {
                     val action =
                         SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE
                         )
                     navigate(action)
                 }
@@ -271,6 +286,10 @@ class SendDocumentsFragment : Fragment() {
                 SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToLoginFragmentDestination()
             findNavController().navigate(action)
         }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

@@ -18,6 +18,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DAT
 class UserDataStore(private val context: Context) {
     companion object{
         const val DARK_MODE = "dark_mode"
+        const val IMAGE = "image"
     }
 
     suspend fun getDataStorePreferences() = withContext(Dispatchers.IO){
@@ -30,7 +31,8 @@ class UserDataStore(private val context: Context) {
                     ?: false,
                 biometricEmail = preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_EMAIL)].orEmpty(),
                 biometricPassword = preferences[stringPreferencesKey(LoginFragment.BIOMETRIC_PASSWORD)].orEmpty(),
-                darkMode = preferences[booleanPreferencesKey(DARK_MODE)] ?: false
+                darkMode = preferences[booleanPreferencesKey(DARK_MODE)] ?: false,
+                image = preferences[stringPreferencesKey(IMAGE)].orEmpty()
             )
         }
     }
@@ -58,7 +60,13 @@ class UserDataStore(private val context: Context) {
 
     suspend fun saveModePreference(darkMode: Boolean){
         context.dataStore.edit { preferences ->
-            preferences[booleanPreferencesKey(DARK_MODE)]  = darkMode
+            preferences[booleanPreferencesKey(DARK_MODE)] = darkMode
+        }
+    }
+
+    suspend fun saveImage(image: String){
+        context.dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(IMAGE)] = image
         }
     }
 

@@ -37,9 +37,10 @@ class SendDocumentsViewModel @Inject constructor(
         attached: String
     ) {
         viewModelScope.launch {
-            documentRepository.createNewDocument(
+             val response = documentRepository.createNewDocument(
                 idType, identification, name, lastname, city, email, attachedType, attached
             )
+            _status.value = response
         }
     }
 

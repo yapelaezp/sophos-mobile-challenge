@@ -8,32 +8,24 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.utils.UserDataStore
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
 @AndroidEntryPoint
 class GalleryFragment : Fragment() {
 
-    private val galleryViewModel: CameraViewModel by viewModels()
+    private val galleryViewModel: GalleryViewModel by activityViewModels()
+    //private val galleryViewModel: GalleryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         openGallery()
-        observeViewModel()
-    }
-
-    private fun observeViewModel() {
-        galleryViewModel.imageBase64.observe(viewLifecycleOwner) { imageBase64 ->
-            showMessage(getString(R.string.image_saved))
-            val action =
-                GalleryFragmentDirections.actionGalleryFragmentToSendDocumentsFragmentDestination(
-                    imageBase64
-                )
-            findNavController().navigate(action)
-        }
     }
 
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
@@ -43,9 +35,19 @@ class GalleryFragment : Fragment() {
             if (result != null) {
                 val uri: Uri? = result.data?.data
                 try {
-                    val imageBitmap =
-                        MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
-                    galleryViewModel.getImage64Photo(imageBitmap)
+                    if (uri != null) {
+                        val imageBitmap =
+                            MediaStore.Images.Media.getBitmap(
+                                requireActivity().contentResolver,
+                                uri
+                            )
+                        galleryViewModel.setImage64Photo(imageBitmap)
+                        showMessage("Image uploaded")
+                        findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
+                    } else {
+                        showMessage("No image attached")
+                        findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
+                    }
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

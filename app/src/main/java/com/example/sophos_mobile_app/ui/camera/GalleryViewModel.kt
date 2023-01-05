@@ -23,7 +23,7 @@ class GalleryViewModel @Inject constructor(private val imageConverter: ImageConv
     val imageBase64: LiveData<String>
         get() = _imageBase64
 
-    fun getImage64Photo(imageBitmap: Bitmap){
+    fun setImage64Photo(imageBitmap: Bitmap){
         viewModelScope.launch {
             val bitmapResizedPhoto = imageConverter.resize(imageBitmap,
                 IMAGE_MAX_WIDTH,

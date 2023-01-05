@@ -126,7 +126,7 @@ class OfficesFragment : Fragment() {
     }
 
     private fun navigateToSendDocs() {
-        val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToSendDocumentsFragmentDestination(null)
+        val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToSendDocumentsFragmentDestination()
         findNavController().navigate(action)
     }
 

@@ -43,7 +43,7 @@ class CameraFragment : Fragment() {
     private fun observeViewModel() {
         cameraViewModel.photoBase64.observe(viewLifecycleOwner){ base64Photo ->
             showMessage(getString(R.string.photo_saved))
-            val action = CameraFragmentDirections.actionCameraFragmentToSendDocumentsFragmentDestination(base64Photo)
+            val action = CameraFragmentDirections.actionCameraFragmentToSendDocumentsFragmentDestination()
             findNavController().navigate(action)
         }
     }
