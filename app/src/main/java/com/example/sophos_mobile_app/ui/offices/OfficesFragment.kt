@@ -13,6 +13,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.MainActivity
@@ -160,7 +161,8 @@ class OfficesFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
-            findNavController().navigate(R.id.loginFragmentDestination)
+            val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+            findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
         }
     }
 

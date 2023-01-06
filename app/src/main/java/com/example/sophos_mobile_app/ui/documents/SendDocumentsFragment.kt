@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
@@ -287,7 +288,8 @@ class SendDocumentsFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
-            findNavController().navigate(R.id.loginFragmentDestination)
+            val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+            findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
         }
     }
 

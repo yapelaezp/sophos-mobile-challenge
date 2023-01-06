@@ -1,5 +1,6 @@
 package com.example.sophos_mobile_app.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,8 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userDataStore = UserDataStore(requireContext())
+        //isUserLogged()
         setupBiometricAccess()
     }
 
@@ -52,8 +55,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        userDataStore = UserDataStore(requireContext())
-        isUserLogged()
         setListeners()
         observeViewModel()
         return binding.root
