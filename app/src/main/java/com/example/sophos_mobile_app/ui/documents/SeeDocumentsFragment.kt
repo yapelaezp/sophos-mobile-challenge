@@ -112,8 +112,7 @@ class SeeDocumentsFragment : Fragment() {
     }
 
     private fun navigateToSendDocs() {
-        val action = SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToSendDocumentsFragmentDestination()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.sendDocumentsFragmentDestination)
     }
 
     private fun navigateToOffices() {
@@ -130,9 +129,7 @@ class SeeDocumentsFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
-            val action =
-                SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToLoginFragmentDestination()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.loginFragmentDestination)
         }
     }
 

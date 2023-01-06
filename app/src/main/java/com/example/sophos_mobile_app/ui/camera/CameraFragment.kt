@@ -1,116 +1,95 @@
 package com.example.sophos_mobile_app.ui.camera
 
+
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.Environment
+import android.provider.MediaStore
 import android.widget.Toast
-import androidx.camera.core.*
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.sophos_mobile_app.BuildConfig
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentCameraBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
 
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
+    private val cameraViewModel: CameraViewModel by activityViewModels()
 
-    private var imageCapture: ImageCapture? = null
-    private val cameraViewModel: CameraViewModel by viewModels()
-    private lateinit var outputDirectory: File
+    var cameraPhotoFilePath: Uri? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentCameraBinding.inflate(inflater, container, false)
-        startCamera()
-        setListeners()
-        observeViewModel()
-        outputDirectory = getOutputDirectory()
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //observeViewModel()
+        openSomeActivityForResult()
     }
 
-    private fun observeViewModel() {
-        cameraViewModel.photoBase64.observe(viewLifecycleOwner){ base64Photo ->
-            showMessage(getString(R.string.photo_saved))
-            val action = CameraFragmentDirections.actionCameraFragmentToSendDocumentsFragmentDestination()
-            findNavController().navigate(action)
-        }
-    }
-
-    private fun setListeners() {
-        binding.ibTakePhoto.setOnClickListener {
-            takePhoto()
-        }
-    }
-
-    private fun getOutputDirectory(): File {
-        val mediaDir = requireActivity().externalMediaDirs.firstOrNull()?.let { mFile ->
-            File(mFile, resources.getString(R.string.app_name)).apply {
-                mkdirs()
-            }
-        }
-        return if (mediaDir != null && mediaDir.exists()) mediaDir else requireActivity().filesDir
-    }
-
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-        cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-            val preview = Preview.Builder()
-                .build()
-                .also { mPreview ->
-                    mPreview.setSurfaceProvider(
-                        binding.pvCameraPreview.surfaceProvider
-                    )
-                }
-            imageCapture = ImageCapture.Builder().build()
-
-            val camSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    this, camSelector, preview, imageCapture
-                )
-            }catch (e: Exception){
-
-            }
-        }, ContextCompat.getMainExecutor(requireContext()))
-    }
-
-    private fun takePhoto() {
-        val imageCapture = imageCapture ?: return
-        imageCapture.takePicture(
-            ContextCompat.getMainExecutor(requireContext()),
-            object : ImageCapture.OnImageCapturedCallback() {
-                override fun onCaptureSuccess(imageProxy: ImageProxy) {
-                    super.onCaptureSuccess(imageProxy)
-                    try {
-                        cameraViewModel.getBase64Photo(imageProxy)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                try {
+                    cameraPhotoFilePath?.let { uri ->
+                        val imageBitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, uri)
+                        cameraViewModel.createImage64Photo(imageBitmap)
+                        showMessage("Image uploaded")
+                        findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
                     }
-                }
-                override fun onError(exception: ImageCaptureException) {
-                    super.onError(exception)
-                    Toast.makeText(requireContext(), exception.message, Toast.LENGTH_LONG).show()
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
             }
-        )
+            else if(result.resultCode == Activity.RESULT_CANCELED){
+                showMessage("No image attached")
+                findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
+            }
+        }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            absolutePath
+        }
+    }
+
+    private fun openSomeActivityForResult() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                null
+            }
+            photoFile?.also {
+                val photoURI: Uri = FileProvider.getUriForFile(requireContext(),
+                    BuildConfig.APPLICATION_ID + ".provider", it)
+                cameraPhotoFilePath = photoURI
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            }
+        }
+        resultLauncher.launch(intent)
     }
 
     private fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
 }

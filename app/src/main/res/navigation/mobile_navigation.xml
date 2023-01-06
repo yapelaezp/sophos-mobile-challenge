@@ -26,9 +26,6 @@
             android:name="userName"
             app:argType="string"/>
         <action
-            android:id="@+id/action_to_sendDocumentsFragmentDestination"
-            app:destination="@id/sendDocumentsFragmentDestination" />
-        <action
             android:id="@+id/action_menuFragmentDestination_to_viewDocumentsFragmentDestination"
             app:destination="@id/viewDocumentsFragmentDestination" />
         <argument
@@ -37,9 +34,6 @@
         <action
             android:id="@+id/action_menuFragmentDestination_self"
             app:destination="@id/menuFragmentDestination" />
-        <action
-            android:id="@+id/action_menuFragmentDestination_to_loginFragmentDestination"
-            app:destination="@id/loginFragmentDestination" />
         <action
             android:id="@+id/action_menuFragmentDestination_to_permissionsFragment"
             app:destination="@id/permissionsFragment" />
@@ -59,9 +53,6 @@
         <action
             android:id="@+id/action_sendDocumentsFragmentDestination_to_viewDocumentsFragmentDestination"
             app:destination="@id/viewDocumentsFragmentDestination" />
-        <action
-            android:id="@+id/action_sendDocumentsFragmentDestination_to_loginFragmentDestination"
-            app:destination="@id/loginFragmentDestination" />
     </fragment>
 
     <fragment
@@ -72,12 +63,6 @@
         <action
             android:id="@+id/action_officesFragmentDestination_to_viewDocumentsFragmentDestination"
             app:destination="@id/viewDocumentsFragmentDestination" />
-        <action
-            android:id="@+id/action_officesFragmentDestination_to_sendDocumentsFragmentDestination"
-            app:destination="@id/sendDocumentsFragmentDestination" />
-        <action
-            android:id="@+id/action_officesFragmentDestination_to_loginFragmentDestination"
-            app:destination="@id/loginFragmentDestination" />
         <argument
             android:name="hasLocationPermission"
             app:argType="boolean" />
@@ -92,14 +77,8 @@
             android:name="email"
             app:argType="string" />
         <action
-            android:id="@+id/action_viewDocumentsFragmentDestination_to_sendDocumentsFragmentDestination"
-            app:destination="@id/sendDocumentsFragmentDestination" />
-        <action
             android:id="@+id/action_viewDocumentsFragmentDestination_to_permissionsFragment"
             app:destination="@id/permissionsFragment"/>
-        <action
-            android:id="@+id/action_viewDocumentsFragmentDestination_to_loginFragmentDestination"
-            app:destination="@id/loginFragmentDestination" />
     </fragment>
     <fragment
         android:id="@+id/permissionsFragment"
@@ -116,17 +95,14 @@
         <action
             android:id="@+id/action_permissionsFragment_to_cameraFragment"
             app:destination="@id/cameraFragment"
-            app:popUpTo="@id/menuFragmentDestination"/>
+            app:popUpTo="@id/permissionsFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_permissionsFragment_to_officesFragmentDestination"
             app:destination="@id/officesFragmentDestination"
             app:popUpTo="@id/permissionsFragment"
             app:popUpToInclusive="true"
             />
-        <action
-            android:id="@+id/action_permissionsFragment_to_menuFragmentDestination"
-            app:destination="@id/menuFragmentDestination"
-            app:popUpTo="@id/menuFragmentDestination" />
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
@@ -141,9 +117,5 @@
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.sophos_mobile_app.ui.camera.CameraFragment"
-        android:label="CameraFragment" >
-        <action
-            android:id="@+id/action_cameraFragment_to_sendDocumentsFragmentDestination"
-            app:destination="@id/sendDocumentsFragmentDestination" />
-    </fragment>
+        android:label="CameraFragment" />
 </navigation>

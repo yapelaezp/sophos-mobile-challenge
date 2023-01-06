@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
+import com.example.sophos_mobile_app.ui.camera.CameraViewModel
 import com.example.sophos_mobile_app.ui.camera.GalleryViewModel
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
@@ -40,6 +41,7 @@ class SendDocumentsFragment : Fragment() {
     private val binding get() = _binding!!
     private val sendDocumentViewModel: SendDocumentsViewModel by viewModels()
     private val galleryViewModel: GalleryViewModel by activityViewModels()
+    private val cameraViewModel: CameraViewModel by activityViewModels()
     private val appLanguage = AppLanguage()
     private lateinit var userDataStore: UserDataStore
     private var imageBase64: String? = null
@@ -76,6 +78,9 @@ class SendDocumentsFragment : Fragment() {
             }
         }
         galleryViewModel.imageBase64.observe(viewLifecycleOwner){ imageBase64 ->
+            this.imageBase64 = imageBase64
+        }
+        cameraViewModel.imageBase64.observe(viewLifecycleOwner){ imageBase64 ->
             this.imageBase64 = imageBase64
         }
     }
@@ -282,9 +287,7 @@ class SendDocumentsFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
-            val action =
-                SendDocumentsFragmentDirections.actionSendDocumentsFragmentDestinationToLoginFragmentDestination()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.loginFragmentDestination)
         }
     }
 

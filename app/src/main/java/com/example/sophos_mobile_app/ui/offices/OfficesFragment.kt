@@ -126,8 +126,7 @@ class OfficesFragment : Fragment() {
     }
 
     private fun navigateToSendDocs() {
-        val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToSendDocumentsFragmentDestination()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.sendDocumentsFragmentDestination)
     }
 
     private fun setComponents() {
@@ -161,8 +160,7 @@ class OfficesFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
-            val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToLoginFragmentDestination()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.loginFragmentDestination)
         }
     }
 

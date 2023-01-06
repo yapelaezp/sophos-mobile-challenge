@@ -49,8 +49,7 @@ class MenuFragment : Fragment() {
 
     private fun setListeners() {
         binding.btnMenuScreenSendDocs.setOnClickListener {
-            val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.sendDocumentsFragmentDestination)
         }
         binding.btnMenuScreenSeeDocs.setOnClickListener {
             navigateToSeeDocs()
@@ -123,8 +122,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun navigateToSendDocs() {
-        val action = MenuFragmentDirections.actionToSendDocumentsFragmentDestination()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.sendDocumentsFragmentDestination)
     }
 
     private fun navigateToOffices() {
@@ -172,9 +170,7 @@ class MenuFragment : Fragment() {
         }
         withContext(Dispatchers.Main) {
             Toast.makeText(requireContext(), "Data cleared successfully", Toast.LENGTH_SHORT).show()
-            val action =
-                MenuFragmentDirections.actionMenuFragmentDestinationToLoginFragmentDestination()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.loginFragmentDestination)
         }
     }
 

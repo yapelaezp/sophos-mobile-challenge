@@ -27,15 +27,7 @@ class CameraViewModel @Inject constructor(private val imageConverter: ImageConve
     val imageBase64: LiveData<String>
         get() = _imageBase64
 
-    fun getBase64Photo(imageProxy: ImageProxy){
-        viewModelScope.launch {
-            val bitmapPhoto = imageConverter.imageProxyToBitmap(imageProxy)
-            val bitmapResizedPhoto = imageConverter.resize(bitmapPhoto, PHOTO_MAX_WIDTH, PHOTO_MAX_HEIGHT)
-            _photoBase64.value = imageConverter.bitmapToBase64(bitmapResizedPhoto)
-        }
-    }
-
-    fun getImage64Photo(imageBitmap: Bitmap){
+    fun createImage64Photo(imageBitmap: Bitmap){
         viewModelScope.launch {
             val bitmapResizedPhoto = imageConverter.resize(imageBitmap,
                 GalleryViewModel.IMAGE_MAX_WIDTH,
