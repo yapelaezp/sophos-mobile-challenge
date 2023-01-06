@@ -1,7 +1,9 @@
 package com.example.sophos_mobile_app.ui.documents
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.databinding.ItemDocumentDetailBinding
@@ -17,9 +19,10 @@ class DocumentDetailAdapter(private val documentList: List<Document>,private val
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(documentHolder: DocumentViewHolder, position: Int) {
         val document = documentList[position]
-        documentHolder.binding.tvItemDocumentDate.text = document.date
+        documentHolder.binding.tvItemDocumentDate.text = document.customDate
         documentHolder.binding.tvItemDocumentDetailType.text = document.attachedType
         documentHolder.binding.tvItemDocumentDetailName.text = document.name + " " + document.lastname
     }

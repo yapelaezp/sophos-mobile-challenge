@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -17,7 +16,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
-import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
@@ -109,6 +107,8 @@ class SeeDocumentsFragment : Fragment() {
                 binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_language).title = "English"
             }
         }
+        //Set Recycler View
+        binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()){}
     }
 
     private fun navigateToSendDocs() {

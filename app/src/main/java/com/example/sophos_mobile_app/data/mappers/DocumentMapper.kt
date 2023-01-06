@@ -21,3 +21,4 @@ fun DocumentDetailDto.toModel() = DocumentDetail(
     attachedType,
     idType
 )
+
