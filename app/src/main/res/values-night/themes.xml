@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="colorTertiary">@color/pink_sophos</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/purple_sophos_dark</item>
         <item name="colorAccent">@color/pink_sophos</item>
