@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -48,7 +50,6 @@ class OfficesFragment : Fragment() {
     private var offices: List<Office>? = null
     private val appLanguage = AppLanguage()
     private lateinit var userDataStore: UserDataStore
-    private lateinit var placesClient: PlacesClient
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val defaultLocation = LatLng(-33.8523341, 151.2106085) // TODO ("Put Medellin as Default")
     private var locationPermissionGranted: Boolean? = null
@@ -108,6 +109,10 @@ class OfficesFragment : Fragment() {
                     lifecycleScope.launch(Dispatchers.IO) {
                         logout()
                     }
+                    true
+                }
+                R.id.action_mode -> {
+                    setAppMode()
                     true
                 }
                 else -> false
@@ -186,6 +191,29 @@ class OfficesFragment : Fragment() {
                     )
                 } catch (e: Exception){
                     e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    private fun setAppMode() {
+        lifecycleScope.launch(Dispatchers.IO){
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                val appCompatActivity = activity as AppCompatActivity
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        appCompatActivity.delegate.applyDayNight()
+                        binding.toolbarOfficesScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                    }
+                    userDataStore.saveModePreference(darkMode = true)
+                } else {
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        binding.toolbarOfficesScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        appCompatActivity.delegate.applyDayNight()
+                    }
+                    userDataStore.saveModePreference(darkMode = false)
                 }
             }
         }

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -157,6 +159,10 @@ class SendDocumentsFragment : Fragment() {
                     }
                     true
                 }
+                R.id.action_mode -> {
+                    setAppMode()
+                    true
+                }
                 else -> false
             }
         }
@@ -290,6 +296,29 @@ class SendDocumentsFragment : Fragment() {
         withContext(Dispatchers.Main) {
             val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
             findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
+        }
+    }
+
+    private fun setAppMode() {
+        lifecycleScope.launch(Dispatchers.IO){
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                val appCompatActivity = activity as AppCompatActivity
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        appCompatActivity.delegate.applyDayNight()
+                        binding.toolbarDocumentScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                    }
+                    userDataStore.saveModePreference(darkMode = true)
+                } else {
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        binding.toolbarDocumentScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        appCompatActivity.delegate.applyDayNight()
+                    }
+                    userDataStore.saveModePreference(darkMode = false)
+                }
+            }
         }
     }
 

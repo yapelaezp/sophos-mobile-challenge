@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -18,6 +20,7 @@ import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
+import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +35,7 @@ class SeeDocumentsFragment : Fragment() {
     private var _binding: FragmentSeeDocumentsBinding? = null
     private val binding get() = _binding!!
     private val appLanguage = AppLanguage()
+    private lateinit var userDataStore: UserDataStore
 
     private val seeDocumentsViewModel: SeeDocumentsViewModel by viewModels()
 
@@ -40,6 +44,7 @@ class SeeDocumentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSeeDocumentsBinding.inflate(inflater, container, false)
+        userDataStore = UserDataStore(requireContext())
         return binding.root
     }
 
@@ -73,6 +78,10 @@ class SeeDocumentsFragment : Fragment() {
                     lifecycleScope.launch(Dispatchers.IO) {
                         logout()
                     }
+                    true
+                }
+                R.id.action_mode -> {
+                    setAppMode()
                     true
                 }
                 else -> false
@@ -110,6 +119,29 @@ class SeeDocumentsFragment : Fragment() {
         }
         //Set Recycler View
         binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()){}
+    }
+
+    private fun setAppMode() {
+        lifecycleScope.launch(Dispatchers.IO){
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                val appCompatActivity = activity as AppCompatActivity
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        appCompatActivity.delegate.applyDayNight()
+                        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                    }
+                    userDataStore.saveModePreference(darkMode = true)
+                } else {
+                    withContext(Dispatchers.Main){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        appCompatActivity.delegate.applyDayNight()
+                    }
+                    userDataStore.saveModePreference(darkMode = false)
+                }
+            }
+        }
     }
 
     private fun navigateToSendDocs() {
