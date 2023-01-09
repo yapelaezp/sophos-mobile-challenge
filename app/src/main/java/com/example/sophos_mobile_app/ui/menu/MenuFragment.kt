@@ -38,6 +38,7 @@ class MenuFragment : Fragment() {
     private val binding get() = _binding!!
     private val appLanguage = AppLanguage()
     private val popupBinding by lazy { BackgroundPopupMenuBinding.inflate(layoutInflater) }
+    private lateinit var popupWindow: PopupWindow
     private lateinit var userDataStore: UserDataStore
 
     override fun onCreateView(
@@ -61,36 +62,29 @@ class MenuFragment : Fragment() {
         binding.btnMenuScreenOffices.setOnClickListener {
             navigateToOffices()
         }
-        binding.toolbarMenuScreen.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_logout -> {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        logout()
-                    }
-                    true
-                }
-                R.id.action_language -> {
-                    lifecycleScope.launch { appLanguage.changeLanguage() }
-                    true
-                }
-                R.id.action_mode -> {
-                    setAppMode()
-                    true
-                }
-                R.id.action_see_docs -> {
-                    navigateToSeeDocs()
-                    true
-                }
-                R.id.action_offices -> {
-                    navigateToOffices()
-                    true
-                }
-                R.id.action_send_docs -> {
-                    navigateToSendDocs()
-                    true
-                }
-                else -> false
-            }
+        popupBinding.actionSendDocs.setOnClickListener {
+            navigateToSendDocs()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionSeeDocs.setOnClickListener {
+            navigateToSeeDocs()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionOffices.setOnClickListener {
+            navigateToOffices()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionMode.setOnClickListener {
+            setAppMode()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLanguage.setOnClickListener {
+            lifecycleScope.launch { appLanguage.changeLanguage() }
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLogout.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            popupWindow.dismiss()
         }
     }
 
@@ -102,13 +96,13 @@ class MenuFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
-                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
                     }
                     userDataStore.saveModePreference(darkMode = false)
@@ -138,14 +132,11 @@ class MenuFragment : Fragment() {
     private fun setComponents() {
         //Set toolbar
         binding.toolbarMenuScreen.title = args.userName
-        binding.toolbarMenuScreen.menu.findItem(R.id.action_main_menu).isVisible = false
-        binding.toolbarMenuScreen.overflowIcon =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
-                binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "Español"
+                popupBinding.actionLanguage.text = "Español"
             } else{
-                binding.toolbarMenuScreen.menu.findItem(R.id.action_language).title = "English"
+                popupBinding.actionLanguage.text = "English"
             }
         }
         lifecycleScope.launch(Dispatchers.IO) {
@@ -153,20 +144,23 @@ class MenuFragment : Fragment() {
                 println(userPreferences.darkMode)
                 if (!userPreferences.darkMode){
                     withContext(Dispatchers.Main){
-                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
                     }
                 } else{
                     withContext(Dispatchers.Main){
-                        binding.toolbarMenuScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                 }
             }
         }
-
+        binding.ivMenuScreenOverflowIcon.setOnClickListener {
+            showPopupWindow(it)
+        }
+        popupWindow = PopupWindow(popupBinding.root, WRAP_CONTENT, WRAP_CONTENT)
     }
 
     private fun showPopupWindow(anchor: View){
-        val popupWindow = PopupWindow(popupBinding.root, WRAP_CONTENT, WRAP_CONTENT)
+
         if (popupWindow.isShowing){
             popupWindow.dismiss()
         } else {

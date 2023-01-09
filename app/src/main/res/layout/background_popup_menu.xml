@@ -5,32 +5,32 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/action_1"
+        android:id="@+id/action_send_docs"
         style="@style/popup_menu_item.send_docs"
         android:text = "@string/send_docs"/>
 
     <TextView
-        android:id="@+id/action_2"
+        android:id="@+id/action_see_docs"
         style="@style/popup_menu_item.see_docs"
         android:text = "@string/see_docs"/>
 
     <TextView
-        android:id="@+id/action_3"
+        android:id="@+id/action_offices"
         style="@style/popup_menu_item.offices"
         android:text = "@string/offices"/>
 
     <TextView
-        android:id="@+id/action_4"
+        android:id="@+id/action_mode"
         style="@style/popup_menu_item.nigh_mode"
         android:text = "@string/night_mode"/>
 
     <TextView
-        android:id="@+id/action_5"
+        android:id="@+id/action_language"
         style="@style/popup_menu_item.language"
         android:text = "@string/language"/>
 
     <TextView
-        android:id="@+id/action_6"
+        android:id="@+id/action_logout"
         style="@style/popup_menu_item.logout"
         android:text = "@string/logout"/>
 

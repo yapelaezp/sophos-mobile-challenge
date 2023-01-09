@@ -140,7 +140,7 @@ class SendDocumentsFragment : Fragment() {
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.toolbarDocumentScreen.setOnMenuItemClickListener { menuItem ->
+ /*       binding.toolbarDocumentScreen.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_language -> {
                     lifecycleScope.launch { appLanguage.changeLanguage() }
@@ -170,7 +170,7 @@ class SendDocumentsFragment : Fragment() {
                 }
                 else -> false
             }
-        }
+        }*/
     }
 
     private fun showSelectPhotoOptionDialog() {
@@ -247,7 +247,7 @@ class SendDocumentsFragment : Fragment() {
         }
         //Set toolbar
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
-        binding.toolbarDocumentScreen.overflowIcon =
+ /*       binding.toolbarDocumentScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
@@ -259,7 +259,7 @@ class SendDocumentsFragment : Fragment() {
             } else {
                 binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "English"
             }
-        }
+        }*/
     }
 
     private fun navigate(action: NavDirections) {

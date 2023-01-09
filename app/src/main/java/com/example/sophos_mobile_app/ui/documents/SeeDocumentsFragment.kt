@@ -56,7 +56,7 @@ class SeeDocumentsFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.toolbarViewDocumentsScreen.setOnMenuItemClickListener { menuItem ->
+ /*       binding.toolbarViewDocumentsScreen.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
                 R.id.action_language -> {
                     lifecycleScope.launch { appLanguage.changeLanguage() }
@@ -86,7 +86,7 @@ class SeeDocumentsFragment : Fragment() {
                 }
                 else -> false
             }
-        }
+        }*/
         binding.toolbarViewDocumentsScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
@@ -107,7 +107,7 @@ class SeeDocumentsFragment : Fragment() {
         //Get document list
         seeDocumentsViewModel.getDocuments(args.email)
         //Set Toolbar
-        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_see_docs).isVisible = false
+/*        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_see_docs).isVisible = false
         binding.toolbarViewDocumentsScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         appLanguage.currentLocaleName?.let {
@@ -116,7 +116,7 @@ class SeeDocumentsFragment : Fragment() {
             } else{
                 binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_language).title = "English"
             }
-        }
+        }*/
         //Set Recycler View
         binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()){}
     }

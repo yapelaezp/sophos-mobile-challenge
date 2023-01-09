@@ -87,7 +87,7 @@ class OfficesFragment : Fragment() {
         binding.toolbarOfficesScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.toolbarOfficesScreen.setOnMenuItemClickListener { menuItem ->
+   /*     binding.toolbarOfficesScreen.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
                 R.id.action_language -> {
                     lifecycleScope.launch { appLanguage.changeLanguage() }
@@ -117,7 +117,7 @@ class OfficesFragment : Fragment() {
                 }
                 else -> false
             }
-        }
+        }*/
     }
 
     private fun navigateToSeeDocs() {
@@ -147,14 +147,14 @@ class OfficesFragment : Fragment() {
         //Load cities
         officesViewModel.getOffices()
         //Set toolbar
-        binding.toolbarOfficesScreen.menu.findItem(R.id.action_offices).isVisible = false
+/*        binding.toolbarOfficesScreen.menu.findItem(R.id.action_offices).isVisible = false
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
                 binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "Español"
             } else{
                 binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "English"
             }
-        }
+        }*/
     }
 
     private suspend fun logout() {

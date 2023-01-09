@@ -17,10 +17,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_topbar"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
         app:title="@string/go_back"
-        app:titleTextColor="?attr/colorPrimaryVariant" />
+        app:titleTextColor="?attr/colorPrimaryVariant">
+
+        <ImageButton
+            android:id="@+id/iv_menu_screen_overflow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_baseline_menu_24"
+            android:backgroundTint="?attr/colorPrimary"/>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
         android:id="@+id/tv_offices_screen_title"

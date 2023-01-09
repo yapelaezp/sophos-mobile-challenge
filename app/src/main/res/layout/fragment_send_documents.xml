@@ -10,15 +10,24 @@
         android:id="@+id/toolbar_document_screen"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:title="@string/offices"
         android:backgroundTint="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_topbar"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
-        app:titleTextColor="?attr/colorPrimaryVariant" />
+        app:title="@string/offices"
+        app:titleTextColor="?attr/colorPrimaryVariant">
+
+        <ImageButton
+            android:id="@+id/iv_send_docs_screen_overflow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="?attr/colorPrimary"
+            android:onClick="showPopup"
+            android:src="@drawable/ic_baseline_menu_24" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
         android:id="@+id/tv_document_screen_doc_delivery"
@@ -52,8 +61,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:spinnerMode ="dropdown"
         android:prompt="@string/doc_type_title"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_document_screen_add_photo" />

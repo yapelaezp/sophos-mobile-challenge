@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <item
+<!--    <item
         android:id="@+id/action_main_menu"
         android:title="@string/main_menu"
         app:showAsAction="never" />
@@ -38,7 +38,7 @@
     <item
         android:id="@+id/action_logout"
         android:title="@string/logout"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
 
 
