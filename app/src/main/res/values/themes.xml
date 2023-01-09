@@ -16,6 +16,9 @@
         <item name="colorOnSurface">@color/purple_sophos</item>
         <item name="colorOnSurfaceVariant">@color/purple_sophos</item>
         <item name="colorAccent">@color/pink_sophos</item>
+        <item name="popupMenuBackground">@drawable/background_button_rounded</item>
+
+
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">

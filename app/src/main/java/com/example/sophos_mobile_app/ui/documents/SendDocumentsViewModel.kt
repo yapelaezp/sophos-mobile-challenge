@@ -22,8 +22,8 @@ class SendDocumentsViewModel @Inject constructor(
     val status: LiveData<Boolean>
         get() = _status
 
-    private val _cities = MutableLiveData<List<String>>()
-    val cities: LiveData<List<String>>
+    private val _cities = MutableLiveData<Set<String>>()
+    val cities: LiveData<Set<String>>
         get() = _cities
 
     fun createNewDocument(
@@ -46,7 +46,8 @@ class SendDocumentsViewModel @Inject constructor(
 
     fun getOffices() {
         viewModelScope.launch {
-            _cities.value = officeRepository.getOffices().map { office -> office.city }
+            val response = officeRepository.getOffices().map { office -> office.city }
+            _cities.value = response.toSet()
         }
     }
 

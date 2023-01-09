@@ -3,8 +3,10 @@ package com.example.sophos_mobile_app.ui.documents
 import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -46,8 +48,9 @@ class SendDocumentsFragment : Fragment() {
     private val galleryViewModel: GalleryViewModel by activityViewModels()
     private val cameraViewModel: CameraViewModel by activityViewModels()
     private val appLanguage = AppLanguage()
-    private lateinit var userDataStore: UserDataStore
     private var imageBase64: String? = null
+    private lateinit var userDataStore: UserDataStore
+    private lateinit var arrayAdapter: ArrayAdapter<String>
 
 
     override fun onCreateView(
@@ -67,10 +70,12 @@ class SendDocumentsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        val cities = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
         sendDocumentViewModel.cities.observe(viewLifecycleOwner) { offices ->
-            cities.addAll(offices)
-            binding.spDocumentScreenCity.adapter = cities
+                val cities = offices.toMutableList()
+                val cityTitle = getString(R.string.city)
+                cities.add(0,cityTitle)
+                arrayAdapter =  ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, cities)
+                binding.spDocumentScreenCity.adapter = arrayAdapter
         }
         sendDocumentViewModel.status.observe(viewLifecycleOwner){ postNewDocStatus ->
             if (postNewDocStatus){
@@ -200,7 +205,7 @@ class SendDocumentsFragment : Fragment() {
         docType: String?, docNumber: String?, names: String?, lastnames: String?,
         email: String?, city: String?, attachedType: String, imageBase64: String?
     ): Pair<Boolean, String> {
-        if (Validation.isFieldEmpty(docType)) {
+        if (Validation.isFieldEmpty(docType) || docType  == getString(R.string.doc_type_title)) {
             return Pair(false, getString(R.string.id_type_requirement))
         }
         if (Validation.isFieldEmpty(docNumber)) {
@@ -215,7 +220,7 @@ class SendDocumentsFragment : Fragment() {
         if (Validation.isFieldEmpty(email)) {
             return Pair(false, getString(R.string.email_requirement))
         }
-        if (Validation.isFieldEmpty(city)) {
+        if (Validation.isFieldEmpty(city) || city == getString(R.string.city)) {
             return Pair(false, getString(R.string.city_requirement))
         }
         if (Validation.isFieldEmpty(attachedType)) {
@@ -228,9 +233,9 @@ class SendDocumentsFragment : Fragment() {
     }
 
     private fun setComponents() {
-        // Load cities into city spinner
+        // Set cities spinner
         sendDocumentViewModel.getOffices()
-
+       // cities.add(getString(R.string.city))
         //Set doc type spinner
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -240,7 +245,6 @@ class SendDocumentsFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spDocumentScreenIdType.adapter = adapter
         }
-
         //Set toolbar
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
         binding.toolbarDocumentScreen.overflowIcon =
@@ -322,6 +326,18 @@ class SendDocumentsFragment : Fragment() {
         }
     }
 
+/*    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (parent?.id) {
+            R.id.sp_document_screen_city -> {
+                city = cities.getItem(position).toString()
+                cities.clear()
+                cities.add(city)
+            }
+        }
+    }*/
+
+    //override fun onNothingSelected(parent: AdapterView<*>?) {}
+
     private fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
@@ -330,4 +346,5 @@ class SendDocumentsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

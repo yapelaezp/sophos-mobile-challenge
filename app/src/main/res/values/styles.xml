@@ -105,4 +105,43 @@
         <item name="android:textColor">@color/aquamarine_sophos</item>
     </style>
 
+    <!-- Menu item popup -->
+    <style name="popup_menu_item">
+        <item name="android:layout_width">220dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="popup_menu_item.send_docs">
+        <item name="android:textColor">@color/pink_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_send_docs</item>
+    </style>
+
+    <style name="popup_menu_item.see_docs">
+        <item name="android:textColor">@color/blue_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_see_docs</item>
+    </style>
+
+    <style name="popup_menu_item.offices">
+        <item name="android:textColor">@color/aquamarine_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_offices</item>
+    </style>
+
+    <style name="popup_menu_item.nigh_mode">
+        <item name="android:textColor">@color/dark_blue_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_night_mode</item>
+    </style>
+
+    <style name="popup_menu_item.language">
+        <item name="android:textColor">@color/light_blue_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_language</item>
+    </style>
+
+    <style name="popup_menu_item.logout">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/background_menu_item_logout</item>
+    </style>
+
 </resources>

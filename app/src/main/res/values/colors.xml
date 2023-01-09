@@ -20,4 +20,7 @@
     <color name="color_accent">#FE0FE0</color>
     <color name="background_light">#FFFFFF</color>
     <color name="purple_sophos_dark">#3A275B</color>
+    <color name="light_blue_sophos">#22c5f3</color>
+    <color name="dark_blue_sophos">#341e8a</color>
+
 </resources>

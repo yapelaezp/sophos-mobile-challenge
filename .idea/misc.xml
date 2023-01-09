@@ -4,6 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Alejandro/Documents/AndroidStudioProjects/BootcampSophos/sophosmobileapp/app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_item_language.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_item_logout.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_item_night_mode.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_item_offices.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_item_see_docs.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_item_send_docs.xml" value="0.2075" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_layout_aquamarine.xml" value="0.131" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_layout_blue.xml" value="0.1845" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-night/background_menu_layout_button_offices.xml" value="0.175" />
@@ -21,6 +27,13 @@
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_button_fingerprint.xml" value="0.1595" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_button_rounded.xml" value="0.1905" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item.xml" value="0.1" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item_language.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item_logout.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item_night_mode.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item_offices.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item_see_docs.xml" value="0.2075" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_item_send_docs.xml" value="0.2075" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_layout_button_offices.xml" value="0.1595" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_layout_button_see_docs.xml" value="0.1595" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/background_menu_layout_button_send_docs.xml" value="0.175" />
@@ -66,6 +79,7 @@
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/drawable/vertical_separator.xml" value="0.17" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/font/font.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/background_popup_menu.xml" value="0.25" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/fragment_camera.xml" value="0.25" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/fragment_kamera.xml" value="0.25" />
         <entry key="..\:/Users/Alejandro/Documents/Bootcamp Sophos/sophos-mobile-challenge/app/src/main/res/layout/fragment_login.xml" value="0.264" />

@@ -2,12 +2,13 @@ package com.example.sophos_mobile_app.ui.menu
 
 import android.Manifest
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ListPopupWindow.WRAP_CONTENT
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -17,6 +18,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
@@ -35,6 +37,7 @@ class MenuFragment : Fragment() {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private val appLanguage = AppLanguage()
+    private val popupBinding by lazy { BackgroundPopupMenuBinding.inflate(layoutInflater) }
     private lateinit var userDataStore: UserDataStore
 
     override fun onCreateView(
@@ -158,6 +161,19 @@ class MenuFragment : Fragment() {
                     }
                 }
             }
+        }
+
+    }
+
+    private fun showPopupWindow(anchor: View){
+        val popupWindow = PopupWindow(popupBinding.root, WRAP_CONTENT, WRAP_CONTENT)
+        if (popupWindow.isShowing){
+            popupWindow.dismiss()
+        } else {
+            popupWindow.apply {
+                isOutsideTouchable = true
+            }
+            popupWindow.showAsDropDown(anchor)
         }
     }
 

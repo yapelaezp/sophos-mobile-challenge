@@ -16,7 +16,7 @@
         android:textColor="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/h_divider_item_view_document"
-        tools:text="@tools:sample/date/mmddyy" />
+        android:text="@tools:sample/date/mmddyy" />
 
     <TextView
         android:id="@+id/tv_item_document_detail_type"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toEndOf="@+id/tv_item_document_date"
         app:layout_constraintTop_toTopOf="@id/tv_item_document_date"
         app:layout_constraintBottom_toBottomOf="@id/tv_item_document_date"
-        tools:text="@tools:sample/lorem" />
+        android:text="@tools:sample/lorem" />
 
     <TextView
         android:id="@+id/tv_item_document_detail_name"

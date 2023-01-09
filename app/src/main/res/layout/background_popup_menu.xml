@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/action_1"
+        style="@style/popup_menu_item.send_docs"
+        android:text = "@string/send_docs"/>
+
+    <TextView
+        android:id="@+id/action_2"
+        style="@style/popup_menu_item.see_docs"
+        android:text = "@string/see_docs"/>
+
+    <TextView
+        android:id="@+id/action_3"
+        style="@style/popup_menu_item.offices"
+        android:text = "@string/offices"/>
+
+    <TextView
+        android:id="@+id/action_4"
+        style="@style/popup_menu_item.nigh_mode"
+        android:text = "@string/night_mode"/>
+
+    <TextView
+        android:id="@+id/action_5"
+        style="@style/popup_menu_item.language"
+        android:text = "@string/language"/>
+
+    <TextView
+        android:id="@+id/action_6"
+        style="@style/popup_menu_item.logout"
+        android:text = "@string/logout"/>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

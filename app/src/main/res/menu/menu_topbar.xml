@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <item
         android:id="@+id/action_main_menu"
@@ -10,12 +11,14 @@
     <item
         android:id="@+id/action_send_docs"
         android:title="@string/send_docs"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        android:itemBackground = "@color/pink_sophos"/>
 
     <item
         android:id="@+id/action_see_docs"
         android:title="@string/see_docs"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        app:itemBackground = "@color/pink_sophos"/>
 
     <item
         android:id="@+id/action_offices"
