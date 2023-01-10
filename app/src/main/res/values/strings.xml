@@ -59,6 +59,8 @@
     <string name="doc_type_title">Doc type</string>
     <string name="add_new_doc_success">Document added succesfully</string>
     <string name="add_new_doc_failed">Document could not be uploaded </string>
+    <string name="network_error">Network error</string>
+    <string name="unknown_host_exception">Unknown host exception</string>
 
     <string-array name="doc_type">
         <item>Doc type</item>

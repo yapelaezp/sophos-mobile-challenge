@@ -28,6 +28,8 @@ ext {
     mapsVersion = '18.1.0'
     latestAppCompatVersion = '1.7.0-alpha01'
     placesVersion = '3.0.0'
+    archTestingVersion = '2.1.0'
+    coroutinesVersion = '1.5.2'
 }
 
 task clean(type: Delete) {

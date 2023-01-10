@@ -15,7 +15,7 @@ class ValidationTest{
 
         //Action
 
-        val actual = Validation.isFieldNullOrEmpty(email,password, city)
+        val actual = Validation.isFieldEmpty(email)
         //Assert
         assertEquals(Pair(false, ""), actual)
     }

@@ -26,7 +26,7 @@ android {
         }
     }
     compileOptions {
-        //coreLibraryDesugaringEnabled true
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -45,8 +45,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat-resources:$latestAppCompatVersion"
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     implementation "androidx.activity:activity-ktx:1.7.0-alpha02"
@@ -81,8 +79,14 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:$mapsVersion"
     implementation "com.google.android.libraries.places:places:$placesVersion"
 
-    //Desugaring gradle
-    //coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+    //Desugaring gradle (For date compatibility)
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+
+    // Test unit
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
 
 
 }
