@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -25,6 +23,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import com.example.sophos_mobile_app.ui.camera.CameraViewModel
 import com.example.sophos_mobile_app.ui.camera.GalleryViewModel
@@ -48,6 +47,8 @@ class SendDocumentsFragment : Fragment() {
     private val galleryViewModel: GalleryViewModel by activityViewModels()
     private val cameraViewModel: CameraViewModel by activityViewModels()
     private val appLanguage = AppLanguage()
+    private val popupBinding by lazy { BackgroundPopupMenuBinding.inflate(layoutInflater) }
+    private lateinit var popupWindow: PopupWindow
     private var imageBase64: String? = null
     private lateinit var userDataStore: UserDataStore
     private lateinit var arrayAdapter: ArrayAdapter<String>
@@ -140,37 +141,26 @@ class SendDocumentsFragment : Fragment() {
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
- /*       binding.toolbarDocumentScreen.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_language -> {
-                    lifecycleScope.launch { appLanguage.changeLanguage() }
-                    true
-                }
-                R.id.action_main_menu -> {
-                    findNavController().popBackStack(R.id.menuFragmentDestination, false)
-                    true
-                }
-                R.id.action_see_docs -> {
-                    navigateToSeeDocs()
-                    true
-                }
-                R.id.action_offices -> {
-                    navigateToOffices()
-                    true
-                }
-                R.id.action_logout -> {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        logout()
-                    }
-                    true
-                }
-                R.id.action_mode -> {
-                    setAppMode()
-                    true
-                }
-                else -> false
-            }
-        }*/
+        popupBinding.actionSeeDocs.setOnClickListener {
+            navigateToSeeDocs()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionOffices.setOnClickListener {
+            navigateToOffices()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionMode.setOnClickListener {
+            setAppMode()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLanguage.setOnClickListener {
+            lifecycleScope.launch { appLanguage.changeLanguage() }
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLogout.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            popupWindow.dismiss()
+        }
     }
 
     private fun showSelectPhotoOptionDialog() {
@@ -245,21 +235,40 @@ class SendDocumentsFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spDocumentScreenIdType.adapter = adapter
         }
-        //Set toolbar
+        //Set Toolbar
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
- /*       binding.toolbarDocumentScreen.overflowIcon =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.toolbarDocumentScreen.menu.findItem(R.id.action_send_docs).isVisible = false
+        popupBinding.actionSendDocs.visibility = View.GONE
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()) {
-                binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "Español"
+                popupBinding.actionLanguage.text = "Español"
             } else {
-                binding.toolbarDocumentScreen.menu.findItem(R.id.action_language).title = "English"
+                popupBinding.actionLanguage.text = "English"
             }
-        }*/
+        }
+        binding.ivSendDocsScreenOverflowIcon.setOnClickListener {
+            showPopupWindow(it)
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
+                println(userPreferences.darkMode)
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
+                    }
+                } else{
+                    withContext(Dispatchers.Main){
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
+                    }
+                }
+            }
+        }
+        popupWindow = PopupWindow(popupBinding.root,
+            ListPopupWindow.WRAP_CONTENT,
+            ListPopupWindow.WRAP_CONTENT
+        )
     }
 
     private fun navigate(action: NavDirections) {
@@ -311,13 +320,13 @@ class SendDocumentsFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
-                        binding.toolbarDocumentScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        binding.toolbarDocumentScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
                     }
                     userDataStore.saveModePreference(darkMode = false)
@@ -326,17 +335,16 @@ class SendDocumentsFragment : Fragment() {
         }
     }
 
-/*    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        when (parent?.id) {
-            R.id.sp_document_screen_city -> {
-                city = cities.getItem(position).toString()
-                cities.clear()
-                cities.add(city)
+    private fun showPopupWindow(anchor: View){
+        if (popupWindow.isShowing){
+            popupWindow.dismiss()
+        } else {
+            popupWindow.apply {
+                isOutsideTouchable = true
             }
+            popupWindow.showAsDropDown(anchor)
         }
-    }*/
-
-    //override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
 
     private fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()

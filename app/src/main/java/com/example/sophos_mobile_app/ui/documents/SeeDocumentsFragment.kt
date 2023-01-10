@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListPopupWindow
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -17,6 +19,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
@@ -36,7 +39,8 @@ class SeeDocumentsFragment : Fragment() {
     private val binding get() = _binding!!
     private val appLanguage = AppLanguage()
     private lateinit var userDataStore: UserDataStore
-
+    private val popupBinding by lazy { BackgroundPopupMenuBinding.inflate(layoutInflater) }
+    private lateinit var popupWindow: PopupWindow
     private val seeDocumentsViewModel: SeeDocumentsViewModel by viewModels()
 
     override fun onCreateView(
@@ -56,39 +60,28 @@ class SeeDocumentsFragment : Fragment() {
     }
 
     private fun setListeners() {
- /*       binding.toolbarViewDocumentsScreen.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.action_language -> {
-                    lifecycleScope.launch { appLanguage.changeLanguage() }
-                    true
-                }
-                R.id.action_main_menu -> {
-                    findNavController().popBackStack(R.id.menuFragmentDestination, false)
-                    true
-                }
-                R.id.action_send_docs -> {
-                    navigateToSendDocs()
-                    true
-                }
-                R.id.action_offices -> {
-                    navigateToOffices()
-                    true
-                }
-                R.id.action_logout -> {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        logout()
-                    }
-                    true
-                }
-                R.id.action_mode -> {
-                    setAppMode()
-                    true
-                }
-                else -> false
-            }
-        }*/
         binding.toolbarViewDocumentsScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
+        }
+        popupBinding.actionSendDocs.setOnClickListener {
+            navigateToSendDocs()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionOffices.setOnClickListener {
+            navigateToOffices()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionMode.setOnClickListener {
+            setAppMode()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLanguage.setOnClickListener {
+            lifecycleScope.launch { appLanguage.changeLanguage() }
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLogout.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            popupWindow.dismiss()
         }
     }
 
@@ -107,16 +100,35 @@ class SeeDocumentsFragment : Fragment() {
         //Get document list
         seeDocumentsViewModel.getDocuments(args.email)
         //Set Toolbar
-/*        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_see_docs).isVisible = false
-        binding.toolbarViewDocumentsScreen.overflowIcon =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
+        popupBinding.actionSeeDocs.visibility = View.GONE
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
-                binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_language).title = "Español"
+                popupBinding.actionLanguage.text = "Español"
             } else{
-                binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_language).title = "English"
+                popupBinding.actionLanguage.text = "English"
             }
-        }*/
+        }
+        binding.ivSeeDocsScreenOverflowIcon.setOnClickListener {
+            showPopupWindow(it)
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
+                println(userPreferences.darkMode)
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
+                    }
+                } else{
+                    withContext(Dispatchers.Main){
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
+                    }
+                }
+            }
+        }
+        popupWindow = PopupWindow(popupBinding.root,
+            ListPopupWindow.WRAP_CONTENT,
+            ListPopupWindow.WRAP_CONTENT
+        )
         //Set Recycler View
         binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()){}
     }
@@ -129,14 +141,14 @@ class SeeDocumentsFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
-                        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                        popupBinding.actionSeeDocs.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        binding.toolbarViewDocumentsScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
+                        popupBinding.actionSeeDocs.text = getString(R.string.night_mode)
                     }
                     userDataStore.saveModePreference(darkMode = false)
                 }
@@ -151,6 +163,17 @@ class SeeDocumentsFragment : Fragment() {
     private fun navigateToOffices() {
         val action = SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
         findNavController().navigate(action)
+    }
+
+    private fun showPopupWindow(anchor: View){
+        if (popupWindow.isShowing){
+            popupWindow.dismiss()
+        } else {
+            popupWindow.apply {
+                isOutsideTouchable = true
+            }
+            popupWindow.showAsDropDown(anchor)
+        }
     }
 
     private suspend fun logout() {

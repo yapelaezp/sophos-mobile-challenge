@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ListPopupWindow.WRAP_CONTENT
 import android.widget.PopupWindow
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
@@ -160,7 +157,6 @@ class MenuFragment : Fragment() {
     }
 
     private fun showPopupWindow(anchor: View){
-
         if (popupWindow.isShowing){
             popupWindow.dismiss()
         } else {

@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListPopupWindow
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -21,6 +23,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.MainActivity
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.model.Office
+import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
@@ -48,13 +51,15 @@ class OfficesFragment : Fragment() {
     private lateinit var mapView: MapView
     private val officesViewModel: OfficesViewModel by viewModels()
     private var offices: List<Office>? = null
-    private val appLanguage = AppLanguage()
     private lateinit var userDataStore: UserDataStore
+    private val appLanguage = AppLanguage()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val defaultLocation = LatLng(-33.8523341, 151.2106085) // TODO ("Put Medellin as Default")
     private var locationPermissionGranted: Boolean? = null
     private val args: OfficesFragmentArgs by navArgs()
     private var lastKnownLocation: Location? = null
+    private val popupBinding by lazy { BackgroundPopupMenuBinding.inflate(layoutInflater) }
+    private lateinit var popupWindow: PopupWindow
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName
@@ -87,37 +92,26 @@ class OfficesFragment : Fragment() {
         binding.toolbarOfficesScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
-   /*     binding.toolbarOfficesScreen.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.action_language -> {
-                    lifecycleScope.launch { appLanguage.changeLanguage() }
-                    true
-                }
-                R.id.action_main_menu -> {
-                    findNavController().popBackStack(R.id.menuFragmentDestination, false)
-                    true
-                }
-                R.id.action_send_docs -> {
-                    navigateToSendDocs()
-                    true
-                }
-                R.id.action_see_docs -> {
-                    navigateToSeeDocs()
-                    true
-                }
-                R.id.action_logout -> {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        logout()
-                    }
-                    true
-                }
-                R.id.action_mode -> {
-                    setAppMode()
-                    true
-                }
-                else -> false
-            }
-        }*/
+        popupBinding.actionSendDocs.setOnClickListener {
+            navigateToSendDocs()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionSeeDocs.setOnClickListener {
+            navigateToSeeDocs()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionMode.setOnClickListener {
+            setAppMode()
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLanguage.setOnClickListener {
+            lifecycleScope.launch { appLanguage.changeLanguage() }
+            popupWindow.dismiss()
+        }
+        popupBinding.actionLogout.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            popupWindow.dismiss()
+        }
     }
 
     private fun navigateToSeeDocs() {
@@ -147,14 +141,35 @@ class OfficesFragment : Fragment() {
         //Load cities
         officesViewModel.getOffices()
         //Set toolbar
-/*        binding.toolbarOfficesScreen.menu.findItem(R.id.action_offices).isVisible = false
+        popupBinding.actionOffices.visibility = View.GONE
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()){
-                binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "Español"
+                popupBinding.actionLanguage.text = "Español"
             } else{
-                binding.toolbarOfficesScreen.menu.findItem(R.id.action_language).title = "English"
+                popupBinding.actionLanguage.text = "English"
             }
-        }*/
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
+                println(userPreferences.darkMode)
+                if (!userPreferences.darkMode){
+                    withContext(Dispatchers.Main){
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
+                    }
+                } else{
+                    withContext(Dispatchers.Main){
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
+                    }
+                }
+            }
+        }
+        binding.ivMenuScreenOverflowIcon.setOnClickListener {
+            showPopupWindow(it)
+        }
+        popupWindow = PopupWindow(popupBinding.root,
+            ListPopupWindow.WRAP_CONTENT,
+            ListPopupWindow.WRAP_CONTENT
+        )
     }
 
     private suspend fun logout() {
@@ -204,13 +219,13 @@ class OfficesFragment : Fragment() {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
-                        binding.toolbarOfficesScreen.menu.findItem(R.id.action_mode).title = getString(R.string.day_mode)
+                        popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
                     withContext(Dispatchers.Main){
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        binding.toolbarOfficesScreen.menu.findItem(R.id.action_mode).title = getString(R.string.night_mode)
+                        popupBinding.actionMode.text = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
                     }
                     userDataStore.saveModePreference(darkMode = false)
@@ -265,6 +280,17 @@ class OfficesFragment : Fragment() {
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
+        }
+    }
+
+    private fun showPopupWindow(anchor: View){
+        if (popupWindow.isShowing){
+            popupWindow.dismiss()
+        } else {
+            popupWindow.apply {
+                isOutsideTouchable = true
+            }
+            popupWindow.showAsDropDown(anchor)
         }
     }
 }

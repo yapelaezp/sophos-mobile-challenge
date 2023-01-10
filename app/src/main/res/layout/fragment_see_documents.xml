@@ -21,7 +21,7 @@
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24">
 
         <ImageButton
-            android:id="@+id/iv_menu_screen_overflow_icon"
+            android:id="@+id/iv_see_docs_screen_overflow_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
