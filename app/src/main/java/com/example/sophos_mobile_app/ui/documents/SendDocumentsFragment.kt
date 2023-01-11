@@ -75,7 +75,6 @@ class SendDocumentsFragment : Fragment() {
                 binding.spDocumentScreenCity.adapter = arrayAdapter
         }
         sendDocumentViewModel.statusPost.observe(viewLifecycleOwner) { status ->
-            println("pikachu $status")
             when (status) {
                 is ResponseStatus.Error -> {
                     binding.pbSendDocs.visibility = View.GONE

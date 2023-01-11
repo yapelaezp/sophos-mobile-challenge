@@ -35,7 +35,7 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService) : Document
         response.put
     }
 
-    override suspend fun getDocumentByUserEmail(email: String): ResponseStatus<List<Document>> =
+    override suspend fun getDocumentsByUserEmail(email: String): ResponseStatus<List<Document>> =
         makeNetworkCall {
             val response = api.getDocumentByUserEmail(email).Items.map { document ->
                 document.toModel()

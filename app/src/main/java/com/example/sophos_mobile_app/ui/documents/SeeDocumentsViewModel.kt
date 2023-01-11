@@ -36,7 +36,7 @@ class SeeDocumentsViewModel @Inject constructor(
     fun getDocuments(email: String){
         _status.postValue(ResponseStatus.Loading())
         viewModelScope.launch {
-            when(val response = documentRepository.getDocumentByUserEmail(email)){
+            when(val response = documentRepository.getDocumentsByUserEmail(email)){
                  is ResponseStatus.Success -> {
                     _documents.postValue(response.data)
                     _status.postValue(ResponseStatus.Success(response.data))

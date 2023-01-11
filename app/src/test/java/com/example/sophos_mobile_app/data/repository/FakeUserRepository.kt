@@ -14,10 +14,14 @@ class FakeUserRepository : UserRepository {
                 )
             )
         } else {
-            ResponseStatus.Error(0)
+            ResponseStatus.Success(
+                User(
+                    null, null, null,
+                    false, null
+                )
+            )
         }
     }
-
 }
 
 
