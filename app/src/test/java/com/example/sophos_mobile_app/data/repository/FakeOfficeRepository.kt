@@ -1,10 +1,11 @@
 package com.example.sophos_mobile_app.data.repository
 
+import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Office
 
 class FakeOfficeRepository(): OfficeRepository{
-    override suspend fun getOffices(): List<Office> {
-        return listOf( Office(
+    override suspend fun getOffices(): ResponseStatus<List<Office>> {
+        return ResponseStatus.Success(listOf( Office(
             "Chile",
             7,
             "-70.64851440000001",
@@ -57,6 +58,6 @@ class FakeOfficeRepository(): OfficeRepository{
                 "-99.16522090000001",
                 "19.42736700000002",
                 "Torre Reforma Latino - Piso 41")
-        )
+        ))
     }
 }

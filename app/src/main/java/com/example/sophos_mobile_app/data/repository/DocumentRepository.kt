@@ -1,5 +1,6 @@
 package com.example.sophos_mobile_app.data.repository
 
+import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.model.DocumentDetail
 
@@ -13,9 +14,9 @@ interface DocumentRepository {
         email: String,
         attachedType: String,
         attached: String
-    ): Boolean
+    ): ResponseStatus<Boolean>
 
-    suspend fun getDocumentByUserEmail(email: String): List<Document>
+    suspend fun getDocumentByUserEmail(email: String): ResponseStatus<List<Document>>
 
-    suspend fun getDocumentDetail(registerId: String): List<DocumentDetail>
+    suspend fun getDocumentDetail(registerId: String): ResponseStatus<List<DocumentDetail>>
 }

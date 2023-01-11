@@ -2,7 +2,9 @@ package com.example.sophos_mobile_app.ui.menu
 
 import android.Manifest
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ListPopupWindow.WRAP_CONTENT
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
@@ -86,18 +88,18 @@ class MenuFragment : Fragment() {
     }
 
     private fun setAppMode() {
-        lifecycleScope.launch(Dispatchers.IO){
-            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
                 val appCompatActivity = activity as AppCompatActivity
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
@@ -130,45 +132,48 @@ class MenuFragment : Fragment() {
         //Set toolbar
         binding.toolbarMenuScreen.title = args.userName
         appLanguage.currentLocaleName?.let {
-            if ("español" !in it.lowercase()){
+            if ("español" !in it.lowercase()) {
                 popupBinding.actionLanguage.text = "Español"
-            } else{
+            } else {
                 popupBinding.actionLanguage.text = "English"
             }
         }
         lifecycleScope.launch(Dispatchers.IO) {
             userDataStore.getDataStorePreferences().collect { userPreferences ->
                 println(userPreferences.darkMode)
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                     }
-                } else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                 }
             }
         }
+        popupWindow = PopupWindow(popupBinding.root, WRAP_CONTENT, WRAP_CONTENT)
+
         binding.ivMenuScreenOverflowIcon.setOnClickListener {
             showPopupWindow(it)
         }
-        popupWindow = PopupWindow(popupBinding.root, WRAP_CONTENT, WRAP_CONTENT)
     }
 
-    private fun showPopupWindow(anchor: View){
-        if (popupWindow.isShowing){
-            popupWindow.dismiss()
-        } else {
+    private fun showPopupWindow(anchor: View) {
+        if (popupWindow.isShowing) {
             popupWindow.apply {
-                isOutsideTouchable = true
+                showAsDropDown(anchor)
+                dismiss()
             }
-            popupWindow.showAsDropDown(anchor)
+        }
+        popupWindow.apply {
+            isOutsideTouchable = true
+            showAsDropDown(anchor)
         }
     }
 
     private suspend fun logout() {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             requireContext().dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
                 preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
@@ -176,8 +181,13 @@ class MenuFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
-            val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
-            findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
+            val navOptions =
+                NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+            findNavController().navigate(
+                R.id.loginFragmentDestination,
+                null,
+                navOptions = navOptions
+            )
         }
     }
 

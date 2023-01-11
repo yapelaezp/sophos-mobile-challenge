@@ -107,11 +107,11 @@
 
     <!-- Menu item popup -->
     <style name="popup_menu_item">
-        <item name="android:layout_width">220dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="popup_menu_item.send_docs">

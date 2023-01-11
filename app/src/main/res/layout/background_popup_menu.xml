@@ -34,6 +34,4 @@
         style="@style/popup_menu_item.logout"
         android:text = "@string/logout"/>
 
-
-
 </androidx.appcompat.widget.LinearLayoutCompat>

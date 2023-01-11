@@ -1,14 +1,13 @@
 package com.example.sophos_mobile_app.ui.login
 
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sophos_mobile_app.data.api.ResponseStatus
+import com.example.sophos_mobile_app.data.api.dto.UserDto
 import com.example.sophos_mobile_app.data.model.User
 import com.example.sophos_mobile_app.data.repository.UserRepository
-import com.example.sophos_mobile_app.data.repository.UserRepositoryImpl
-import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,16 +15,26 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val userRepository: UserRepository): ViewModel(){
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User>
+    private val _user = MutableLiveData<User?>()
+    val user: LiveData<User?>
         get() = _user
 
+    private val _status = MutableLiveData<ResponseStatus<Any>>()
+    val status: LiveData<ResponseStatus<Any>> get() = _status
+
     fun login(email: String, password: String) {
+        _status.value = ResponseStatus.Loading()
         viewModelScope.launch {
-            val response = userRepository.getUserById(email, password)
-            _user.value = response
+            when(val response = userRepository.getUserById(email, password)){
+                is ResponseStatus.Success -> {
+                    _user.postValue(response.data)
+                    _status.postValue(ResponseStatus.Success(response.data))
+                }
+                is ResponseStatus.Error -> {
+                    _status.postValue(ResponseStatus.Error(response.messageId))
+                }
+                else -> {}
+            }
         }
     }
-
-
 }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListPopupWindow
 import android.widget.PopupWindow
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.MainActivity
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding
@@ -85,6 +87,16 @@ class OfficesFragment : Fragment() {
         officesViewModel.offices.observe(viewLifecycleOwner){ offices ->
             this.offices = offices
             setMapView()
+        }
+        officesViewModel.status.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                is ResponseStatus.Error -> {
+                    binding.pbOffices.visibility = View.GONE
+                    showErrorDialog(status.messageId)
+                }
+                is ResponseStatus.Loading -> binding.pbOffices.visibility = View.VISIBLE
+                is ResponseStatus.Success -> binding.pbOffices.visibility = View.GONE
+            }
         }
     }
 
@@ -281,6 +293,15 @@ class OfficesFragment : Fragment() {
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
         }
+    }
+
+    private fun showErrorDialog(messageId: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error_message)
+            .setMessage(messageId)
+            .setPositiveButton(android.R.string.ok) { _, _ -> /** Dissmiss dialog **/ }
+            .create()
+            .show()
     }
 
     private fun showPopupWindow(anchor: View){

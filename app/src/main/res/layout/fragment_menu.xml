@@ -15,7 +15,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
             app:titleTextColor="?attr/colorPrimaryVariant"
             app:layout_constraintEnd_toEndOf="parent"
             tools:title="Naruto"
@@ -28,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:src="@drawable/ic_baseline_menu_24"
-                android:backgroundTint="?attr/colorPrimary"/>
+                android:backgroundTint="?attr/colorOnPrimary"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
         <ImageView

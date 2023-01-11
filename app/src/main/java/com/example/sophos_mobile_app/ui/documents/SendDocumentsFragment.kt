@@ -3,32 +3,28 @@ package com.example.sophos_mobile_app.ui.documents
 import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import com.example.sophos_mobile_app.ui.camera.CameraViewModel
 import com.example.sophos_mobile_app.ui.camera.GalleryViewModel
 import com.example.sophos_mobile_app.ui.login.LoginFragment
-import com.example.sophos_mobile_app.ui.menu.MenuFragmentDirections
 import com.example.sophos_mobile_app.utils.AppLanguage
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
@@ -78,12 +74,18 @@ class SendDocumentsFragment : Fragment() {
                 arrayAdapter =  ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, cities)
                 binding.spDocumentScreenCity.adapter = arrayAdapter
         }
-        sendDocumentViewModel.status.observe(viewLifecycleOwner){ postNewDocStatus ->
-            if (postNewDocStatus){
-                this.imageBase64 = null
-                showMessage(getString(R.string.add_new_doc_success))
-            } else {
-                showMessage(getString(R.string.add_new_doc_failed))
+        sendDocumentViewModel.statusPost.observe(viewLifecycleOwner) { status ->
+            println("pikachu $status")
+            when (status) {
+                is ResponseStatus.Error -> {
+                    binding.pbSendDocs.visibility = View.GONE
+                    showErrorDialog(status.messageId)
+                }
+                is ResponseStatus.Loading -> binding.pbSendDocs.visibility = View.VISIBLE
+                is ResponseStatus.Success -> {
+                    binding.pbSendDocs.visibility = View.GONE
+                    showMessage(getString(R.string.add_new_doc_success))
+                }
             }
         }
         galleryViewModel.imageBase64.observe(viewLifecycleOwner){ imageBase64 ->
@@ -333,6 +335,15 @@ class SendDocumentsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showErrorDialog(messageId: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error_message)
+            .setMessage(messageId)
+            .setPositiveButton(android.R.string.ok) { _, _ -> /** Dissmiss dialog **/ }
+            .create()
+            .show()
     }
 
     private fun showPopupWindow(anchor: View){

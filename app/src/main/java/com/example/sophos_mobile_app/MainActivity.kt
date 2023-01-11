@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAppMode() {
-        lifecycleScope.launch(Dispatchers.IO){
+        lifecycleScope.launch(Dispatchers.Main){
             userDataStore.getDataStorePreferences().collect{ userPreferences ->
                 if (userPreferences.darkMode){
                     withContext(Dispatchers.Main){

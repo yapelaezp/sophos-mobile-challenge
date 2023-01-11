@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListPopupWindow
 import android.widget.PopupWindow
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.viewModels
@@ -19,6 +19,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
@@ -86,9 +87,31 @@ class SeeDocumentsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        seeDocumentsViewModel.status.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                is ResponseStatus.Error -> {
+                    binding.pbSeeDocsData.visibility = View.GONE
+                    showErrorDialog(status.messageId)
+                }
+                is ResponseStatus.Loading ->binding.pbSeeDocsData.visibility = View.VISIBLE
+                is ResponseStatus.Success -> binding.pbSeeDocsData.visibility = View.GONE
+            }
+        }
+        seeDocumentsViewModel.statusImage.observe(viewLifecycleOwner) { statusImage ->
+            when (statusImage) {
+                is ResponseStatus.Error -> {
+                    binding.pbSeeDocsImage.visibility = View.GONE
+                    showErrorDialog(statusImage.messageId)
+                }
+                is ResponseStatus.Loading ->binding.pbSeeDocsImage.visibility = View.VISIBLE
+                is ResponseStatus.Success -> binding.pbSeeDocsImage.visibility = View.GONE
+            }
+        }
         seeDocumentsViewModel.documents.observe(viewLifecycleOwner){ documents ->
-            binding.rvViewDocuments.adapter = DocumentDetailAdapter(documents){ registerId ->
-                seeDocumentsViewModel.getDocumentDetail(registerId)
+            binding.rvViewDocuments.adapter = documents?.let {
+                DocumentDetailAdapter(it){ registerId ->
+                    seeDocumentsViewModel.getImageFromDocument(registerId)
+                }
             }
         }
         seeDocumentsViewModel.imageBitmap.observe(viewLifecycleOwner){ imageBitmap ->
@@ -174,6 +197,15 @@ class SeeDocumentsFragment : Fragment() {
             }
             popupWindow.showAsDropDown(anchor)
         }
+    }
+
+    private fun showErrorDialog(messageId: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error_message)
+            .setMessage(messageId)
+            .setPositiveButton(android.R.string.ok) { _, _ -> /** Dissmiss dialog **/ }
+            .create()
+            .show()
     }
 
     private suspend fun logout() {

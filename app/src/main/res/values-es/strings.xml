@@ -60,4 +60,19 @@
     <string name="doc_type_title">Tipo de documento</string>
     <string name="add_new_doc_success">Documento agregado con éxito</string>
     <string name="add_new_doc_failed">No se ha podido subir el documento</string>
+    <string name="network_error">Error de red</string>
+    <string name="unknown_host_exception">Error en el servidor</string>
+    <string name="error_message">Hubo un error!</string>
+    <string name="authentication_success">Autenticación exitosa</string>
+    <string name="authentication_failed">Autenticación fallida</string>
+    <string name="image_uploaded">Imagen adjuntada</string>
+    <string name="no_image_attached">Ninguna imagen adjuntada</string>
+
+    <string-array name="doc_type">
+        <item>Tipo de ducumento</item>
+        <item>CC</item>
+        <item>TI</item>
+        <item>PA</item>
+        <item>CE</item>
+    </string-array>
 </resources>

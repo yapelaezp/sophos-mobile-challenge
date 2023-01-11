@@ -44,7 +44,7 @@ class CameraFragment : Fragment() {
                     cameraPhotoFilePath?.let { uri ->
                         val imageBitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, uri)
                         cameraViewModel.createImage64Photo(imageBitmap)
-                        showMessage("Image uploaded")
+                        showMessage(getString(R.string.image_uploaded))
                         findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
                     }
                 } catch (e: IOException) {
@@ -52,7 +52,7 @@ class CameraFragment : Fragment() {
                 }
             }
             else if(result.resultCode == Activity.RESULT_CANCELED){
-                showMessage("No image attached")
+                showMessage(getString(R.string.no_image_attached))
                 findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
             }
         }

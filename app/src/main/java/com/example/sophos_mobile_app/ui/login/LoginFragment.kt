@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.FragmentLoginBinding
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
@@ -46,7 +48,7 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userDataStore = UserDataStore(requireContext())
-        //isUserLogged()
+        isUserLogged()
         setupBiometricAccess()
     }
 
@@ -61,7 +63,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun isUserLogged() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.Main) {
             userDataStore.getDataStorePreferences().collect() { userPreferences ->
                 if (userPreferences.email.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
@@ -81,16 +83,32 @@ class LoginFragment : Fragment() {
             val userEmail = binding.etvLoginEmail.text.toString()
             val userPassword = binding.etvLoginPassword.text.toString()
             lifecycleScope.launch(Dispatchers.IO) {
-                userDataStore.saveUserInDataStore(userEmail, userPassword, user.name)
-                userDataStore.getDataStorePreferences().collect{ userPreferences ->
-                    if (userPreferences.biometricIntention){
-                        userDataStore.saveBiometricData(userEmail,userPassword)
+                user?.name?.let {
+                    userDataStore.saveUserInDataStore(userEmail, userPassword, it)
+                    userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                        if (userPreferences.biometricIntention){
+                            userDataStore.saveBiometricData(userEmail,userPassword)
+                        }
                     }
-                }
+                    lifecycleScope.launch(Dispatchers.Main){
+                        val action =
+                            LoginFragmentDirections.actionToMenuFragmentDestination(user.name as String, userEmail)
+                        findNavController().navigate(action)
+                    }
+                } ?: lifecycleScope.launch(Dispatchers.Main) {showErrorDialog(R.string.invalid_email_or_password)  }
             }
-            val action =
-                LoginFragmentDirections.actionToMenuFragmentDestination(user.name, userEmail)
-            findNavController().navigate(action)
+        }
+        loginViewModel.status.observe(viewLifecycleOwner) { status ->
+            println(status)
+            when (status) {
+                is ResponseStatus.Error -> {
+                    binding.pbLogin.visibility = View.GONE
+                    showErrorDialog(status.messageId)
+                }
+                is ResponseStatus.Loading -> binding.pbLogin.visibility = View.VISIBLE
+                is ResponseStatus.Success -> binding.pbLogin.visibility = View.GONE
+                else -> {}
+            }
         }
     }
 
@@ -146,14 +164,14 @@ class LoginFragment : Fragment() {
                     }
                     Toast.makeText(
                         requireContext(),
-                        "Authentication succeeded!", Toast.LENGTH_SHORT
+                        getString(R.string.authentication_success), Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Toast.makeText(
-                        requireContext(), "Authentication failed",
+                        requireContext(), getString(R.string.authentication_failed),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -187,6 +205,15 @@ class LoginFragment : Fragment() {
             binding.tilLoginEmail.error = null
             true
         }
+    }
+
+    private fun showErrorDialog(messageId: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error_message)
+            .setMessage(messageId)
+            .setPositiveButton(android.R.string.ok) { _, _ -> /** Dissmiss dialog **/ }
+            .create()
+            .show()
     }
 
     override fun onDestroyView() {

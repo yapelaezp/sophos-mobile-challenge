@@ -24,9 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:backgroundTint="?attr/colorPrimary"
             android:onClick="showPopup"
-            android:src="@drawable/ic_baseline_menu_24" />
+            android:src="@drawable/ic_baseline_menu_24"
+            android:backgroundTint="?attr/colorOnPrimary"/>
     </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
@@ -167,5 +167,16 @@
         app:layout_constraintEnd_toEndOf="@+id/sp_document_screen_city"
         app:layout_constraintStart_toStartOf="@+id/sp_document_screen_city"
         app:layout_constraintTop_toBottomOf="@+id/btn_document_screen_upload_doc" />
+
+    <ProgressBar
+        android:id="@+id/pb_send_docs"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

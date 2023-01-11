@@ -21,7 +21,6 @@ import java.io.IOException
 class GalleryFragment : Fragment() {
 
     private val galleryViewModel: GalleryViewModel by activityViewModels()
-    //private val galleryViewModel: GalleryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +41,10 @@ class GalleryFragment : Fragment() {
                                 uri
                             )
                         galleryViewModel.setImage64Photo(imageBitmap)
-                        showMessage("Image uploaded")
+                        showMessage(getString(R.string.image_uploaded))
                         findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
                     } else {
-                        showMessage("No image attached")
+                        showMessage(getString(R.string.no_image_attached))
                         findNavController().popBackStack(R.id.sendDocumentsFragmentDestination, false)
                     }
                 } catch (e: IOException) {

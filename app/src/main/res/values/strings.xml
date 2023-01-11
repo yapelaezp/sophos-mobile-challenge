@@ -61,6 +61,12 @@
     <string name="add_new_doc_failed">Document could not be uploaded </string>
     <string name="network_error">Network error</string>
     <string name="unknown_host_exception">Unknown host exception</string>
+    <string name="error_message">There was an error!</string>
+    <string name="authentication_success">Authentication success</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="image_uploaded">Image uploaded</string>
+    <string name="no_image_attached">No image attached</string>
+    <string name="invalid_email_or_password">Wrong email or password</string>
 
     <string-array name="doc_type">
         <item>Doc type</item>

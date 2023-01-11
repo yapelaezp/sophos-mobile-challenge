@@ -6,10 +6,8 @@ import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.repository.FakeOfficeRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 
@@ -39,7 +37,7 @@ class OfficesViewModelTest {
         //Action
         val actual = officesViewModel.offices.value?.size
         //Assert
-        assert(actual!! >= 0 )
+        assert(actual!! > 0 )
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,10 +51,5 @@ class OfficesViewModelTest {
         val actual =  officesViewModel.offices.value?.first()
         assertEquals(expected, actual)
     }
-
-/*    @AfterClass
-    fun tearDown() {
-        LOG.info("closing DB connection")
-    }*/
 
 }
