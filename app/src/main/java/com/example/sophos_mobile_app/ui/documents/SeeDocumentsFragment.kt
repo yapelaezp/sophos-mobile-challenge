@@ -2,7 +2,6 @@ package com.example.sophos_mobile_app.ui.documents
 
 import android.Manifest
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -82,7 +82,7 @@ class SeeDocumentsFragment : Fragment() {
             popupWindow.dismiss()
         }
         popupBinding.actionLogout.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            logout()
             popupWindow.dismiss()
         }
     }
@@ -94,7 +94,7 @@ class SeeDocumentsFragment : Fragment() {
                     binding.pbSeeDocsData.visibility = View.GONE
                     showErrorDialog(status.messageId)
                 }
-                is ResponseStatus.Loading ->binding.pbSeeDocsData.visibility = View.VISIBLE
+                is ResponseStatus.Loading -> binding.pbSeeDocsData.visibility = View.VISIBLE
                 is ResponseStatus.Success -> binding.pbSeeDocsData.visibility = View.GONE
             }
         }
@@ -104,18 +104,18 @@ class SeeDocumentsFragment : Fragment() {
                     binding.pbSeeDocsImage.visibility = View.GONE
                     showErrorDialog(statusImage.messageId)
                 }
-                is ResponseStatus.Loading ->binding.pbSeeDocsImage.visibility = View.VISIBLE
+                is ResponseStatus.Loading -> binding.pbSeeDocsImage.visibility = View.VISIBLE
                 is ResponseStatus.Success -> binding.pbSeeDocsImage.visibility = View.GONE
             }
         }
-        seeDocumentsViewModel.documents.observe(viewLifecycleOwner){ documents ->
+        seeDocumentsViewModel.documents.observe(viewLifecycleOwner) { documents ->
             binding.rvViewDocuments.adapter = documents?.let {
-                DocumentDetailAdapter(it){ registerId ->
+                DocumentDetailAdapter(it) { registerId ->
                     seeDocumentsViewModel.getImageFromDocument(registerId)
                 }
             }
         }
-        seeDocumentsViewModel.imageBitmap.observe(viewLifecycleOwner){ imageBitmap ->
+        seeDocumentsViewModel.imageBitmap.observe(viewLifecycleOwner) { imageBitmap ->
             println("see doc pikachu $imageBitmap")
             binding.ivViwDocumentsAttached.setImageBitmap(imageBitmap)
         }
@@ -127,9 +127,9 @@ class SeeDocumentsFragment : Fragment() {
         //Set Toolbar
         popupBinding.actionSeeDocs.visibility = View.GONE
         appLanguage.currentLocaleName?.let {
-            if ("español" !in it.lowercase()){
+            if ("español" !in it.lowercase()) {
                 popupBinding.actionLanguage.text = "Español"
-            } else{
+            } else {
                 popupBinding.actionLanguage.text = "English"
             }
         }
@@ -139,38 +139,39 @@ class SeeDocumentsFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             userDataStore.getDataStorePreferences().collect { userPreferences ->
                 println(userPreferences.darkMode)
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                     }
-                } else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                 }
             }
         }
-        popupWindow = PopupWindow(popupBinding.root,
+        popupWindow = PopupWindow(
+            popupBinding.root,
             ListPopupWindow.WRAP_CONTENT,
             ListPopupWindow.WRAP_CONTENT
         )
         //Set Recycler View
-        binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()){}
+        binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()) {}
     }
 
     private fun setAppMode() {
-        lifecycleScope.launch(Dispatchers.IO){
-            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
                 val appCompatActivity = activity as AppCompatActivity
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
                         popupBinding.actionSeeDocs.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         appCompatActivity.delegate.applyDayNight()
                         popupBinding.actionSeeDocs.text = getString(R.string.night_mode)
@@ -186,12 +187,15 @@ class SeeDocumentsFragment : Fragment() {
     }
 
     private fun navigateToOffices() {
-        val action = SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToPermissionsFragment(Manifest.permission.ACCESS_COARSE_LOCATION)
+        val action =
+            SeeDocumentsFragmentDirections.actionViewDocumentsFragmentDestinationToPermissionsFragment(
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         findNavController().navigate(action)
     }
 
-    private fun showPopupWindow(anchor: View){
-        if (popupWindow.isShowing){
+    private fun showPopupWindow(anchor: View) {
+        if (popupWindow.isShowing) {
             popupWindow.dismiss()
         } else {
             popupWindow.apply {
@@ -210,19 +214,17 @@ class SeeDocumentsFragment : Fragment() {
             .show()
     }
 
-    private suspend fun logout() {
-        withContext(Dispatchers.IO) {
+    private fun logout() {
+        lifecycleScope.launch(Dispatchers.IO) {
             requireContext().dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
                 preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
                 preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
             }
         }
-        withContext(Dispatchers.Main) {
-            activity?.deleteDatabase(DATABASE_NAME)
-            val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
-            findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
-        }
+        activity?.deleteDatabase(DATABASE_NAME)
+        val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+        findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
     }
 
     override fun onDestroyView() {

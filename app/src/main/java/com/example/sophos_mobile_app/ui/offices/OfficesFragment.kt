@@ -21,7 +21,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.sophos_mobile_app.MainActivity
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
@@ -120,7 +119,7 @@ class OfficesFragment : Fragment() {
             popupWindow.dismiss()
         }
         popupBinding.actionLogout.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            logout()
             popupWindow.dismiss()
         }
     }
@@ -146,7 +145,7 @@ class OfficesFragment : Fragment() {
     private fun setComponents() {
         //Get user datastore instance
         userDataStore = UserDataStore(requireContext())
-        //Get permision value
+        //Get permission value
         locationPermissionGranted = args.hasLocationPermission
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient =
@@ -188,33 +187,29 @@ class OfficesFragment : Fragment() {
         )
     }
 
-    private suspend fun logout() {
-        withContext(Dispatchers.IO) {
+    private fun logout() {
+        lifecycleScope.launch(Dispatchers.IO) {
             requireContext().dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
                 preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
                 preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
             }
         }
-        withContext(Dispatchers.Main) {
-            activity?.deleteDatabase(DATABASE_NAME)
-            val navOptions =
-                NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
-            findNavController().navigate(
-                R.id.loginFragmentDestination,
-                null,
-                navOptions = navOptions
-            )
-        }
+        activity?.deleteDatabase(DATABASE_NAME)
+        val navOptions =
+            NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+        findNavController().navigate(
+            R.id.loginFragmentDestination,
+            null,
+            navOptions = navOptions
+        )
+
     }
 
     private fun setMapView() {
         //Set Mapview
         mapView.getMapAsync { googleMap ->
-            // For zooming automatically to the location of the marker
-/*            val cameraPosition = CameraPosition.Builder().target().zoom(15f).build()
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
-            // Turn on the My Location layer and the related control on the map.
+
             updateLocationUI(googleMap)
 
             // Get the current location of the device and set the position of the map.
@@ -225,7 +220,7 @@ class OfficesFragment : Fragment() {
                         googleMap.addMarker(
                             MarkerOptions().position(
                                 LatLng(
-                                    office.latitude.toDouble()*-1,
+                                    office.latitude.toDouble() * -1,
                                     office.longitude.toDouble()
                                 )
                             ).title(office.name)

@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ListPopupWindow
+import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -65,11 +68,12 @@ class SendDocumentsFragment : Fragment() {
 
     private fun observeViewModel() {
         sendDocumentViewModel.cities.observe(viewLifecycleOwner) { offices ->
-                val cities = offices.toMutableList()
-                val cityTitle = getString(R.string.city)
-                cities.add(0,cityTitle)
-                arrayAdapter =  ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, cities)
-                binding.spDocumentScreenCity.adapter = arrayAdapter
+            val cities = offices.toMutableList()
+            val cityTitle = getString(R.string.city)
+            cities.add(0, cityTitle)
+            arrayAdapter =
+                ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, cities)
+            binding.spDocumentScreenCity.adapter = arrayAdapter
         }
         sendDocumentViewModel.statusPost.observe(viewLifecycleOwner) { status ->
             when (status) {
@@ -84,10 +88,10 @@ class SendDocumentsFragment : Fragment() {
                 }
             }
         }
-        galleryViewModel.imageBase64.observe(viewLifecycleOwner){ imageBase64 ->
+        galleryViewModel.imageBase64.observe(viewLifecycleOwner) { imageBase64 ->
             this.imageBase64 = imageBase64
         }
-        cameraViewModel.imageBase64.observe(viewLifecycleOwner){ imageBase64 ->
+        cameraViewModel.imageBase64.observe(viewLifecycleOwner) { imageBase64 ->
             this.imageBase64 = imageBase64
         }
     }
@@ -157,7 +161,7 @@ class SendDocumentsFragment : Fragment() {
             popupWindow.dismiss()
         }
         popupBinding.actionLogout.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            logout()
             popupWindow.dismiss()
         }
     }
@@ -194,7 +198,7 @@ class SendDocumentsFragment : Fragment() {
         docType: String?, docNumber: String?, names: String?, lastnames: String?,
         email: String?, city: String?, attachedType: String, imageBase64: String?
     ): Pair<Boolean, String> {
-        if (Validation.isFieldEmpty(docType) || docType  == getString(R.string.doc_type_title)) {
+        if (Validation.isFieldEmpty(docType) || docType == getString(R.string.doc_type_title)) {
             return Pair(false, getString(R.string.id_type_requirement))
         }
         if (Validation.isFieldEmpty(docNumber)) {
@@ -224,7 +228,7 @@ class SendDocumentsFragment : Fragment() {
     private fun setComponents() {
         // Set cities spinner
         sendDocumentViewModel.getOffices()
-       // cities.add(getString(R.string.city))
+        // cities.add(getString(R.string.city))
         //Set doc type spinner
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -253,18 +257,19 @@ class SendDocumentsFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             userDataStore.getDataStorePreferences().collect { userPreferences ->
                 println(userPreferences.darkMode)
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                     }
-                } else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                 }
             }
         }
-        popupWindow = PopupWindow(popupBinding.root,
+        popupWindow = PopupWindow(
+            popupBinding.root,
             ListPopupWindow.WRAP_CONTENT,
             ListPopupWindow.WRAP_CONTENT
         )
@@ -297,34 +302,32 @@ class SendDocumentsFragment : Fragment() {
         }
     }
 
-    private suspend fun logout() {
-        withContext(Dispatchers.IO) {
+    private fun logout() {
+        lifecycleScope.launch(Dispatchers.IO) {
             requireContext().dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
                 preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
                 preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
             }
         }
-        withContext(Dispatchers.Main) {
-            activity?.deleteDatabase(DATABASE_NAME)
-            val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
-            findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
-        }
+        activity?.deleteDatabase(DATABASE_NAME)
+        val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+        findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
     }
 
     private fun setAppMode() {
-        lifecycleScope.launch(Dispatchers.IO){
-            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
                 val appCompatActivity = activity as AppCompatActivity
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
@@ -344,8 +347,8 @@ class SendDocumentsFragment : Fragment() {
             .show()
     }
 
-    private fun showPopupWindow(anchor: View){
-        if (popupWindow.isShowing){
+    private fun showPopupWindow(anchor: View) {
+        if (popupWindow.isShowing) {
             popupWindow.dismiss()
         } else {
             popupWindow.apply {

@@ -83,7 +83,7 @@ class MenuFragment : Fragment() {
             popupWindow.dismiss()
         }
         popupBinding.actionLogout.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) { logout() }
+            logout()
             popupWindow.dismiss()
         }
     }
@@ -173,24 +173,22 @@ class MenuFragment : Fragment() {
         }
     }
 
-    private suspend fun logout() {
-        withContext(Dispatchers.IO) {
+    private fun logout() {
+        lifecycleScope.launch(Dispatchers.IO) {
             requireContext().dataStore.edit { preferences ->
                 preferences[stringPreferencesKey(LoginFragment.EMAIL)] = ""
                 preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
                 preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
             }
         }
-        withContext(Dispatchers.Main) {
-            activity?.deleteDatabase(DATABASE_NAME)
-            val navOptions =
-                NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
-            findNavController().navigate(
-                R.id.loginFragmentDestination,
-                null,
-                navOptions = navOptions
-            )
-        }
+        activity?.deleteDatabase(DATABASE_NAME)
+        val navOptions =
+            NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+        findNavController().navigate(
+            R.id.loginFragmentDestination,
+            null,
+            navOptions = navOptions
+        )
     }
 
 }
