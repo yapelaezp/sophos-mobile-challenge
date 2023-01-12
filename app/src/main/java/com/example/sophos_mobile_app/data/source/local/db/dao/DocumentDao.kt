@@ -13,10 +13,13 @@ interface DocumentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDocuments(documents: List<DocumentEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDocumentDetail(documentDetail: List<DocumentDetailEntity>)
+
     @Query("SELECT * FROM documents")
     suspend fun getDocuments(): List<DocumentEntity>
 
     @Query("SELECT * FROM document_detail WHERE register_id = :registerId")
-    suspend fun getDocumentById(registerId: String): DocumentDetailEntity
+    suspend fun getDocumentDetail(registerId: String): List<DocumentDetailEntity>
 
 }

@@ -60,8 +60,18 @@ class DocumentRepositoryImpl @Inject constructor(
 
     override suspend fun getDocumentDetail(registerId: String): ResponseStatus<List<DocumentDetail>> =
         makeRepositoryCall {
-            val response = api.getDocumentDetail(registerId).Items.map { documentDetailDto ->
-                documentDetailDto.toModel()
+            val response = if(documentsDao.getDocumentDetail(registerId).isEmpty()){
+                api.getDocumentDetail(registerId).Items.map{ documentDetailDto ->
+                    documentDetailDto.toModel()
+                }.also { documentDetailList ->
+                    documentsDao.insertDocumentDetail(documentDetailList.map {  documentDetail ->
+                        documentDetail.toEntity()
+                    })
+                }
+            } else {
+                documentsDao.getDocumentDetail(registerId).map { documentDetailEntity ->
+                    documentDetailEntity.toModel()
+                }
             }
             response
         }
