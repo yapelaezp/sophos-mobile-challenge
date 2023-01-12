@@ -77,30 +77,29 @@ class LoginFragment : Fragment() {
 
     private fun observeViewModel() {
         loginViewModel.user.observe(viewLifecycleOwner) { user ->
+            print("User after login $user")
             val userEmail = binding.etvLoginEmail.text.toString()
             val userPassword = binding.etvLoginPassword.text.toString()
-            lifecycleScope.launch(Dispatchers.IO) {
-                user?.name?.let {
-                    userDataStore.saveUserInDataStore(userEmail, userPassword, it)
+            if (user?.access == true) {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    userDataStore.saveUserInDataStore(userEmail, userPassword, user.name as String)
                     userDataStore.getDataStorePreferences().collect { userPreferences ->
                         if (userPreferences.biometricIntention) {
                             userDataStore.saveBiometricData(userEmail, userPassword)
                         }
                     }
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        val action =
-                            LoginFragmentDirections.actionToMenuFragmentDestination(
-                                user.name as String,
-                                userEmail
-                            )
-                        findNavController().navigate(action)
-                    }
                 }
-                    ?: lifecycleScope.launch(Dispatchers.Main) { showErrorDialog(R.string.invalid_email_or_password) }
+                val action =
+                    LoginFragmentDirections.actionToMenuFragmentDestination(
+                        user.name as String,
+                        userEmail
+                    )
+                findNavController().navigate(action)
+            } else {
+                showErrorDialog(R.string.invalid_email_or_password)
             }
         }
         loginViewModel.status.observe(viewLifecycleOwner) { status ->
-            println(status)
             when (status) {
                 is ResponseStatus.Error -> {
                     binding.pbLogin.visibility = View.GONE
@@ -147,37 +146,32 @@ class LoginFragment : Fragment() {
                     super.onAuthenticationSucceeded(result)
                     lifecycleScope.launch(Dispatchers.IO) {
                         userDataStore.getDataStorePreferences().collect() { userPreferences ->
-                            if (!userPreferences.biometricIntention) userDataStore.setBiometricIntention()
+                            if (!userPreferences.biometricIntention) {
+                                println("bi false to true $userPreferences")
+                                userDataStore.setBiometricIntention()
+                            }
                             if (userPreferences.biometricEmail.isEmpty()) {
                                 withContext(Dispatchers.Main) {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        getString(R.string.auth_with_password_first),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    println("be empty $userPreferences")
+                                    showInfoMessage(getString(R.string.auth_with_password_first))
                                 }
                             } else {
                                 userDataStore.getDataStorePreferences().collect { userPreferences ->
+                                    println("can enter $userPreferences")
                                     loginViewModel.login(
                                         userPreferences.biometricEmail,
                                         userPreferences.biometricPassword
                                     )
                                 }
+                                showInfoMessage(getString(R.string.authentication_success))
                             }
                         }
                     }
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.authentication_success), Toast.LENGTH_SHORT
-                    ).show()
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(
-                        requireContext(), getString(R.string.authentication_failed),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showInfoMessage(getString(R.string.authentication_failed))
                 }
             })
 
@@ -186,6 +180,10 @@ class LoginFragment : Fragment() {
             .setSubtitle(getString(R.string.use_biometric_as_authentication))
             .setNegativeButtonText(getString(R.string.use_password_auth))
             .build()
+    }
+
+    private fun showInfoMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     private fun validatePassword(password: String): Boolean {

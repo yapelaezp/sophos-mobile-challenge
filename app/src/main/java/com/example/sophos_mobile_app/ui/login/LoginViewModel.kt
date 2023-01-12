@@ -23,8 +23,8 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     val status: LiveData<ResponseStatus<Any>> get() = _status
 
     fun login(email: String, password: String) {
-        _status.value = ResponseStatus.Loading()
         viewModelScope.launch {
+            _status.value = ResponseStatus.Loading()
             when(val response = userRepository.getUserById(email, password)){
                 is ResponseStatus.Success -> {
                     _user.postValue(response.data)
