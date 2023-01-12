@@ -14,6 +14,6 @@ interface OfficesDao {
     suspend fun insertOffices(offices: List<OfficeEntity>)
 
     @Query("SELECT * FROM offices")
-    suspend fun getOffices(): List<Office>
+    suspend fun getOffices(): List<OfficeEntity>
 
 }

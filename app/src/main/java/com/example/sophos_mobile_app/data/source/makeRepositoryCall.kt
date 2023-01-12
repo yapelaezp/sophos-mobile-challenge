@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 
-suspend fun <T> makeNetworkCall(
+suspend fun <T> makeRepositoryCall(
     call: suspend () -> T
 ): ResponseStatus<T> = withContext(Dispatchers.IO) {
     try {

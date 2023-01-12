@@ -60,8 +60,7 @@ class SendDocumentsViewModel @Inject constructor(
     fun getOffices() {
         _statusOffice.value = ResponseStatus.Loading()
         viewModelScope.launch {
-            val response = officeRepository.getOffices()
-            when (response) {
+            when (val response = officeRepository.getOffices()) {
                 is ResponseStatus.Success -> {
                     _cities.postValue(response.data.map { office -> office.city }.toSet())
                     _statusOffice.postValue(ResponseStatus.Success(response.data))

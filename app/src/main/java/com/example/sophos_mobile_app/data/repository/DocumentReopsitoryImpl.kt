@@ -3,7 +3,7 @@ package com.example.sophos_mobile_app.data.repository
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.source.remote.api.dto.NewDocumentDto
-import com.example.sophos_mobile_app.data.source.remote.api.makeNetworkCall
+import com.example.sophos_mobile_app.data.source.remote.api.makeRepositoryCall
 import com.example.sophos_mobile_app.data.mappers.toModel
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.model.DocumentDetail
@@ -20,7 +20,7 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService) : Document
         email: String,
         attachedType: String,
         attached: String
-    ): ResponseStatus<Boolean> = makeNetworkCall {
+    ): ResponseStatus<Boolean> = makeRepositoryCall {
         val newDocument = NewDocumentDto(
             idType,
             identification,
@@ -36,7 +36,7 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService) : Document
     }
 
     override suspend fun getDocumentsByUserEmail(email: String): ResponseStatus<List<Document>> =
-        makeNetworkCall {
+        makeRepositoryCall {
             val response = api.getDocumentByUserEmail(email).Items.map { document ->
                 document.toModel()
             }
@@ -44,7 +44,7 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService) : Document
         }
 
     override suspend fun getDocumentDetail(registerId: String): ResponseStatus<List<DocumentDetail>> =
-        makeNetworkCall {
+        makeRepositoryCall {
             val response = api.getDocumentDetail(registerId).Items.map { documentDetailDto ->
                 documentDetailDto.toModel()
             }

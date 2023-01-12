@@ -8,4 +8,5 @@ const val DOCUMENTS_URL = "RS_Documentos"
 const val OFFICES_URL = "RS_Oficinas"
 const val FILE_NAME_FORMAT = "yy-MM-dd-HH-mm-ss-SSS"
 const val DATA_STORE_NAME = "sophos_datastore"
+const val DATABASE_NAME = "sophos_database"
 
