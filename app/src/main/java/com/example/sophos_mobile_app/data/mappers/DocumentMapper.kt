@@ -1,7 +1,7 @@
 package com.example.sophos_mobile_app.data.mappers
 
-import com.example.sophos_mobile_app.data.api.dto.DocumentDetailDto
-import com.example.sophos_mobile_app.data.api.dto.DocumentDto
+import com.example.sophos_mobile_app.data.source.remote.api.dto.DocumentDetailDto
+import com.example.sophos_mobile_app.data.source.remote.api.dto.DocumentDto
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.model.DocumentDetail
 

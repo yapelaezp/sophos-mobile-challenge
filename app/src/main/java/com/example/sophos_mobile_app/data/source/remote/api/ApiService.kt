@@ -1,11 +1,11 @@
-package com.example.sophos_mobile_app.data.api
+package com.example.sophos_mobile_app.data.source.remote.api
 
-import com.example.sophos_mobile_app.data.api.dto.NewDocumentDto
-import com.example.sophos_mobile_app.data.api.responses.OfficesResponse
-import com.example.sophos_mobile_app.data.api.dto.UserDto
-import com.example.sophos_mobile_app.data.api.responses.DocumentDetailResponse
-import com.example.sophos_mobile_app.data.api.responses.DocumentResponse
-import com.example.sophos_mobile_app.data.api.responses.NewDocumentResponse
+import com.example.sophos_mobile_app.data.source.remote.api.dto.NewDocumentDto
+import com.example.sophos_mobile_app.data.source.remote.api.responses.OfficesResponse
+import com.example.sophos_mobile_app.data.source.remote.api.dto.UserDto
+import com.example.sophos_mobile_app.data.source.remote.api.responses.DocumentDetailResponse
+import com.example.sophos_mobile_app.data.source.remote.api.responses.DocumentResponse
+import com.example.sophos_mobile_app.data.source.remote.api.responses.NewDocumentResponse
 import com.example.sophos_mobile_app.utils.DOCUMENTS_URL
 import com.example.sophos_mobile_app.utils.OFFICES_URL
 import com.example.sophos_mobile_app.utils.USERS_URL

@@ -30,6 +30,7 @@ ext {
     placesVersion = '3.0.0'
     archTestingVersion = '2.1.0'
     coroutinesVersion = '1.5.2'
+    roomVersion = "2.4.3"
 }
 
 task clean(type: Delete) {

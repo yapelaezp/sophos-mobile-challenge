@@ -2,7 +2,7 @@ package com.example.sophos_mobile_app.ui.documents
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.sophos_mobile_app.MainCoroutineRule
-import com.example.sophos_mobile_app.data.api.ResponseStatus
+import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.repository.FakeDocumentRepository
 import com.example.sophos_mobile_app.data.repository.FakeOfficeRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi

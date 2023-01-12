@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sophos_mobile_app.data.api.ResponseStatus
+import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.repository.OfficeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

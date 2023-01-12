@@ -82,18 +82,21 @@ dependencies {
     //Desugaring gradle (For date compatibility)
     //coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
 
+    //Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
     // Test unit
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     testImplementation 'org.mockito:mockito-all:1.10.19'
-
     testImplementation "org.powermock:powermock-module-junit4:2.0.7"
     testImplementation "org.powermock:powermock-module-junit4-rule:2.0.7"
     testImplementation "org.powermock:powermock-api-mockito2:2.0.7"
     testImplementation "org.powermock:powermock-classloading-xstream:1.6.6"
-
-
 
 }
