@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         userDataStore = UserDataStore(this)
         setAppMode()
+        setContentView(R.layout.activity_main)
     }
 
     private fun setAppMode() {
@@ -25,9 +26,6 @@ class MainActivity : AppCompatActivity() {
                 if (userPreferences.darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     delegate.applyDayNight()
-                    setContentView(R.layout.activity_main)
-                } else {
-                    setContentView(R.layout.activity_main)
                 }
             }
         }
