@@ -16,7 +16,7 @@ interface DocumentRepository {
         attached: String
     ): ResponseStatus<Boolean>
 
-    suspend fun getDocumentsByUserEmail(email: String): ResponseStatus<List<Document>>
+    suspend fun getDocuments(email: String): ResponseStatus<List<Document>>
 
     suspend fun getDocumentDetail(registerId: String): ResponseStatus<List<DocumentDetail>>
 }

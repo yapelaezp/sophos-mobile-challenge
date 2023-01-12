@@ -28,7 +28,7 @@ interface ApiService {
     suspend fun createNewDocument(@Body newDocumentDto: NewDocumentDto): NewDocumentResponse
 
     @GET(DOCUMENTS_URL)
-    suspend fun getDocumentByUserEmail(@Query("correo") email: String): DocumentResponse
+    suspend fun getDocuments(@Query("correo") email: String): DocumentResponse
 
     @GET(DOCUMENTS_URL)
     suspend fun getDocumentDetail(@Query("idRegistro") registerId: String): DocumentDetailResponse

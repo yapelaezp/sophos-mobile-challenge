@@ -18,7 +18,7 @@ class FakeDocumentRepository : DocumentRepository {
         return ResponseStatus.Success(true)
     }
 
-    override suspend fun getDocumentsByUserEmail(email: String): ResponseStatus<List<Document>> {
+    override suspend fun getDocuments(email: String): ResponseStatus<List<Document>> {
         return if (email == "alejo51120@gmail.com") {
             ResponseStatus.Success(
                 listOf(

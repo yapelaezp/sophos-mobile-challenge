@@ -11,7 +11,7 @@ import com.example.sophos_mobile_app.data.source.local.db.entities.DocumentEntit
 interface DocumentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDocuments(documents: DocumentEntity)
+    suspend fun insertDocuments(documents: List<DocumentEntity>)
 
     @Query("SELECT * FROM documents")
     suspend fun getDocuments(): List<DocumentEntity>

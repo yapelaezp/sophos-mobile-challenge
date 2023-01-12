@@ -4,6 +4,7 @@ import com.example.sophos_mobile_app.data.source.remote.api.dto.DocumentDetailDt
 import com.example.sophos_mobile_app.data.source.remote.api.dto.DocumentDto
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.model.DocumentDetail
+import com.example.sophos_mobile_app.data.source.local.db.entities.DocumentEntity
 
 fun DocumentDto.toModel() = Document(
     lastname, date, logId, name, attachedType
@@ -22,3 +23,10 @@ fun DocumentDetailDto.toModel() = DocumentDetail(
     idType
 )
 
+fun DocumentEntity.toModel() = Document(
+    lastname, date, logId, name, attachedType
+)
+
+fun Document.toEntity() = DocumentEntity(
+    lastname, date, logId, name, attachedType
+)

@@ -1,15 +1,20 @@
 package com.example.sophos_mobile_app.data.repository
 
+import com.example.sophos_mobile_app.data.mappers.toEntity
+import com.example.sophos_mobile_app.data.mappers.toModel
+import com.example.sophos_mobile_app.data.model.Document
+import com.example.sophos_mobile_app.data.model.DocumentDetail
+import com.example.sophos_mobile_app.data.source.local.db.dao.DocumentDao
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.source.remote.api.dto.NewDocumentDto
 import com.example.sophos_mobile_app.data.source.remote.api.makeRepositoryCall
-import com.example.sophos_mobile_app.data.mappers.toModel
-import com.example.sophos_mobile_app.data.model.Document
-import com.example.sophos_mobile_app.data.model.DocumentDetail
 import javax.inject.Inject
 
-class DocumentRepositoryImpl @Inject constructor(val api: ApiService) : DocumentRepository {
+class DocumentRepositoryImpl @Inject constructor(
+    private val api: ApiService,
+    private val documentsDao: DocumentDao
+) : DocumentRepository {
 
     override suspend fun createNewDocument(
         idType: String,
@@ -35,10 +40,20 @@ class DocumentRepositoryImpl @Inject constructor(val api: ApiService) : Document
         response.put
     }
 
-    override suspend fun getDocumentsByUserEmail(email: String): ResponseStatus<List<Document>> =
+    override suspend fun getDocuments(email: String): ResponseStatus<List<Document>> =
         makeRepositoryCall {
-            val response = api.getDocumentByUserEmail(email).Items.map { document ->
-                document.toModel()
+            val response = if (documentsDao.getDocuments().isEmpty()){
+                api.getDocuments(email).Items.map { documentDto ->
+                    documentDto.toModel()
+                }.also { documentList ->
+                       documentsDao.insertDocuments(  documentList.map { document ->
+                           document.toEntity()
+                       })
+                }
+            } else {
+                documentsDao.getDocuments().map { documentEntity ->
+                    documentEntity.toModel()
+                }
             }
             response
         }

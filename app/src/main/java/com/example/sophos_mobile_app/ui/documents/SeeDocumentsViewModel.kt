@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.repository.DocumentRepository
-import com.example.sophos_mobile_app.utils.ConvertidorImagenes
 import com.example.sophos_mobile_app.utils.ImageConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,7 +36,7 @@ class SeeDocumentsViewModel @Inject constructor(
     fun getDocuments(email: String){
         _status.postValue(ResponseStatus.Loading())
         viewModelScope.launch {
-            when(val response = documentRepository.getDocumentsByUserEmail(email)){
+            when(val response = documentRepository.getDocuments(email)){
                  is ResponseStatus.Success -> {
                     _documents.postValue(response.data)
                     _status.postValue(ResponseStatus.Success(response.data))

@@ -1,6 +1,7 @@
 package com.example.sophos_mobile_app.di
 
 import com.example.sophos_mobile_app.data.repository.*
+import com.example.sophos_mobile_app.data.source.local.db.dao.DocumentDao
 import com.example.sophos_mobile_app.data.source.local.db.dao.OfficesDao
 import com.example.sophos_mobile_app.data.source.local.db.dao.UserDao
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
@@ -22,8 +23,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDocumentRepository(apiService: ApiService): DocumentRepository {
-        return DocumentRepositoryImpl(apiService)
+    fun provideDocumentRepository(apiService: ApiService, documentDao: DocumentDao): DocumentRepository {
+        return DocumentRepositoryImpl(apiService, documentDao)
     }
 
     @Provides
