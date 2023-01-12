@@ -23,8 +23,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.MainActivity
 import com.example.sophos_mobile_app.R
-import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Office
+import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
@@ -39,7 +39,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.net.PlacesClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,7 +56,7 @@ class OfficesFragment : Fragment() {
     private lateinit var userDataStore: UserDataStore
     private val appLanguage = AppLanguage()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private val defaultLocation = LatLng(-33.8523341, 151.2106085) // TODO ("Put Medellin as Default")
+    private val defaultLocation = LatLng(6.25184, -75.56359) //Medellin location
     private var locationPermissionGranted: Boolean? = null
     private val args: OfficesFragmentArgs by navArgs()
     private var lastKnownLocation: Location? = null
@@ -65,8 +64,7 @@ class OfficesFragment : Fragment() {
     private lateinit var popupWindow: PopupWindow
 
     companion object {
-        private val TAG = MainActivity::class.java.simpleName
-        private const val DEFAULT_ZOOM = 15
+        private const val DEFAULT_ZOOM = 20
     }
 
     override fun onCreateView(
@@ -85,7 +83,7 @@ class OfficesFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        officesViewModel.offices.observe(viewLifecycleOwner){ offices ->
+        officesViewModel.offices.observe(viewLifecycleOwner) { offices ->
             this.offices = offices
             setMapView()
         }
@@ -129,9 +127,12 @@ class OfficesFragment : Fragment() {
 
     private fun navigateToSeeDocs() {
         lifecycleScope.launch(Dispatchers.IO) {
-            userDataStore.getDataStorePreferences().collect{ userPreferences ->
-                withContext(Dispatchers.Main){
-                    val action = OfficesFragmentDirections.actionOfficesFragmentDestinationToViewDocumentsFragmentDestination(userPreferences.email)
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
+                withContext(Dispatchers.Main) {
+                    val action =
+                        OfficesFragmentDirections.actionOfficesFragmentDestinationToViewDocumentsFragmentDestination(
+                            userPreferences.email
+                        )
                     findNavController().navigate(action)
                 }
             }
@@ -148,7 +149,8 @@ class OfficesFragment : Fragment() {
         //Get permision value
         locationPermissionGranted = args.hasLocationPermission
         // Construct a FusedLocationProviderClient.
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())        //Set Toolbar
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())        //Set Toolbar
         binding.toolbarOfficesScreen.overflowIcon =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_menu_24)
         //Load cities
@@ -156,21 +158,21 @@ class OfficesFragment : Fragment() {
         //Set toolbar
         popupBinding.actionOffices.visibility = View.GONE
         appLanguage.currentLocaleName?.let {
-            if ("español" !in it.lowercase()){
+            if ("español" !in it.lowercase()) {
                 popupBinding.actionLanguage.text = "Español"
-            } else{
+            } else {
                 popupBinding.actionLanguage.text = "English"
             }
         }
         lifecycleScope.launch(Dispatchers.IO) {
             userDataStore.getDataStorePreferences().collect { userPreferences ->
                 println(userPreferences.darkMode)
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                     }
-                } else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                 }
@@ -179,7 +181,8 @@ class OfficesFragment : Fragment() {
         binding.ivMenuScreenOverflowIcon.setOnClickListener {
             showPopupWindow(it)
         }
-        popupWindow = PopupWindow(popupBinding.root,
+        popupWindow = PopupWindow(
+            popupBinding.root,
             ListPopupWindow.WRAP_CONTENT,
             ListPopupWindow.WRAP_CONTENT
         )
@@ -195,14 +198,19 @@ class OfficesFragment : Fragment() {
         }
         withContext(Dispatchers.Main) {
             activity?.deleteDatabase(DATABASE_NAME)
-            val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
-            findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
+            val navOptions =
+                NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
+            findNavController().navigate(
+                R.id.loginFragmentDestination,
+                null,
+                navOptions = navOptions
+            )
         }
     }
 
     private fun setMapView() {
         //Set Mapview
-        mapView.getMapAsync{ googleMap ->
+        mapView.getMapAsync { googleMap ->
             // For zooming automatically to the location of the marker
 /*            val cameraPosition = CameraPosition.Builder().target().zoom(15f).build()
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
@@ -213,12 +221,26 @@ class OfficesFragment : Fragment() {
             getDeviceLocation(googleMap)
             this.offices?.forEach { office ->
                 try {
-                    println(office)
-                    googleMap.addMarker(MarkerOptions()
-                        .position(LatLng(office.latitude.toDouble(),office.longitude.toDouble()))
-                        .title(office.name)
-                    )
-                } catch (e: Exception){
+                    if (office.city == "Chile") {
+                        googleMap.addMarker(
+                            MarkerOptions().position(
+                                LatLng(
+                                    office.latitude.toDouble()*-1,
+                                    office.longitude.toDouble()
+                                )
+                            ).title(office.name)
+                        )
+                    } else {
+                        googleMap.addMarker(
+                            MarkerOptions().position(
+                                LatLng(
+                                    office.latitude.toDouble(),
+                                    office.longitude.toDouble()
+                                )
+                            ).title(office.name)
+                        )
+                    }
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -226,18 +248,18 @@ class OfficesFragment : Fragment() {
     }
 
     private fun setAppMode() {
-        lifecycleScope.launch(Dispatchers.IO){
-            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+        lifecycleScope.launch(Dispatchers.IO) {
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
                 val appCompatActivity = activity as AppCompatActivity
-                if (!userPreferences.darkMode){
-                    withContext(Dispatchers.Main){
+                if (!userPreferences.darkMode) {
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         appCompatActivity.delegate.applyDayNight()
                         popupBinding.actionMode.text = getString(R.string.day_mode)
                     }
                     userDataStore.saveModePreference(darkMode = true)
                 } else {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         popupBinding.actionMode.text = getString(R.string.night_mode)
                         appCompatActivity.delegate.applyDayNight()
@@ -280,14 +302,18 @@ class OfficesFragment : Fragment() {
                         if (lastKnownLocation != null) {
                             map.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
-                                LatLng(lastKnownLocation!!.latitude,
-                                    lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    ), DEFAULT_ZOOM.toFloat()
+                                )
+                            )
                         }
                     } else {
-                        Log.d(TAG, "Current location is null. Using defaults.")
-                        Log.e(TAG, "Exception: %s", task.exception)
-                        map.moveCamera(CameraUpdateFactory
-                            .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat()))
+                        map.moveCamera(
+                            CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
+                        )
                         map.uiSettings.isMyLocationButtonEnabled = false
                     }
                 }
@@ -306,8 +332,8 @@ class OfficesFragment : Fragment() {
             .show()
     }
 
-    private fun showPopupWindow(anchor: View){
-        if (popupWindow.isShowing){
+    private fun showPopupWindow(anchor: View) {
+        if (popupWindow.isShowing) {
             popupWindow.dismiss()
         } else {
             popupWindow.apply {
