@@ -115,6 +115,7 @@ class SendDocumentsFragment : Fragment() {
                 this.imageBase64
             )
             if (areFieldsValid.first) {
+
                 sendDocumentViewModel.createNewDocument(
                     docType,
                     docNumber,

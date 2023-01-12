@@ -1,5 +1,6 @@
 package com.example.sophos_mobile_app
 
+import android.graphics.Bitmap
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -21,4 +22,5 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.sophos_mobile_app", appContext.packageName)
     }
+    
 }

@@ -115,6 +115,7 @@ class SeeDocumentsFragment : Fragment() {
             }
         }
         seeDocumentsViewModel.imageBitmap.observe(viewLifecycleOwner){ imageBitmap ->
+            println("see doc pikachu $imageBitmap")
             binding.ivViwDocumentsAttached.setImageBitmap(imageBitmap)
         }
     }

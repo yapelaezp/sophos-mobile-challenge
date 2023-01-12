@@ -1,6 +1,5 @@
 package com.example.sophos_mobile_app.ui.login
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,8 +47,8 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userDataStore = UserDataStore(requireContext())
-        isUserLogged()
         setupBiometricAccess()
+        isUserLogged()
     }
 
     override fun onCreateView(
@@ -66,13 +65,11 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             userDataStore.getDataStorePreferences().collect() { userPreferences ->
                 if (userPreferences.email.isNotEmpty()) {
-                    withContext(Dispatchers.Main) {
-                        val action = LoginFragmentDirections.actionToMenuFragmentDestination(
-                            userPreferences.name,
-                            userPreferences.email
-                        )
-                        findNavController().navigate(action)
-                    }
+                    val action = LoginFragmentDirections.actionToMenuFragmentDestination(
+                        userPreferences.name,
+                        userPreferences.email
+                    )
+                    findNavController().navigate(action)
                 }
             }
         }
@@ -85,17 +82,21 @@ class LoginFragment : Fragment() {
             lifecycleScope.launch(Dispatchers.IO) {
                 user?.name?.let {
                     userDataStore.saveUserInDataStore(userEmail, userPassword, it)
-                    userDataStore.getDataStorePreferences().collect{ userPreferences ->
-                        if (userPreferences.biometricIntention){
-                            userDataStore.saveBiometricData(userEmail,userPassword)
+                    userDataStore.getDataStorePreferences().collect { userPreferences ->
+                        if (userPreferences.biometricIntention) {
+                            userDataStore.saveBiometricData(userEmail, userPassword)
                         }
                     }
-                    lifecycleScope.launch(Dispatchers.Main){
+                    lifecycleScope.launch(Dispatchers.Main) {
                         val action =
-                            LoginFragmentDirections.actionToMenuFragmentDestination(user.name as String, userEmail)
+                            LoginFragmentDirections.actionToMenuFragmentDestination(
+                                user.name as String,
+                                userEmail
+                            )
                         findNavController().navigate(action)
                     }
-                } ?: lifecycleScope.launch(Dispatchers.Main) {showErrorDialog(R.string.invalid_email_or_password)  }
+                }
+                    ?: lifecycleScope.launch(Dispatchers.Main) { showErrorDialog(R.string.invalid_email_or_password) }
             }
         }
         loginViewModel.status.observe(viewLifecycleOwner) { status ->
@@ -144,20 +145,23 @@ class LoginFragment : Fragment() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    lifecycleScope.launch(Dispatchers.IO){
-                        userDataStore.getDataStorePreferences().collect(){ userPreferences ->
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        userDataStore.getDataStorePreferences().collect() { userPreferences ->
                             if (!userPreferences.biometricIntention) userDataStore.setBiometricIntention()
-                            if (userPreferences.biometricEmail.isEmpty()){
-                                withContext(Dispatchers.Main){
+                            if (userPreferences.biometricEmail.isEmpty()) {
+                                withContext(Dispatchers.Main) {
                                     Toast.makeText(
                                         requireContext(),
-                                        getString(R.string.auth_with_password_first), Toast.LENGTH_SHORT
+                                        getString(R.string.auth_with_password_first),
+                                        Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                            }
-                            else{
-                                userDataStore.getDataStorePreferences().collect{ userPreferences ->
-                                    loginViewModel.login(userPreferences.biometricEmail,userPreferences.biometricPassword)
+                            } else {
+                                userDataStore.getDataStorePreferences().collect { userPreferences ->
+                                    loginViewModel.login(
+                                        userPreferences.biometricEmail,
+                                        userPreferences.biometricPassword
+                                    )
                                 }
                             }
                         }

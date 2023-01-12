@@ -5,8 +5,6 @@ import com.example.sophos_mobile_app.MainCoroutineRule
 import com.example.sophos_mobile_app.data.api.ResponseStatus
 import com.example.sophos_mobile_app.data.repository.FakeDocumentRepository
 import com.example.sophos_mobile_app.data.repository.FakeOfficeRepository
-import com.example.sophos_mobile_app.data.repository.FakeUserRepository
-import com.example.sophos_mobile_app.ui.login.LoginViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
@@ -50,16 +48,6 @@ class SendDocumentsViewModelTest{
         //Assert
         assert(actual is ResponseStatus.Success)
     }
-
-/*    @Test
-    fun getDocumentsByUserEmail_seeDocuments_listOfUserDocuments(){
-        //Arrange
-        val email = "alejo51120@gmail.com"
-        sendDocumentViewModel.get
-        //Action
-
-        //Assert
-    }*/  //TODO pass to see doc Test
 
     @Test
     fun getOffices_loadCities_listOfCities() = mainCoroutineRule.runBlockingTest {

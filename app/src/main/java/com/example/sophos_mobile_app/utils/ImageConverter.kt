@@ -10,9 +10,9 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import javax.inject.Inject
 
-class ImageConverter @Inject constructor() {
+class ImageConverter @Inject constructor(): ConvertidorImagenes {
 
-    suspend fun imageProxyToBitmap(image: ImageProxy): Bitmap {
+    override suspend fun imageProxyToBitmap(image: ImageProxy): Bitmap {
         return withContext(Dispatchers.IO){
             val planeProxy = image.planes[0]
             val buffer: ByteBuffer = planeProxy.buffer
@@ -22,7 +22,7 @@ class ImageConverter @Inject constructor() {
         }
     }
 
-    suspend fun bitmapToBase64(imageBitmap: Bitmap): String {
+    override suspend fun bitmapToBase64(imageBitmap: Bitmap): String {
         return withContext(Dispatchers.IO){
             val stream = ByteArrayOutputStream()
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
@@ -31,7 +31,7 @@ class ImageConverter @Inject constructor() {
         }
     }
 
-    suspend fun base64ToBitmap(imageBase64: String): Bitmap{
+    override suspend fun base64ToBitmap(imageBase64: String): Bitmap{
         return withContext(Dispatchers.IO) {
             val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
             val bitmapImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
@@ -39,7 +39,7 @@ class ImageConverter @Inject constructor() {
         }
     }
 
-    suspend fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+    override suspend fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         return withContext(Dispatchers.IO){
             var image = image
             if (maxHeight > 0 && maxWidth > 0) {
