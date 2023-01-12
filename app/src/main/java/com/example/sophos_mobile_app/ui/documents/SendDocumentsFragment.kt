@@ -2,6 +2,7 @@ package com.example.sophos_mobile_app.ui.documents
 
 import android.Manifest
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -116,7 +117,6 @@ class SendDocumentsFragment : Fragment() {
                 this.imageBase64
             )
             if (areFieldsValid.first) {
-
                 sendDocumentViewModel.createNewDocument(
                     docType,
                     docNumber,
@@ -228,7 +228,6 @@ class SendDocumentsFragment : Fragment() {
     private fun setComponents() {
         // Set cities spinner
         sendDocumentViewModel.getOffices()
-        // cities.add(getString(R.string.city))
         //Set doc type spinner
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -238,12 +237,19 @@ class SendDocumentsFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spDocumentScreenIdType.adapter = adapter
         }
+        //Set email field
+        lifecycleScope.launch(Dispatchers.IO){
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                withContext(Dispatchers.Main){
+                    binding.etvDocumentScreenEmail.setText(userPreferences.email)
+                }
+            }
+        }
         //Set Toolbar
         binding.toolbarDocumentScreen.title = getString(R.string.go_back)
         binding.toolbarDocumentScreen.getChildAt(1).setOnClickListener {
             findNavController().popBackStack()
         }
-        popupBinding.actionSendDocs.visibility = View.GONE
         appLanguage.currentLocaleName?.let {
             if ("español" !in it.lowercase()) {
                 popupBinding.actionLanguage.text = "Español"
@@ -268,6 +274,8 @@ class SendDocumentsFragment : Fragment() {
                 }
             }
         }
+        //Set toolbar popup
+        popupBinding.actionSendDocs.visibility = View.GONE
         popupWindow = PopupWindow(
             popupBinding.root,
             ListPopupWindow.WRAP_CONTENT,

@@ -1,18 +1,17 @@
 package com.example.sophos_mobile_app.ui.camera
 
 import android.graphics.Bitmap
-import androidx.camera.core.ImageProxy
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sophos_mobile_app.utils.ImageConverter
+import com.example.sophos_mobile_app.utils.ImageConverterImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GalleryViewModel @Inject constructor(private val imageConverter: ImageConverter): ViewModel(){
+class GalleryViewModel @Inject constructor(private val imageConverter: ImageConverterImpl): ViewModel(){
 
     companion object{
         const val IMAGE_MAX_WIDTH = 400

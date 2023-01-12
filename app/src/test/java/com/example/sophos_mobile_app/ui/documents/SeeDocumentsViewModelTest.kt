@@ -1,16 +1,14 @@
 package com.example.sophos_mobile_app.ui.documents
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.sophos_mobile_app.CoroutineTestRule
 import com.example.sophos_mobile_app.MainCoroutineRule
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.repository.FakeDocumentRepository
-import com.example.sophos_mobile_app.utils.ImageConverter
+import com.example.sophos_mobile_app.utils.ImageConverterImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
@@ -20,12 +18,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.powermock.api.mockito.PowerMockito
-import org.powermock.api.mockito.PowerMockito.`when`
-import org.powermock.core.classloader.annotations.PrepareForTest
-import org.powermock.modules.junit4.PowerMockRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SeeDocumentsViewModelTest {
@@ -43,14 +35,14 @@ class SeeDocumentsViewModelTest {
     private val dispatcher = TestCoroutineDispatcher()
 
     private lateinit var seeDocumentViewModel: SeeDocumentsViewModel
-    private lateinit var imageConverter: ImageConverter
+    private lateinit var imageConverter: ImageConverterImpl
 
 
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
         val fakeDocumentRepository = FakeDocumentRepository()
-        imageConverter = ImageConverter()
+        imageConverter = ImageConverterImpl()
         seeDocumentViewModel = SeeDocumentsViewModel(fakeDocumentRepository, imageConverter)
 
     }

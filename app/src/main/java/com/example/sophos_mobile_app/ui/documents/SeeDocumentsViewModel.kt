@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Document
 import com.example.sophos_mobile_app.data.repository.DocumentRepository
-import com.example.sophos_mobile_app.utils.ImageConverter
+import com.example.sophos_mobile_app.utils.ImageConverterImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SeeDocumentsViewModel @Inject constructor(
     private val documentRepository: DocumentRepository,
-    private val imageConverter: ImageConverter
+    private val imageConverter: ImageConverterImpl
     ): ViewModel() {
 
     private val _documents = MutableLiveData<List<Document>?>()

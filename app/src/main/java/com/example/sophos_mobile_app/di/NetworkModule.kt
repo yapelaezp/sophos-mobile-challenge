@@ -1,10 +1,7 @@
 package com.example.sophos_mobile_app.di
 
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
-import com.example.sophos_mobile_app.data.repository.*
 import com.example.sophos_mobile_app.utils.BASE_URL
-import com.example.sophos_mobile_app.utils.ConvertidorImagenes
-import com.example.sophos_mobile_app.utils.ImageConverter
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
