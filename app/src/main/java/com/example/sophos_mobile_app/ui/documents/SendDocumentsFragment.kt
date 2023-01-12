@@ -25,10 +25,7 @@ import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
 import com.example.sophos_mobile_app.ui.camera.CameraViewModel
 import com.example.sophos_mobile_app.ui.camera.GalleryViewModel
 import com.example.sophos_mobile_app.ui.login.LoginFragment
-import com.example.sophos_mobile_app.utils.AppLanguage
-import com.example.sophos_mobile_app.utils.UserDataStore
-import com.example.sophos_mobile_app.utils.Validation
-import com.example.sophos_mobile_app.utils.dataStore
+import com.example.sophos_mobile_app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -309,6 +306,7 @@ class SendDocumentsFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
+            activity?.deleteDatabase(DATABASE_NAME)
             val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
             findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
         }

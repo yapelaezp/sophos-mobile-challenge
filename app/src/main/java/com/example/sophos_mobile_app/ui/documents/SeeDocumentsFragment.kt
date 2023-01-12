@@ -24,6 +24,7 @@ import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
+import com.example.sophos_mobile_app.utils.DATABASE_NAME
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
@@ -218,6 +219,7 @@ class SeeDocumentsFragment : Fragment() {
             }
         }
         withContext(Dispatchers.Main) {
+            activity?.deleteDatabase(DATABASE_NAME)
             val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
             findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
         }
