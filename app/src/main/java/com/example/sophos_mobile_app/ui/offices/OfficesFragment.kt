@@ -65,7 +65,7 @@ class OfficesFragment : Fragment() {
     private lateinit var popupWindow: PopupWindow
 
     companion object {
-        private const val DEFAULT_ZOOM = 20
+        private const val DEFAULT_ZOOM = 50
     }
 
     override fun onCreateView(
