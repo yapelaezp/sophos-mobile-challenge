@@ -52,11 +52,11 @@
         android:textColorHint="?attr/colorPrimaryVariant"
         app:boxStrokeWidth="2dp"
         app:errorEnabled="true"
-        app:placeholderTextColor="@color/pink_sophos"
         app:errorIconDrawable="@null"
         app:layout_constraintEnd_toEndOf="@id/vgl_login_2"
         app:layout_constraintStart_toStartOf="@id/vgl_login_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_enter_data"
+        app:placeholderTextColor="@color/pink_sophos"
         app:startIconDrawable="@drawable/ic_baseline_account_circle"
         app:startIconTint="?attr/colorPrimary">
 
@@ -68,7 +68,8 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textWebEmailAddress"
-            android:text="alejo51120@gmail.com"
+            android:maxLines="1"
+            android:text="angye95@utp.edu.co"
             android:textColor="?attr/colorPrimary"
             android:textSize="18sp" />
 
@@ -108,7 +109,8 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textPassword"
-            android:text="PIpP0553v031"
+            android:maxLines="1"
+            android:text="vdYc38kG85V2"
             android:textColor="?attr/colorPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>

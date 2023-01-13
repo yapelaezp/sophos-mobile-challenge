@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.FragmentLoginBinding
+import com.example.sophos_mobile_app.utils.DATABASE_NAME
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +49,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         userDataStore = UserDataStore(requireContext())
         setupBiometricAccess()
-        isUserLogged()
+        //isUserLogged()
     }
 
     override fun onCreateView(

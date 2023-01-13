@@ -18,13 +18,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSeeDocumentsBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
-import com.example.sophos_mobile_app.utils.DATABASE_NAME
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,8 +106,14 @@ class SeeDocumentsFragment : Fragment() {
                     binding.pbSeeDocsImage.visibility = View.GONE
                     showErrorDialog(statusImage.messageId)
                 }
-                is ResponseStatus.Loading -> binding.pbSeeDocsImage.visibility = View.VISIBLE
-                is ResponseStatus.Success -> binding.pbSeeDocsImage.visibility = View.GONE
+                is ResponseStatus.Loading -> {
+                    binding.pbSeeDocsImage.visibility = View.VISIBLE
+                    binding.ivViwDocumentsAttached.visibility = View.INVISIBLE
+                }
+                is ResponseStatus.Success -> {
+                    binding.pbSeeDocsImage.visibility = View.GONE
+                    binding.ivViwDocumentsAttached.visibility = View.VISIBLE
+                }
             }
         }
         seeDocumentsViewModel.documents.observe(viewLifecycleOwner) { documents ->
@@ -116,8 +124,13 @@ class SeeDocumentsFragment : Fragment() {
             }
         }
         seeDocumentsViewModel.imageBitmap.observe(viewLifecycleOwner) { imageBitmap ->
-            println("see doc pikachu $imageBitmap")
-            binding.ivViwDocumentsAttached.setImageBitmap(imageBitmap)
+            if (imageBitmap != null){
+                println(imageBitmap)
+                binding.ivViwDocumentsAttached.setImageBitmap(imageBitmap)
+            } else{
+                println(imageBitmap)
+                binding.ivViwDocumentsAttached.setImageResource(R.drawable.ic_baseline_broken_image_24)
+            }
         }
     }
 
@@ -156,7 +169,15 @@ class SeeDocumentsFragment : Fragment() {
             ListPopupWindow.WRAP_CONTENT
         )
         //Set Recycler View
-        binding.rvViewDocuments.adapter = DocumentDetailAdapter(emptyList()) {}
+        val customLayoutManager = LinearLayoutManager(context)
+        val docsDecorator = DividerItemDecoration(context, customLayoutManager.orientation)
+        //docsDecorator.setDrawable()
+        customLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding.rvViewDocuments.apply {
+            addItemDecoration(docsDecorator)
+            layoutManager = customLayoutManager
+            adapter = DocumentDetailAdapter(emptyList()) {}
+        }
     }
 
     private fun setAppMode() {
@@ -221,8 +242,8 @@ class SeeDocumentsFragment : Fragment() {
                 preferences[stringPreferencesKey(LoginFragment.PASSWORD)] = ""
                 preferences[stringPreferencesKey(LoginFragment.NAME)] = ""
             }
+            SophosAppDatabase.getDatabase(requireContext()).clearAllTables()
         }
-        activity?.deleteDatabase(DATABASE_NAME)
         val navOptions = NavOptions.Builder().setPopUpTo(R.id.menuFragmentDestination, true).build()
         findNavController().navigate(R.id.loginFragmentDestination, null, navOptions = navOptions)
     }

@@ -22,4 +22,9 @@ interface DocumentDao {
     @Query("SELECT * FROM document_detail WHERE register_id = :registerId")
     suspend fun getDocumentDetail(registerId: String): List<DocumentDetailEntity>
 
+    @Query("DELETE FROM documents")
+    suspend fun deleteDocuments()
+
+
+
 }
