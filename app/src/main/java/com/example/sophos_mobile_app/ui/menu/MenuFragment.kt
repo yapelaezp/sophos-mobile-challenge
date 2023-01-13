@@ -49,6 +49,8 @@ class MenuFragment : Fragment() {
         userDataStore = UserDataStore(requireContext())
         setComponents()
         setListeners()
+        println("POKEEEEEEEEEEEEEEMON MM")
+
         return binding.root
     }
 

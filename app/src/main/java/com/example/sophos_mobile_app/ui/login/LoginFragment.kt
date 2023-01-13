@@ -48,7 +48,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         userDataStore = UserDataStore(requireContext())
         setupBiometricAccess()
-        isUserLogged()
+        //isUserLogged()
     }
 
     override fun onCreateView(
@@ -58,6 +58,7 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         setListeners()
         observeViewModel()
+        println("POKEEEEEEEEEEEEEEMON LOGINNN")
         return binding.root
     }
 

@@ -12,23 +12,9 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var userDataStore: UserDataStore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userDataStore = UserDataStore(this)
-        setAppMode()
+        println("POKEEEEEEEEEEEEEEMON M ACTIVITY")
         setContentView(R.layout.activity_main)
     }
-
-    private fun setAppMode() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            userDataStore.getDataStorePreferences().collect { userPreferences ->
-                if (userPreferences.darkMode) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    delegate.applyDayNight()
-                }
-            }
-        }
-    }
-
 }

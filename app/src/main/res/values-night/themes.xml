@@ -17,6 +17,10 @@
         <item name="colorAccent">@color/pink_sophos</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
     <style name="menu_layout_title_send_docs">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
