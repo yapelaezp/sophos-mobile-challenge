@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:opacity= "opaque">
+    android:opacity="opaque">
 
-    <item android:drawable="?attr/colorOnPrimary"/>
-    <item>
+    <item android:drawable="@color/white" />
+    <item
+        android:width="300dp"
+        android:height="300dp"
+        android:gravity="center">
         <bitmap
-            android:gravity="center"
-            android:src="@drawable/logo_sophos"/>
+
+            android:src="@drawable/splash_logo" />
     </item>
 
 </layer-list>

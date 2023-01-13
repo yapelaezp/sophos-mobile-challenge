@@ -36,7 +36,7 @@ class LoginViewModelTest {
         //Action
         val expected = User(
             "129", "Yesid Alejandro", "Pelaez Posada",
-            true, false
+            true, admin = false
         )
         val actual = loginViewModel.user.value
         //Assert

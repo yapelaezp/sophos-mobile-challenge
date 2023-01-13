@@ -69,7 +69,6 @@
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textWebEmailAddress"
             android:maxLines="1"
-            android:text="alejo51120@gmail.com"
             android:textColor="?attr/colorPrimary"
             android:textSize="22sp" />
 
@@ -110,7 +109,6 @@
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:text="PIpP0553v031"
             android:textColor="?attr/colorPrimary"
             android:textSize="22sp"/>
 

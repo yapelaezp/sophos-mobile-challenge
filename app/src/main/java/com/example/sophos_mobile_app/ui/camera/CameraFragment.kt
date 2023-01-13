@@ -25,7 +25,6 @@ import java.util.*
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
 
-    private var _binding: FragmentCameraBinding? = null
     private val cameraViewModel: CameraViewModel by activityViewModels()
 
     private var cameraPhotoFilePath: Uri? = null

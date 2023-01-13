@@ -58,8 +58,19 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         setListeners()
         observeViewModel()
-        println("POKEEEEEEEEEEEEEEMON LOGINNN")
+        setComponents()
         return binding.root
+    }
+
+    private fun setComponents() {
+        lifecycleScope.launch(Dispatchers.Main){
+            userDataStore.getDataStorePreferences().collect{ userPreferences ->
+                if (userPreferences.email.isNotEmpty()){
+                    binding.etvLoginEmail.setText(userPreferences.email)
+                    binding.etvLoginPassword.setText(userPreferences.password)
+                }
+            }
+        }
     }
 
     private fun isUserLogged() {

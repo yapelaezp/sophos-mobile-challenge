@@ -13,10 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CameraViewModel @Inject constructor(private val imageConverter: ImageConverterImpl): ViewModel() {
 
-    companion object{
-    }
-
-    private val _photoBase64 = MutableLiveData<String>()
+    companion object;
 
     private val _imageBase64 = MutableLiveData<String>()
     val imageBase64: LiveData<String>
