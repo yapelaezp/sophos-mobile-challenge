@@ -61,6 +61,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:fontFamily="@font/montserrat_bold"
         android:prompt="@string/doc_type_title"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +72,7 @@
         android:id="@+id/etv_document_screen_doc_number"
         style="@style/document_input_data"
         android:hint="@string/document_number"
+        android:fontFamily="@font/montserrat_regular"
         android:inputType="number"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
@@ -119,6 +121,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintEnd_toEndOf="@id/etv_document_screen_email"
         app:layout_constraintStart_toStartOf="@+id/etv_document_screen_email"
         app:layout_constraintTop_toBottomOf="@+id/etv_document_screen_email" />

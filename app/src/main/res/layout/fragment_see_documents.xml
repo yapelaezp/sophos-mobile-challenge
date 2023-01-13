@@ -11,11 +11,11 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/h_divider_item_view_document"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/iv_viw_documents_attached"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/rv_view_documents"
-        app:layout_constraintTop_toBottomOf="@+id/iv_viw_documents_attached" />
+        app:layout_constraintTop_toTopOf="@id/iv_viw_documents_attached"  />
 
     <ProgressBar
         android:id="@+id/pb_see_docs_image"
@@ -72,6 +72,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:visibility="invisible"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/rv_view_documents"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,14 +86,13 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hgl_view_documents_screen_40"
         app:layout_constraintVertical_bias="0.50"
         tools:listitem="@layout/item_document_detail" />
-
+<!--
     <View
         android:id="@+id/h_divider_item_view_document"
         android:layout_width="0dp"
@@ -100,7 +100,7 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_view_documents" />
+        app:layout_constraintTop_toBottomOf="@id/rv_view_documents" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hgl_view_documents_screen_40"

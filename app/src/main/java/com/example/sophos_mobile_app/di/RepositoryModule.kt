@@ -3,7 +3,6 @@ package com.example.sophos_mobile_app.di
 import com.example.sophos_mobile_app.data.repository.*
 import com.example.sophos_mobile_app.data.source.local.db.dao.DocumentDao
 import com.example.sophos_mobile_app.data.source.local.db.dao.OfficesDao
-import com.example.sophos_mobile_app.data.source.local.db.dao.UserDao
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
 import dagger.Module
 import dagger.Provides

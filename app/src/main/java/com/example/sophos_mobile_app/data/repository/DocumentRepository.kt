@@ -19,4 +19,5 @@ interface DocumentRepository {
     suspend fun getDocuments(email: String): ResponseStatus<List<Document>>
 
     suspend fun getDocumentDetail(registerId: String): ResponseStatus<List<DocumentDetail>>
+
 }

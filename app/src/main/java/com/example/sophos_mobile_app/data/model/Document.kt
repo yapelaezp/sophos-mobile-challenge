@@ -14,8 +14,12 @@ data class Document (
     val attachedType: String
 ){
     val customDate: String @RequiresApi(Build.VERSION_CODES.O)
-    get() = Instant.parse(date).atZone(ZoneOffset.UTC).let {
-        val v =  it.dayOfMonth.toString() + "/" + it.monthValue + "/" + it.year.toString()
-            v
-    }.toString()
+    get() = try {
+            Instant.parse(date).atZone(ZoneOffset.UTC).let {
+                val v =  it.dayOfMonth.toString() + "/" + it.monthValue + "/" + it.year.toString()
+                v
+            }.toString()
+    } catch (e: Exception){
+            this.date
+    }
 }

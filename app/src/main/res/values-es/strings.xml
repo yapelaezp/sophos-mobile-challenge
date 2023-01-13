@@ -67,6 +67,7 @@
     <string name="authentication_failed">Autenticación fallida</string>
     <string name="image_uploaded">Imagen adjuntada</string>
     <string name="no_image_attached">Ninguna imagen adjuntada</string>
+    <string name="invalid_email_or_password">Email o contraseña incorreta</string>
 
     <string-array name="doc_type">
         <item>Tipo de ducumento</item>
