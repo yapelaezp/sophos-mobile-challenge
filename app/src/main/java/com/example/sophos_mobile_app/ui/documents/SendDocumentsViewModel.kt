@@ -27,8 +27,6 @@ class SendDocumentsViewModel @Inject constructor(
         get() = _cities
 
     private val _statusOffice = MutableLiveData<ResponseStatus<Any>>()
-    val statusOffice: LiveData<ResponseStatus<Any>>
-        get() = _statusOffice
 
     fun createNewDocument(
         idType: String,

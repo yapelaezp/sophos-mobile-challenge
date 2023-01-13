@@ -9,11 +9,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
-import com.example.sophos_mobile_app.utils.UserDataStore
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 

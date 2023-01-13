@@ -2,7 +2,6 @@ package com.example.sophos_mobile_app.data.model
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.google.gson.annotations.SerializedName
 import java.time.Instant
 import java.time.ZoneOffset
 

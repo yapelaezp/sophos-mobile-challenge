@@ -45,11 +45,11 @@
     <string name="use_password_auth">Usuario y contraseña</string>
     <string name="email_not_empty">El email no puede estar vacío</string>
     <string name="invalid_email">Email inválido</string>
-    <string name="password_not_empy">La contraseña no puede estar vacía</string>
-    <string name="request_rationale_permission">%s permiso denegado previamente. Por favor ve aconfiguración y activa el permiso manualmente</string>
+    <string name="password_not_empty">La contraseña no puede estar vacía</string>
+    <string name="request_rationale_permission">Permiso para %s fue denegado previamente. Por favor ve aconfiguración y activa el permiso manualmente</string>
     <string name="permission_denied_format">Permiso %s fue denegado </string>
-    <string name="camera_permisssion">Permiso de cámara</string>
-    <string name="read_external_permisssion">Leer almacenamiento externo</string>
+    <string name="camera_permission">Permiso de cámara</string>
+    <string name="read_external_permission">Leer almacenamiento externo</string>
     <string name="maps_permission">Ubicación</string>
     <string name="location_permission">Ubicación</string>
     <string name="grant_permission">Conceder permiso</string>

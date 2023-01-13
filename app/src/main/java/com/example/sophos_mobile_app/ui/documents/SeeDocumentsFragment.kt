@@ -18,7 +18,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase
@@ -169,13 +168,8 @@ class SeeDocumentsFragment : Fragment() {
             ListPopupWindow.WRAP_CONTENT
         )
         //Set Recycler View
-        val customLayoutManager = LinearLayoutManager(context)
-        val docsDecorator = DividerItemDecoration(context, customLayoutManager.orientation)
-        //docsDecorator.setDrawable()
-        customLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvViewDocuments.apply {
-            addItemDecoration(docsDecorator)
-            layoutManager = customLayoutManager
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, false)
             adapter = DocumentDetailAdapter(emptyList()) {}
         }
     }

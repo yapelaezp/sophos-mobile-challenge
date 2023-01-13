@@ -32,9 +32,6 @@
             android:name="userEmail"
             app:argType="string" />
         <action
-            android:id="@+id/action_menuFragmentDestination_self"
-            app:destination="@id/menuFragmentDestination" />
-        <action
             android:id="@+id/action_menuFragmentDestination_to_permissionsFragment"
             app:destination="@id/permissionsFragment" />
     </fragment>

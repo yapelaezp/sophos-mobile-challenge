@@ -6,7 +6,7 @@ import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.source.local.db.dao.OfficesDao
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
-import com.example.sophos_mobile_app.data.source.remote.api.makeRepositoryCall
+import com.example.sophos_mobile_app.data.source.makeRepositoryCall
 import javax.inject.Inject
 
 class OfficeRepositoryImpl @Inject constructor(

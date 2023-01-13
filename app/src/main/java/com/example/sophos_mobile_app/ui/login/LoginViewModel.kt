@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
-import com.example.sophos_mobile_app.data.source.remote.api.dto.UserDto
 import com.example.sophos_mobile_app.data.model.User
 import com.example.sophos_mobile_app.data.repository.UserRepository
+import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

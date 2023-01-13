@@ -63,15 +63,15 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_email"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/background_button_rounded"
             android:drawablePadding="10dp"
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textWebEmailAddress"
             android:maxLines="1"
-            android:text="angye95@utp.edu.co"
+            android:text="alejo51120@gmail.com"
             android:textColor="?attr/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="22sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,14 +104,15 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etv_login_password"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/background_button_rounded"
             android:drawablePadding="10dp"
             android:fontFamily="@font/montserrat_regular"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:text="vdYc38kG85V2"
-            android:textColor="?attr/colorPrimary" />
+            android:text="PIpP0553v031"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="22sp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

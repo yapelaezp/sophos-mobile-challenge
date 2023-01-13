@@ -8,7 +8,7 @@ import com.example.sophos_mobile_app.data.source.local.db.dao.DocumentDao
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.source.remote.api.dto.NewDocumentDto
-import com.example.sophos_mobile_app.data.source.remote.api.makeRepositoryCall
+import com.example.sophos_mobile_app.data.source.makeRepositoryCall
 import javax.inject.Inject
 
 class DocumentRepositoryImpl @Inject constructor(

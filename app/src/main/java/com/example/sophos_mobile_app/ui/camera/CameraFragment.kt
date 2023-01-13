@@ -26,10 +26,9 @@ import java.util.*
 class CameraFragment : Fragment() {
 
     private var _binding: FragmentCameraBinding? = null
-    private val binding get() = _binding!!
     private val cameraViewModel: CameraViewModel by activityViewModels()
 
-    var cameraPhotoFilePath: Uri? = null
+    private var cameraPhotoFilePath: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

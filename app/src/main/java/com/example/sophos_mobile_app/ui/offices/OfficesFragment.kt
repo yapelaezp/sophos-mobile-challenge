@@ -24,7 +24,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase
-import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase_Impl
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentOfficesBinding

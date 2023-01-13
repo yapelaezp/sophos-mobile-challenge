@@ -1,7 +1,6 @@
 package com.example.sophos_mobile_app.ui.documents
 
 import android.graphics.Bitmap
-import android.util.Base64
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

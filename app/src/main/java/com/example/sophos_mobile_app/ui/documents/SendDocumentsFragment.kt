@@ -2,7 +2,6 @@ package com.example.sophos_mobile_app.ui.documents
 
 import android.Manifest
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase
-import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase_Impl
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentSendDocumentsBinding
@@ -56,7 +54,7 @@ class SendDocumentsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSendDocumentsBinding.inflate(inflater, container, false)
         userDataStore = UserDataStore(requireContext())
         return binding.root
@@ -75,7 +73,7 @@ class SendDocumentsFragment : Fragment() {
             val cityTitle = getString(R.string.city)
             cities.add(0, cityTitle)
             arrayAdapter =
-                ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, cities)
+                ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item,cities)
             binding.spDocumentScreenCity.adapter = arrayAdapter
         }
         sendDocumentViewModel.statusPost.observe(viewLifecycleOwner) { status ->
@@ -187,7 +185,7 @@ class SendDocumentsFragment : Fragment() {
                 1 -> {
                     val action =
                         SendDocumentsFragmentDirections.actionSendDocumentsFragmentToPermissionsFragment(
-                            android.Manifest.permission.CAMERA
+                            Manifest.permission.CAMERA
                         )
                     navigate(action)
                 }
@@ -299,7 +297,7 @@ class SendDocumentsFragment : Fragment() {
 
     private fun navigateToSeeDocs() {
         lifecycleScope.launch(Dispatchers.IO) {
-            userDataStore.getDataStorePreferences().collect() { userPreferences ->
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
                 withContext(Dispatchers.Main) {
                     println(userPreferences.email)
                     val action =

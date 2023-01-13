@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.sophos_mobile_app.utils.UserDataStore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var userDataStore: UserDataStore
@@ -26,11 +28,11 @@ class SplashActivity : AppCompatActivity() {
                 if (userPreferences.darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     delegate.applyDayNight()
-                    println("POKEEEEEEEEEEEEEEMON splash1")
-                    startActivity(intent)
+                    println("POKEEEEEEEEEEEEEEMON splash dark")
+                    startActivity(intent).also { finish() }
                 } else {
-                    println("POKEEEEEEEEEEEEEEMON splash1")
-                    startActivity(intent)
+                    println("POKEEEEEEEEEEEEEEMON splash day")
+                    startActivity(intent).also { finish() }
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.example.sophos_mobile_app.ui.menu
 
 import android.Manifest
-import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +16,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.room.RoomDatabase
 import com.example.sophos_mobile_app.R
-import com.example.sophos_mobile_app.SophosMobileApp
 import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase
-import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase_Impl
 import com.example.sophos_mobile_app.databinding.BackgroundPopupMenuBinding
 import com.example.sophos_mobile_app.databinding.FragmentMenuBinding
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import com.example.sophos_mobile_app.utils.AppLanguage
-import com.example.sophos_mobile_app.utils.DATABASE_NAME
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.dataStore
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +40,6 @@ class MenuFragment : Fragment() {
     private val popupBinding by lazy { BackgroundPopupMenuBinding.inflate(layoutInflater) }
     private lateinit var popupWindow: PopupWindow
     private lateinit var userDataStore: UserDataStore
-    private lateinit var db: SophosAppDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

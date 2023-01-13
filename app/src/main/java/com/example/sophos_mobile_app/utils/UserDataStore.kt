@@ -7,14 +7,11 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.room.Insert
 import com.example.sophos_mobile_app.data.model.UserPreferences
-import com.example.sophos_mobile_app.data.source.local.db.SophosAppDatabase
 import com.example.sophos_mobile_app.ui.login.LoginFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATA_STORE_NAME)
 

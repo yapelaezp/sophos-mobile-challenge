@@ -14,13 +14,9 @@ import javax.inject.Inject
 class CameraViewModel @Inject constructor(private val imageConverter: ImageConverterImpl): ViewModel() {
 
     companion object{
-        const val PHOTO_MAX_WIDTH = 400
-        const val PHOTO_MAX_HEIGHT = 350
     }
 
     private val _photoBase64 = MutableLiveData<String>()
-    val photoBase64: LiveData<String>
-    get() = _photoBase64
 
     private val _imageBase64 = MutableLiveData<String>()
     val imageBase64: LiveData<String>

@@ -1,6 +1,7 @@
-package com.example.sophos_mobile_app.data.source.remote.api
+package com.example.sophos_mobile_app.data.source
 
 import com.example.sophos_mobile_app.R
+import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException

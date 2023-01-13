@@ -45,8 +45,8 @@ class PermissionsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionsValues = hashMapOf(
-            Manifest.permission.CAMERA to getString(R.string.camera_permisssion),
-            Manifest.permission.READ_EXTERNAL_STORAGE to getString(R.string.read_external_permisssion),
+            Manifest.permission.CAMERA to getString(R.string.camera_permission),
+            Manifest.permission.READ_EXTERNAL_STORAGE to getString(R.string.read_external_permission),
             Manifest.permission.ACCESS_COARSE_LOCATION to getString(R.string.location_permission)
         )
         checkPermissions(args.permissionCode)

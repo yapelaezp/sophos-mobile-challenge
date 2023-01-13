@@ -1,13 +1,7 @@
 package com.example.sophos_mobile_app.utils
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
 import androidx.camera.core.ImageProxy
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.nio.ByteBuffer
 
 interface ImageConverter {
 

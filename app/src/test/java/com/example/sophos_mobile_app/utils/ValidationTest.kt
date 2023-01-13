@@ -1,6 +1,5 @@
 package com.example.sophos_mobile_app.utils
 
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
 

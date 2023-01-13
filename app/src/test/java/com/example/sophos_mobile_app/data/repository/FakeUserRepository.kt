@@ -10,7 +10,7 @@ class FakeUserRepository : UserRepository {
             ResponseStatus.Success(
                 User(
                     "129", "Yesid Alejandro", "Pelaez Posada",
-                    true, false
+                    access = true, admin = false
                 )
             )
         } else {

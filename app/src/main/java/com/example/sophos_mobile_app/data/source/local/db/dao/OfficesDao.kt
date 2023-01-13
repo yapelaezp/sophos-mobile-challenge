@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.sophos_mobile_app.data.model.Office
 import com.example.sophos_mobile_app.data.source.local.db.entities.OfficeEntity
 
 @Dao

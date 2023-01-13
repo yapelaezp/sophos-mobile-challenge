@@ -3,7 +3,7 @@ package com.example.sophos_mobile_app.data.repository
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.data.model.Office
 
-class FakeOfficeRepository(): OfficeRepository{
+class FakeOfficeRepository : OfficeRepository{
     override suspend fun getOffices(): ResponseStatus<List<Office>> {
         return ResponseStatus.Success(listOf( Office(
             "Chile",

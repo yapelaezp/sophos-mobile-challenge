@@ -4,7 +4,7 @@ import com.example.sophos_mobile_app.data.mappers.toModel
 import com.example.sophos_mobile_app.data.model.User
 import com.example.sophos_mobile_app.data.source.remote.api.ApiService
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
-import com.example.sophos_mobile_app.data.source.remote.api.makeRepositoryCall
+import com.example.sophos_mobile_app.data.source.makeRepositoryCall
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(

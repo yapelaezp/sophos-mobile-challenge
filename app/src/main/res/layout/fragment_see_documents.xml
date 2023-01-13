@@ -92,15 +92,15 @@
         app:layout_constraintTop_toBottomOf="@+id/hgl_view_documents_screen_40"
         app:layout_constraintVertical_bias="0.50"
         tools:listitem="@layout/item_document_detail" />
-<!--
+
     <View
         android:id="@+id/h_divider_item_view_document"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/black"
+        android:background="?attr/colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_view_documents" />-->
+        app:layout_constraintTop_toBottomOf="@id/rv_view_documents" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hgl_view_documents_screen_40"

@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.sophos_mobile_app.R
 import com.example.sophos_mobile_app.data.source.remote.api.ResponseStatus
 import com.example.sophos_mobile_app.databinding.FragmentLoginBinding
-import com.example.sophos_mobile_app.utils.DATABASE_NAME
 import com.example.sophos_mobile_app.utils.UserDataStore
 import com.example.sophos_mobile_app.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +64,7 @@ class LoginFragment : Fragment() {
 
     private fun isUserLogged() {
         lifecycleScope.launch(Dispatchers.Main) {
-            userDataStore.getDataStorePreferences().collect() { userPreferences ->
+            userDataStore.getDataStorePreferences().collect { userPreferences ->
                 if (userPreferences.email.isNotEmpty()) {
                     val action = LoginFragmentDirections.actionToMenuFragmentDestination(
                         userPreferences.name,
@@ -147,7 +146,7 @@ class LoginFragment : Fragment() {
                 ) {
                     super.onAuthenticationSucceeded(result)
                     lifecycleScope.launch(Dispatchers.IO) {
-                        userDataStore.getDataStorePreferences().collect() { userPreferences ->
+                        userDataStore.getDataStorePreferences().collect { userPreferences ->
                             if (!userPreferences.biometricIntention) {
                                 println("bi false to true $userPreferences")
                                 userDataStore.setBiometricIntention()
@@ -190,7 +189,7 @@ class LoginFragment : Fragment() {
 
     private fun validatePassword(password: String): Boolean {
         return if (Validation.isFieldEmpty(password)) {
-            binding.tilLoginPassword.error = getString(R.string.password_not_empy)
+            binding.tilLoginPassword.error = getString(R.string.password_not_empty)
             false
         } else {
             binding.tilLoginPassword.error = null
