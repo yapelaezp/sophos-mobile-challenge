@@ -169,7 +169,7 @@ class SeeDocumentsFragment : Fragment() {
         )
         //Set Recycler View
         binding.rvViewDocuments.apply {
-            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, true)
             adapter = DocumentDetailAdapter(emptyList()) {}
         }
     }
