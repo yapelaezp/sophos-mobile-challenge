@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/loginFragmentDestination">
+
+    <fragment
+        android:id="@+id/loginFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_to_menuFragmentDestination"
+            app:destination="@id/menuFragmentDestination"
+            app:popUpTo="@id/loginFragmentDestination"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/menuFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <argument
+            android:name="userName"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_menuFragmentDestination_to_viewDocumentsFragmentDestination"
+            app:destination="@id/viewDocumentsFragmentDestination" />
+        <argument
+            android:name="userEmail"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_menuFragmentDestination_to_permissionsFragment"
+            app:destination="@id/permissionsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sendDocumentsFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.documents.SendDocumentsFragment"
+        android:label="fragment_send_documents"
+        tools:layout="@layout/fragment_send_documents" >
+        <action
+            android:id="@+id/action_sendDocumentsFragmentDestination_to_menuFragmentDestination"
+            app:destination="@id/menuFragmentDestination" />
+        <action
+            android:id="@+id/action_sendDocumentsFragment_to_permissionsFragment"
+            app:destination="@id/permissionsFragment"/>
+        <action
+            android:id="@+id/action_sendDocumentsFragmentDestination_to_viewDocumentsFragmentDestination"
+            app:destination="@id/viewDocumentsFragmentDestination" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/officesFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.offices.OfficesFragment"
+        android:label="fragment_offices"
+        tools:layout="@layout/fragment_offices" >
+        <action
+            android:id="@+id/action_officesFragmentDestination_to_viewDocumentsFragmentDestination"
+            app:destination="@id/viewDocumentsFragmentDestination" />
+        <argument
+            android:name="hasLocationPermission"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewDocumentsFragmentDestination"
+        android:name="com.example.sophos_mobile_app.ui.documents.SeeDocumentsFragment"
+        android:label="fragment_view_documents"
+        tools:layout="@layout/fragment_see_documents" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_viewDocumentsFragmentDestination_to_permissionsFragment"
+            app:destination="@id/permissionsFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/permissionsFragment"
+        android:name="com.example.sophos_mobile_app.utils.PermissionsFragment"
+        android:label="PermissionsFragment" >
+        <argument
+            android:name="permissionCode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_permissionsFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:popUpTo="@id/permissionsFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_permissionsFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"
+            app:popUpTo="@id/permissionsFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_permissionsFragment_to_officesFragmentDestination"
+            app:destination="@id/officesFragmentDestination"
+            app:popUpTo="@id/permissionsFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.sophos_mobile_app.ui.camera.GalleryFragment"
+        android:label="GalleryFragment" >
+        <action
+            android:id="@+id/action_galleryFragment_to_sendDocumentsFragmentDestination"
+            app:destination="@id/sendDocumentsFragmentDestination"
+            app:popUpTo="@id/permissionsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.sophos_mobile_app.ui.camera.CameraFragment"
+        android:label="CameraFragment" />
+</navigation>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">sophos-mobile-app</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="enter_data">Ingresa tus datos para acceder</string>
+    <string name="login">Ingresar</string>
+    <string name="login_fingerprint">Ingresar con huella</string>
+    <string name="send_docs">Enviar documentos</string>
+    <string name="see_docs"> Ver documentos</string>
+    <string name="offices">Oficinas</string>
+    <string name="mode">Modo</string>
+    <string name="language">Idioma</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="options_for_you">Estas son las opciones que tenemos para ti</string>
+    <string name="enter">Ingresar</string>
+    <string name="document">Documento</string>
+    <string name="send">Enviar</string>
+    <string name="document_number">Numero de documento</string>
+    <string name="names">Nombres</string>
+    <string name="lastnames">Apellidos</string>
+    <string name="document_delivery">Entrega de documentos</string>
+    <string name="documents">Documentos</string>
+    <string name="go_back">Regresar</string>
+    <string name="capture_button">Botón capturar</string>
+    <string name="select_picture_option">Elige una opción</string>
+    <string name="select_from_gallery">Seleccionar desde la galería</string>
+    <string name="capture_photo_from_gallery">Tomar foto</string>
+    <string name="cancel">Cancelar</string>
+    <string name="accept">Aceptar</string>
+    <string name="photo_saved">Foto guardada correctamente</string>
+    <string name="city">Ciudad</string>
+    <string name="doc_number_requirement">Número de documento es requerido</string>
+    <string name="email_requirement">Campo email es requerido</string>
+    <string name="id_type_requirement">Debes selecciionar un tipo de documento</string>
+    <string name="attached_type_requirement">El campo tipo adjunto es requerido</string>
+    <string name="name_requirement">Campo nombre es requerido</string>
+    <string name="lastname_requirement">Campo apellido es requerido</string>
+    <string name="city_requirement">Debes seleccionar una ciudad</string>
+    <string name="add_photo_requirement">Debes adjuntar una foto o imagen</string>
+    <string name="image_saved">Imagen guardada correctamente</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="fingerprint_auth">Autenticar con huella</string>
+    <string name="use_biometric_as_authentication">Iniciar sesión usando credenciales biométricas</string>
+    <string name="use_password_auth">Usuario y contraseña</string>
+    <string name="email_not_empty">El email no puede estar vacío</string>
+    <string name="invalid_email">Email inválido</string>
+    <string name="password_not_empty">La contraseña no puede estar vacía</string>
+    <string name="request_rationale_permission">Permiso para %s fue denegado previamente. Por favor ve aconfiguración y activa el permiso manualmente</string>
+    <string name="permission_denied_format">Permiso %s fue denegado </string>
+    <string name="camera_permission">Permiso de cámara</string>
+    <string name="read_external_permission">Leer almacenamiento externo</string>
+    <string name="maps_permission">Ubicación</string>
+    <string name="location_permission">Ubicación</string>
+    <string name="grant_permission">Conceder permiso</string>
+    <string name="main_menu">Menú principal</string>
+    <string name="auth_with_password_first">Debes autenticarte con usuario y contraseña primero</string>
+    <string name="day_mode">Modo día</string>
+    <string name="night_mode">Mode noche</string>
+    <string name="doc_type_title">Tipo de documento</string>
+    <string name="add_new_doc_success">Documento agregado con éxito</string>
+    <string name="add_new_doc_failed">No se ha podido subir el documento</string>
+    <string name="network_error">Error de red</string>
+    <string name="unknown_host_exception">Error en el servidor</string>
+    <string name="error_message">Hubo un error!</string>
+    <string name="authentication_success">Autenticación exitosa</string>
+    <string name="authentication_failed">Autenticación fallida</string>
+    <string name="image_uploaded">Imagen adjuntada</string>
+    <string name="no_image_attached">Ninguna imagen adjuntada</string>
+    <string name="invalid_email_or_password">Email o contraseña incorreta</string>
+
+    <string-array name="doc_type">
+        <item>Tipo de ducumento</item>
+        <item>CC</item>
+        <item>TI</item>
+        <item>PA</item>
+        <item>CE</item>
+    </string-array>
+</resources>

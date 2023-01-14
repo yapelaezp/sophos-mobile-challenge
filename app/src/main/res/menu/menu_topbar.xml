@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu>
+
+<!--    <item
+        android:id="@+id/action_main_menu"
+        android:title="@string/main_menu"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_send_docs"
+        android:title="@string/send_docs"
+        app:showAsAction="never"
+        android:itemBackground = "@color/pink_sophos"/>
+
+    <item
+        android:id="@+id/action_see_docs"
+        android:title="@string/see_docs"
+        app:showAsAction="never"
+        app:itemBackground = "@color/pink_sophos"/>
+
+    <item
+        android:id="@+id/action_offices"
+        android:title="@string/offices"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_mode"
+        android:title="@string/mode"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_language"
+        android:title="@string/language"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/logout"
+        app:showAsAction="never"/>-->
+
+
+
+</menu>

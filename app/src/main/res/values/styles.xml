@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="login_vertical_line">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:background">@drawable/separator_vertical</item>
+    </style>
+
+    <style name="login_input_data_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColorHint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="menu_layout_pink">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:background">@drawable/background_menu_layout_pink</item>
+    </style>
+
+    <style name="menu_layout_blue">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:background">@drawable/background_menu_layout_blue</item>
+    </style>
+
+    <style name="menu_layout_aquamarine">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:background">@drawable/background_menu_layout_aquamarine</item>
+    </style>
+
+    <style name="document_input_data">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="menu_layout_button_send_docs">
+        <item name="android:layout_width">140dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:background">@drawable/background_menu_layout_button_send_docs</item>
+        <item name="android:text">@string/enter</item>
+        <item name="android:drawableEnd">@drawable/ic_baseline_east_send_docs</item>
+        <item name="android:textColor">@color/pink_sophos</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="menu_layout_button_see_docs">
+        <item name="android:layout_width">140dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:background">@drawable/background_menu_layout_button_see_docs</item>
+        <item name="android:text">@string/enter</item>
+        <item name="android:drawableEnd">@drawable/ic_baseline_east_see_docs</item>
+        <item name="android:textColor">@color/blue_sophos</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="menu_layout_button_offices">
+        <item name="android:layout_width">140dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:background">@drawable/background_menu_layout_button_offices</item>
+        <item name="android:text">@string/enter</item>
+        <item name="android:drawableEnd">@drawable/ic_baseline_east_offices</item>
+        <item name="android:textColor">@color/aquamarine_sophos</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="menu_layout_title_send_docs">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/pink_sophos</item>
+    </style>
+
+    <style name="menu_layout_title_see_docs">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/blue_sophos</item>
+    </style>
+
+    <style name="menu_layout_title_offices">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/aquamarine_sophos</item>
+    </style>
+
+    <!-- Menu item popup -->
+    <style name="popup_menu_item">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="popup_menu_item.send_docs">
+        <item name="android:textColor">@color/pink_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_send_docs</item>
+    </style>
+
+    <style name="popup_menu_item.see_docs">
+        <item name="android:textColor">@color/blue_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_see_docs</item>
+    </style>
+
+    <style name="popup_menu_item.offices">
+        <item name="android:textColor">@color/aquamarine_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_offices</item>
+    </style>
+
+    <style name="popup_menu_item.nigh_mode">
+        <item name="android:textColor">@color/dark_blue_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_night_mode</item>
+    </style>
+
+    <style name="popup_menu_item.language">
+        <item name="android:textColor">@color/light_blue_sophos</item>
+        <item name="android:background">@drawable/background_menu_item_language</item>
+    </style>
+
+    <style name="popup_menu_item.logout">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/background_menu_item_logout</item>
+    </style>
+
+    <style name="spinner_style" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+</resources>

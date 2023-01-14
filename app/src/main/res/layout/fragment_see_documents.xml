@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.documents.SeeDocumentsFragment">
+
+    <ProgressBar
+        android:id="@+id/pb_see_docs_data"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/iv_viw_documents_attached"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rv_view_documents"
+        app:layout_constraintTop_toTopOf="@id/iv_viw_documents_attached"  />
+
+    <ProgressBar
+        android:id="@+id/pb_see_docs_image"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_viw_documents_attached"
+        app:layout_constraintEnd_toEndOf="@+id/iv_viw_documents_attached"
+        app:layout_constraintStart_toStartOf="@+id/iv_viw_documents_attached"
+        app:layout_constraintTop_toBottomOf="@+id/tv_view_document_screen_docs" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_view_documents_screen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
+        app:title="@string/go_back"
+        app:titleTextColor="?attr/colorPrimaryVariant">
+
+        <ImageButton
+            android:id="@+id/iv_see_docs_screen_overflow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_baseline_menu_24"
+            android:backgroundTint="?attr/colorOnPrimary"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <TextView
+        android:id="@+id/tv_view_document_screen_docs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/documents"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_view_documents_screen" />
+
+    <ImageView
+        android:id="@+id/iv_viw_documents_attached"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/rv_view_documents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_view_document_screen_docs"
+        tools:src="@tools:sample/avatars" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_view_documents"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hgl_view_documents_screen_40"
+        app:layout_constraintVertical_bias="0.50"
+        tools:listitem="@layout/item_document_detail" />
+
+    <View
+        android:id="@+id/h_divider_item_view_document"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="?attr/colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_view_documents" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hgl_view_documents_screen_40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
